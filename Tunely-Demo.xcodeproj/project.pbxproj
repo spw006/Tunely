@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6E908C2E1BD1B5C400CA2744 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E908C2B1BD1B5C400CA2744 /* FBSDKCoreKit.framework */; settings = {ASSET_TAGS = (); }; };
+		6E908C2F1BD1B5C400CA2744 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E908C2C1BD1B5C400CA2744 /* FBSDKLoginKit.framework */; settings = {ASSET_TAGS = (); }; };
+		6E908C301BD1B5C400CA2744 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E908C2D1BD1B5C400CA2744 /* FBSDKShareKit.framework */; settings = {ASSET_TAGS = (); }; };
 		6EA1EEAD1BD0B77D00E83778 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EA1EEAC1BD0B77D00E83778 /* AppDelegate.swift */; };
 		6EA1EEAF1BD0B77D00E83778 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EA1EEAE1BD0B77D00E83778 /* ViewController.swift */; };
 		6EA1EEB21BD0B77D00E83778 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6EA1EEB01BD0B77D00E83778 /* Main.storyboard */; };
@@ -26,6 +29,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6E908C2B1BD1B5C400CA2744 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
+		6E908C2C1BD1B5C400CA2744 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
+		6E908C2D1BD1B5C400CA2744 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKShareKit.framework; sourceTree = "<group>"; };
 		6EA1EEA91BD0B77D00E83778 /* Tunely-Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Tunely-Demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6EA1EEAC1BD0B77D00E83778 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6EA1EEAE1BD0B77D00E83778 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -36,6 +42,7 @@
 		6EA1EEBD1BD0B77D00E83778 /* Tunely-DemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Tunely-DemoTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6EA1EEC11BD0B77D00E83778 /* Tunely_DemoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tunely_DemoTests.swift; sourceTree = "<group>"; };
 		6EA1EEC31BD0B77D00E83778 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6EA1EED31BD0B87700E83778 /* Tunely-Demo-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tunely-Demo-Bridging-Header.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -43,6 +50,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6E908C2F1BD1B5C400CA2744 /* FBSDKLoginKit.framework in Frameworks */,
+				6E908C2E1BD1B5C400CA2744 /* FBSDKCoreKit.framework in Frameworks */,
+				6E908C301BD1B5C400CA2744 /* FBSDKShareKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -56,9 +66,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6E908C291BD1B58300CA2744 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				6E908C2B1BD1B5C400CA2744 /* FBSDKCoreKit.framework */,
+				6E908C2C1BD1B5C400CA2744 /* FBSDKLoginKit.framework */,
+				6E908C2D1BD1B5C400CA2744 /* FBSDKShareKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		6EA1EEA01BD0B77D00E83778 = {
 			isa = PBXGroup;
 			children = (
+				6E908C291BD1B58300CA2744 /* Frameworks */,
 				6EA1EEAB1BD0B77D00E83778 /* Tunely-Demo */,
 				6EA1EEC01BD0B77D00E83778 /* Tunely-DemoTests */,
 				6EA1EEAA1BD0B77D00E83778 /* Products */,
@@ -83,6 +104,7 @@
 				6EA1EEB31BD0B77D00E83778 /* Assets.xcassets */,
 				6EA1EEB51BD0B77D00E83778 /* LaunchScreen.storyboard */,
 				6EA1EEB81BD0B77D00E83778 /* Info.plist */,
+				6EA1EED31BD0B87700E83778 /* Tunely-Demo-Bridging-Header.h */,
 			);
 			path = "Tunely-Demo";
 			sourceTree = "<group>";
@@ -140,6 +162,7 @@
 		6EA1EEA11BD0B77D00E83778 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 0700;
 				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "Tracy Nham";
 				TargetAttributes = {
@@ -328,10 +351,17 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = "Tunely-Demo/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.example.Tunely-Demo";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Tunely-Demo/Tunely-Demo-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -339,10 +369,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = "Tunely-Demo/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.example.Tunely-Demo";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Tunely-Demo/Tunely-Demo-Bridging-Header.h";
 			};
 			name = Release;
 		};
@@ -389,6 +425,7 @@
 				6EA1EEC81BD0B77D00E83778 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		6EA1EEC91BD0B77D00E83778 /* Build configuration list for PBXNativeTarget "Tunely-DemoTests" */ = {
 			isa = XCConfigurationList;
@@ -397,6 +434,7 @@
 				6EA1EECB1BD0B77D00E83778 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
