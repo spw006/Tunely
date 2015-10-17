@@ -18,7 +18,7 @@
                 <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="noQ-yq-edA">
                     <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                     <animations/>
-                    <color key="barTintColor" red="0.3537581259" green="0.03619639568" blue="0.3675457499" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="barTintColor" red="0.24313725489999999" green="0.72549019609999998" blue="0.5568627451" alpha="1" colorSpace="calibratedRGB"/>
                     <items>
                         <navigationItem id="ag1-do-H92">
                             <barButtonItem key="leftBarButtonItem" title="Back" id="ZUn-6V-bO4">
