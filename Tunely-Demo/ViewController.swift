@@ -51,12 +51,52 @@ class ViewController: UIViewController, FBSDKLoginButtonDelegate {
             if result.grantedPermissions.contains("email")
             {
                 // Do work
+                returnUserData()
             }
         }
+        
     }
     
     func loginButtonDidLogOut(loginButton: FBSDKLoginButton!) {
         print("User Logged Out")
+    }
+    
+    func returnUserData()
+    {
+        let graphRequest : FBSDKGraphRequest = FBSDKGraphRequest(graphPath: "me", parameters: ["fields":"id,email,name,friends, picture.width(480).height(480)"])
+        graphRequest.startWithCompletionHandler({ (connection, result, error) -> Void in
+            
+            if ((error) != nil)
+            {
+                // Process error
+                print("Error: \(error)")
+            }
+            else
+            {
+                print("fetched user: \(result)")
+                let userName : NSString = result.valueForKey("name") as! NSString
+                print("User Name is: \(userName)")
+                let userEmail : NSString = result.valueForKey("email") as! NSString
+                print("User Email is: \(userEmail)")
+                
+                
+                let userFriends: NSDictionary = result.valueForKey("friends") as! NSDictionary
+                print("User Friends are: \(userFriends)")
+                
+                
+                
+            }
+        })
+        
+//        let request = FBSDKGraphRequest(graphPath:"/me/friends", parameters: nil);
+//        
+//        request.startWithCompletionHandler { (connection : FBSDKGraphRequestConnection!, result : AnyObject!, error : NSError!) -> Void in
+//            if error == nil {
+//                print("Friends are : \(result)")
+//            } else {
+//                print("Error Getting Friends \(error)");
+//            }
+//        }
     }
     
     
