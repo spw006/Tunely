@@ -16,6 +16,8 @@
 		6EA1EEB41BD0B77D00E83778 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6EA1EEB31BD0B77D00E83778 /* Assets.xcassets */; };
 		6EA1EEB71BD0B77D00E83778 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6EA1EEB51BD0B77D00E83778 /* LaunchScreen.storyboard */; };
 		6EA1EEC21BD0B77D00E83778 /* Tunely_DemoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EA1EEC11BD0B77D00E83778 /* Tunely_DemoTests.swift */; };
+		94738CA21BD2FD4A00161C9D /* SideBarTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94738CA01BD2FD4A00161C9D /* SideBarTableViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		94738CA31BD2FD4A00161C9D /* SideBarTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 94738CA11BD2FD4A00161C9D /* SideBarTableViewController.xib */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,6 +45,8 @@
 		6EA1EEC11BD0B77D00E83778 /* Tunely_DemoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tunely_DemoTests.swift; sourceTree = "<group>"; };
 		6EA1EEC31BD0B77D00E83778 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6EA1EED31BD0B87700E83778 /* Tunely-Demo-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tunely-Demo-Bridging-Header.h"; sourceTree = "<group>"; };
+		94738CA01BD2FD4A00161C9D /* SideBarTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideBarTableViewController.swift; sourceTree = "<group>"; };
+		94738CA11BD2FD4A00161C9D /* SideBarTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SideBarTableViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,6 +104,8 @@
 			children = (
 				6EA1EEAC1BD0B77D00E83778 /* AppDelegate.swift */,
 				6EA1EEAE1BD0B77D00E83778 /* ViewController.swift */,
+				94738CA01BD2FD4A00161C9D /* SideBarTableViewController.swift */,
+				94738CA11BD2FD4A00161C9D /* SideBarTableViewController.xib */,
 				6EA1EEB01BD0B77D00E83778 /* Main.storyboard */,
 				6EA1EEB31BD0B77D00E83778 /* Assets.xcassets */,
 				6EA1EEB51BD0B77D00E83778 /* LaunchScreen.storyboard */,
@@ -201,6 +207,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				94738CA31BD2FD4A00161C9D /* SideBarTableViewController.xib in Resources */,
 				6EA1EEB71BD0B77D00E83778 /* LaunchScreen.storyboard in Resources */,
 				6EA1EEB41BD0B77D00E83778 /* Assets.xcassets in Resources */,
 				6EA1EEB21BD0B77D00E83778 /* Main.storyboard in Resources */,
@@ -222,6 +229,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6EA1EEAF1BD0B77D00E83778 /* ViewController.swift in Sources */,
+				94738CA21BD2FD4A00161C9D /* SideBarTableViewController.swift in Sources */,
 				6EA1EEAD1BD0B77D00E83778 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

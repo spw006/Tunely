@@ -99,6 +99,14 @@ class ViewController: UIViewController, FBSDKLoginButtonDelegate {
 //        }
     }
     
+    @IBAction func revealSideBar(sender: AnyObject) {
+        
+        let sideBar:SideBarTableViewController = SideBarTableViewController(nibName: "SideBarTableViewController", bundle: nil)
+        sideBar.modalTransitionStyle = UIModalTransitionStyle.CoverVertical
+        self.presentViewController(sideBar, animated: true, completion: nil)
+        
+    }
+    
     
 }
 
