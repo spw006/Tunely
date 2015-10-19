@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FBSDKLoginKit
 
 class SideBarTableViewController: UIViewController {
     
@@ -55,12 +56,14 @@ class SideBarTableViewController: UIViewController {
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
+        
+        
         if sideBarArray[indexPath.row] == "Search" {
             // initiate search bar here
         }
         
         if sideBarArray[indexPath.row] == "Logout" {
-            // logout code here
+            FBSDKLoginManager().logOut()
         }
         
     }
