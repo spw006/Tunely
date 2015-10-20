@@ -8,8 +8,12 @@
 
 
 import UIKit
+import FBSDKLoginKit
+import FBSDKCoreKit
 
 class ViewController: UIViewController, FBSDKLoginButtonDelegate {
+    
+    @IBOutlet weak var loginView : UIView!
     
     
     override func viewDidLoad() {
@@ -23,7 +27,7 @@ class ViewController: UIViewController, FBSDKLoginButtonDelegate {
         // Do any additional setup after loading the view, typically from a nib.
         else {
             let loginButton : FBSDKLoginButton = FBSDKLoginButton()
-            self.view.addSubview(loginButton)
+            loginView.addSubview(loginButton)
             loginButton.center = self.view.center
             loginButton.readPermissions = ["public_profile", "email", "user_friends"]
             loginButton.delegate = self
@@ -107,6 +111,25 @@ class ViewController: UIViewController, FBSDKLoginButtonDelegate {
         
     }
     
+    override func viewDidAppear(animated: Bool) {
+        if let _ = FBSDKAccessToken.currentAccessToken()
+        {
+            // user is logged in
+            loginView.alpha = 0
+        }
+        else
+        {
+            // user is logged out
+            UIView.beginAnimations(nil, context: nil)
+            UIView.setAnimationDuration(1)
+            UIView.setAnimationDelay(0.2)
+            UIView.setAnimationCurve(UIViewAnimationCurve.EaseOut)
+            loginView.alpha = 1
+            
+            UIView.commitAnimations()
+        }
+        
+    }
     
 }
 

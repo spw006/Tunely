@@ -12,7 +12,7 @@ import FBSDKLoginKit
 class SideBarTableViewController: UIViewController {
     
     @IBOutlet weak var tableView : UITableView!
-    var sideBarArray : [ String ] = [ "Search", "Logout" ]
+    var sideBarArray : [ String ] = [ "Home", "Search", "Logout" ]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,14 +56,18 @@ class SideBarTableViewController: UIViewController {
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
-        
+        if sideBarArray[indexPath.row] == "Home" {
+            dismissViewControllerAnimated(true, completion: nil)
+        }
         
         if sideBarArray[indexPath.row] == "Search" {
             // initiate search bar here
         }
         
+        
         if sideBarArray[indexPath.row] == "Logout" {
             FBSDKLoginManager().logOut()
+            dismissViewControllerAnimated(true, completion: nil)
         }
         
     }

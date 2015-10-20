@@ -17,35 +17,92 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <navigationBar contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0TZ-Ao-BxF">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Tunely" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="svz-BB-V7f">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="73"/>
                                 <animations/>
-                                <color key="barTintColor" red="0.24313725489999999" green="0.72549019609999998" blue="0.5568627451" alpha="1" colorSpace="calibratedRGB"/>
-                                <textAttributes key="titleTextAttributes">
-                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                </textAttributes>
-                                <items>
-                                    <navigationItem title="Tunely" id="W9f-4G-knd">
-                                        <barButtonItem key="leftBarButtonItem" title="Sidebar" id="tfC-8J-Cq1">
-                                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                            <connections>
-                                                <action selector="revealSideBar:" destination="BYZ-38-t0r" id="gZP-3j-lah"/>
-                                            </connections>
-                                        </barButtonItem>
-                                    </navigationItem>
-                                </items>
-                            </navigationBar>
+                                <color key="backgroundColor" red="0.24313725489999999" green="0.72549019609999998" blue="0.5568627451" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kLW-WF-3XF">
+                                <rect key="frame" x="8" y="21" width="58" height="30"/>
+                                <animations/>
+                                <state key="normal" title="sidebar">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="revealSideBar:" destination="BYZ-38-t0r" eventType="touchUpInside" id="vc5-O1-jS3"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s7q-fG-bT5">
+                                <rect key="frame" x="8" y="237" width="359" height="62"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
+                                <state key="normal" title="Host Stream"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EE4-LV-b8x">
+                                <rect key="frame" x="8" y="299" width="359" height="62"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
+                                <state key="normal" title="Join Stream">
+                                    <color key="titleColor" red="0.24313725489999999" green="0.72549019609999998" blue="0.5568627451" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lIr-J1-9a1">
+                                <rect key="frame" x="8" y="363" width="359" height="62"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
+                                <state key="normal" title="Current Streams">
+                                    <color key="titleColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                            </button>
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9kV-qg-F2U">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <animations/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
                         </subviews>
                         <animations/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.9475337068666666" green="0.9475337068666666" blue="0.9475337068666666" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstAttribute="trailingMargin" secondItem="0TZ-Ao-BxF" secondAttribute="trailing" constant="-20" id="wYl-3Y-p0W"/>
-                            <constraint firstItem="0TZ-Ao-BxF" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="xdR-U2-ORO"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="9kV-qg-F2U" secondAttribute="trailing" constant="-20" id="Acy-sc-eeE"/>
+                            <constraint firstItem="lIr-J1-9a1" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-12" id="MDX-Wq-F15"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="lIr-J1-9a1" secondAttribute="trailing" constant="-12" id="Ucf-ku-BrJ"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="EE4-LV-b8x" secondAttribute="trailing" constant="-12" id="ZJc-uV-iBB"/>
+                            <constraint firstItem="s7q-fG-bT5" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-12" id="ZWd-Ky-dbY"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="s7q-fG-bT5" secondAttribute="trailing" constant="-12" id="gue-q1-8KB"/>
+                            <constraint firstItem="EE4-LV-b8x" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-12" id="i3L-no-WBH"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="9kV-qg-F2U" secondAttribute="bottom" id="kmT-UV-aJp"/>
+                            <constraint firstItem="9kV-qg-F2U" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" id="l1P-Nm-SfK"/>
+                            <constraint firstItem="9kV-qg-F2U" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="uSl-79-nAX"/>
                         </constraints>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <outlet property="loginView" destination="9kV-qg-F2U" id="dVl-Sn-Dcq"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="161.5" y="79.5"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="Flc-E6-rih">
+            <objects>
+                <viewController id="ETA-qd-uUY" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="SSt-yn-MhB"/>
+                        <viewControllerLayoutGuide type="bottom" id="R3T-Ly-wwD"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="cdw-MJ-PTc">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="aDM-44-FvM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
         </scene>
     </scenes>

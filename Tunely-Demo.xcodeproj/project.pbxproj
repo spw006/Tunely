@@ -107,6 +107,7 @@
 				94738CA01BD2FD4A00161C9D /* SideBarTableViewController.swift */,
 				94738CA11BD2FD4A00161C9D /* SideBarTableViewController.xib */,
 				6EA1EEB01BD0B77D00E83778 /* Main.storyboard */,
+				94672BB11BD601BB00764E88 /* Resources */,
 				6EA1EEB31BD0B77D00E83778 /* Assets.xcassets */,
 				6EA1EEB51BD0B77D00E83778 /* LaunchScreen.storyboard */,
 				6EA1EEB81BD0B77D00E83778 /* Info.plist */,
@@ -122,6 +123,13 @@
 				6EA1EEC31BD0B77D00E83778 /* Info.plist */,
 			);
 			path = "Tunely-DemoTests";
+			sourceTree = "<group>";
+		};
+		94672BB11BD601BB00764E88 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
