@@ -12,7 +12,7 @@ import FBSDKLoginKit
 class SideBarTableViewController: UIViewController {
     
     @IBOutlet weak var tableView : UITableView!
-    var sideBarArray : [ String ] = [ "Home", "Search", "Logout" ]
+    var sideBarArray : [ String ] = [ "Home", "Logout" ]
     
     override func viewDidLoad() {
         super.viewDidLoad()

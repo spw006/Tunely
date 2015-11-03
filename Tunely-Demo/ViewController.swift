@@ -111,6 +111,16 @@ class ViewController: UIViewController, FBSDKLoginButtonDelegate {
         
     }
     
+    @IBAction func hostStream(sender: AnyObject) {
+        let hostView:HostViewController = HostViewController(nibName: "HostViewController", bundle: nil)
+        self.presentViewController(hostView, animated: true, completion: nil)
+    }
+    
+    @IBAction func joinStream(sender: AnyObject) {
+        let joinView:JoinViewController = JoinViewController(nibName: "JoinViewController", bundle: nil)
+        self.presentViewController(joinView, animated: true, completion: nil)
+    }
+    
     override func viewDidAppear(animated: Bool) {
         if let _ = FBSDKAccessToken.currentAccessToken()
         {
