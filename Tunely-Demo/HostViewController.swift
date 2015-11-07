@@ -9,6 +9,7 @@
 import UIKit
 
 class HostViewController: UIViewController {
+    @IBOutlet weak var hostBtn: UIButton!
     
     // Stream object
     var newStream : NSMutableDictionary = [ "name" : "", "password" : "" ]
@@ -58,6 +59,26 @@ class HostViewController: UIViewController {
     @IBAction func host(sender: AnyObject) {
         let streamView:StreamViewController = StreamViewController(nibName: "StreamViewController", bundle: nil)
         self.presentViewController(streamView, animated: true, completion: nil)
+        
+        let name = "stream name"
+        let password = "password"
+        
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+
+        appDelegate.client?.subscribeToChannels(["my_channel"], withPresence: true)
+
+        // post request
+        
+        let uri : String = "http://ec2-54-183-142-37.us-west-1.compute.amazonaws.com/api/streams"
+        let parameters : [String: String] = ["name": name, "password": password, "host": , "pubnub": ]
+        let headers : [String: String]? = ["x-access-token": FBSDKAccessToken.currentAccessToken().tokenString]
+        
+        Alamofire.request(.POST, uri, parameters: parameters, headers:headers, encoding: .JSON)
+            .responseJSON {response in
+                print(response)
+        }
+        
+        
     }
 
     /*

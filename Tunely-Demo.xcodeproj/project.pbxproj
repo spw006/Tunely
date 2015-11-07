@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4BAAA1C7CB21601B35BCFEE1 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49A86EBA64DCFD350517698D /* Pods.framework */; };
+		6E0967C41BEBE8D0009D4491 /* Spotify.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E0967C31BEBE8D0009D4491 /* Spotify.framework */; settings = {ASSET_TAGS = (); }; };
+		6E0967C61BEBEE29009D4491 /* Song.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E0967C51BEBEE29009D4491 /* Song.swift */; settings = {ASSET_TAGS = (); }; };
 		6E908C2E1BD1B5C400CA2744 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E908C2B1BD1B5C400CA2744 /* FBSDKCoreKit.framework */; settings = {ASSET_TAGS = (); }; };
 		6E908C2F1BD1B5C400CA2744 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E908C2C1BD1B5C400CA2744 /* FBSDKLoginKit.framework */; settings = {ASSET_TAGS = (); }; };
 		6E908C301BD1B5C400CA2744 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E908C2D1BD1B5C400CA2744 /* FBSDKShareKit.framework */; settings = {ASSET_TAGS = (); }; };
@@ -24,6 +27,7 @@
 		94D157931BE86AFD0048BAF8 /* JoinViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 94D157911BE86AFD0048BAF8 /* JoinViewController.xib */; settings = {ASSET_TAGS = (); }; };
 		94D157961BE935C90048BAF8 /* StreamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D157941BE935C90048BAF8 /* StreamViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		94D157971BE935C90048BAF8 /* StreamViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 94D157951BE935C90048BAF8 /* StreamViewController.xib */; settings = {ASSET_TAGS = (); }; };
+		C32ADDAA616F35E8EDA39225 /* Pods_Tunely_Demo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F190DAFBC520A332AFAB41A8 /* Pods_Tunely_Demo.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,6 +41,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		49A86EBA64DCFD350517698D /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6E0967C31BEBE8D0009D4491 /* Spotify.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Spotify.framework; sourceTree = "<group>"; };
+		6E0967C51BEBEE29009D4491 /* Song.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Song.swift; sourceTree = "<group>"; };
 		6E908C2B1BD1B5C400CA2744 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		6E908C2C1BD1B5C400CA2744 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		6E908C2D1BD1B5C400CA2744 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKShareKit.framework; sourceTree = "<group>"; };
@@ -51,6 +58,7 @@
 		6EA1EEC11BD0B77D00E83778 /* Tunely_DemoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tunely_DemoTests.swift; sourceTree = "<group>"; };
 		6EA1EEC31BD0B77D00E83778 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6EA1EED31BD0B87700E83778 /* Tunely-Demo-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tunely-Demo-Bridging-Header.h"; sourceTree = "<group>"; };
+		764AEE57F408B1640D1B7705 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		94738CA01BD2FD4A00161C9D /* SideBarTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideBarTableViewController.swift; sourceTree = "<group>"; };
 		94738CA11BD2FD4A00161C9D /* SideBarTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SideBarTableViewController.xib; sourceTree = "<group>"; };
 		94D1578C1BE851E10048BAF8 /* HostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HostViewController.swift; sourceTree = "<group>"; };
@@ -59,6 +67,8 @@
 		94D157911BE86AFD0048BAF8 /* JoinViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JoinViewController.xib; sourceTree = "<group>"; };
 		94D157941BE935C90048BAF8 /* StreamViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamViewController.swift; sourceTree = "<group>"; };
 		94D157951BE935C90048BAF8 /* StreamViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StreamViewController.xib; sourceTree = "<group>"; };
+		C9BDBE6A354FB0D717D5A316 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		F190DAFBC520A332AFAB41A8 /* Pods_Tunely_Demo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Tunely_Demo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +79,9 @@
 				6E908C2F1BD1B5C400CA2744 /* FBSDKLoginKit.framework in Frameworks */,
 				6E908C2E1BD1B5C400CA2744 /* FBSDKCoreKit.framework in Frameworks */,
 				6E908C301BD1B5C400CA2744 /* FBSDKShareKit.framework in Frameworks */,
+				6E0967C41BEBE8D0009D4491 /* Spotify.framework in Frameworks */,
+				4BAAA1C7CB21601B35BCFEE1 /* Pods.framework in Frameworks */,
+				C32ADDAA616F35E8EDA39225 /* Pods_Tunely_Demo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -85,9 +98,12 @@
 		6E908C291BD1B58300CA2744 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6E0967C31BEBE8D0009D4491 /* Spotify.framework */,
 				6E908C2B1BD1B5C400CA2744 /* FBSDKCoreKit.framework */,
 				6E908C2C1BD1B5C400CA2744 /* FBSDKLoginKit.framework */,
 				6E908C2D1BD1B5C400CA2744 /* FBSDKShareKit.framework */,
+				49A86EBA64DCFD350517698D /* Pods.framework */,
+				F190DAFBC520A332AFAB41A8 /* Pods_Tunely_Demo.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -99,6 +115,7 @@
 				6EA1EEAB1BD0B77D00E83778 /* Tunely-Demo */,
 				6EA1EEC01BD0B77D00E83778 /* Tunely-DemoTests */,
 				6EA1EEAA1BD0B77D00E83778 /* Products */,
+				F1235EA8C9DBB1DAC2C53485 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -122,6 +139,7 @@
 				94738CA11BD2FD4A00161C9D /* SideBarTableViewController.xib */,
 				6EA1EEB01BD0B77D00E83778 /* Main.storyboard */,
 				94D157941BE935C90048BAF8 /* StreamViewController.swift */,
+				6E0967C51BEBEE29009D4491 /* Song.swift */,
 				94D157951BE935C90048BAF8 /* StreamViewController.xib */,
 				94D157901BE86AFD0048BAF8 /* JoinViewController.swift */,
 				94D157911BE86AFD0048BAF8 /* JoinViewController.xib */,
@@ -150,6 +168,15 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
+		F1235EA8C9DBB1DAC2C53485 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				764AEE57F408B1640D1B7705 /* Pods.debug.xcconfig */,
+				C9BDBE6A354FB0D717D5A316 /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -157,9 +184,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6EA1EEC61BD0B77D00E83778 /* Build configuration list for PBXNativeTarget "Tunely-Demo" */;
 			buildPhases = (
+				CA454FE957E987631EF62D60 /* Check Pods Manifest.lock */,
 				6EA1EEA51BD0B77D00E83778 /* Sources */,
 				6EA1EEA61BD0B77D00E83778 /* Frameworks */,
 				6EA1EEA71BD0B77D00E83778 /* Resources */,
+				5FEA25FFEFBAE2D58DEFEC63 /* Embed Pods Frameworks */,
+				268734422FE70DCBCCCB1D12 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -252,11 +282,60 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		268734422FE70DCBCCCB1D12 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Tunely-Demo/Pods-Tunely-Demo-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5FEA25FFEFBAE2D58DEFEC63 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Tunely-Demo/Pods-Tunely-Demo-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CA454FE957E987631EF62D60 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		6EA1EEA51BD0B77D00E83778 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6E0967C61BEBEE29009D4491 /* Song.swift in Sources */,
 				94D1578E1BE851E10048BAF8 /* HostViewController.swift in Sources */,
 				6EA1EEAF1BD0B77D00E83778 /* ViewController.swift in Sources */,
 				94D157961BE935C90048BAF8 /* StreamViewController.swift in Sources */,
@@ -389,6 +468,7 @@
 		};
 		6EA1EEC71BD0B77D00E83778 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 764AEE57F408B1640D1B7705 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -407,6 +487,7 @@
 		};
 		6EA1EEC81BD0B77D00E83778 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C9BDBE6A354FB0D717D5A316 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;

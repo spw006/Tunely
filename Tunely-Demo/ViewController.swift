@@ -10,6 +10,7 @@
 import UIKit
 import FBSDKLoginKit
 import FBSDKCoreKit
+import Alamofire
 
 class ViewController: UIViewController, FBSDKLoginButtonDelegate {
     
@@ -19,6 +20,7 @@ class ViewController: UIViewController, FBSDKLoginButtonDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        /*navigationController!.navigationBar.barTintColor = UIColor(red: 77.0/255.0, green: 182.0/255.0, blue: 172.0/255.0, alpha: 1.0) */
 
         if (FBSDKAccessToken.currentAccessToken() != nil)
         {
@@ -80,6 +82,7 @@ class ViewController: UIViewController, FBSDKLoginButtonDelegate {
                 print("fetched user: \(result)")
                 let userName : NSString = result.valueForKey("name") as! NSString
                 print("User Name is: \(userName)")
+                
                 let userEmail : NSString = result.valueForKey("email") as! NSString
                 print("User Email is: \(userEmail)")
                 
@@ -87,8 +90,20 @@ class ViewController: UIViewController, FBSDKLoginButtonDelegate {
                 let userFriends: NSDictionary = result.valueForKey("friends") as! NSDictionary
                 print("User Friends are: \(userFriends)")
                 
+                let userFBID: NSString = result.valueForKey("id") as! NSString
                 
+                let uri : String = "http://ec2-54-183-142-37.us-west-1.compute.amazonaws.com/api/users"
                 
+                let parameters : [String: AnyObject] = ["name": userName, "email": userEmail , "fbid": userFBID]
+                let headers : [String: String]? = ["x-access-token": FBSDKAccessToken.currentAccessToken().tokenString]
+                
+                Alamofire.request(.POST, uri, parameters: parameters, headers:headers, encoding: .JSON)
+                    .responseJSON {response in
+                        print(response)
+                }
+                
+                let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+                appDelegate.userFBID = userFBID
             }
         })
         

@@ -7,11 +7,41 @@
 //
 
 import UIKit
+import Alamofire
+import SwiftyJSON
 
-class StreamViewController: UIViewController {
 
+class StreamViewController: UIViewController, UISearchBarDelegate, UISearchDisplayDelegate {
+
+    @IBOutlet weak var tableView: UITableView!
+
+    
+    var searchActive : Bool = false
+    
+    var filtered:[String] = []
+    
+    var songs: [Song] = []
+    
+    func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
+        searchActive = true;
+    }
+    
+    func searchBarTextDidEndEditing(searchBar: UISearchBar) {
+        searchActive = true;
+    }
+    
+    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+        searchActive = false;
+    }
+    
+    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+        searchActive = true;
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        navigationController!.navigationBar.barTintColor = UIColor(red: 77.0/255.0, green: 182.0/255.0, blue: 172.0/255.0, alpha: 1.0)
 
         // Do any additional setup after loading the view.
     }
@@ -19,6 +49,14 @@ class StreamViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    @IBAction func revealSideBar(sender: AnyObject) {
+        
+        let sideBar:SideBarTableViewController = SideBarTableViewController(nibName: "SideBarTableViewController", bundle: nil)
+        sideBar.modalTransitionStyle = UIModalTransitionStyle.CoverVertical
+        self.presentViewController(sideBar, animated: true, completion: nil)
+        
     }
     
 

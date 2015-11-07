@@ -6,6 +6,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="StreamViewController" customModule="Tunely_Demo" customModuleProvider="target">
             <connections>
+                <outlet property="tableView" destination="RAu-IV-SEY" id="zcr-bh-u2N"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
