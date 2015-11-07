@@ -69,14 +69,14 @@ class HostViewController: UIViewController {
 
         // post request
         
-        let uri : String = "http://ec2-54-183-142-37.us-west-1.compute.amazonaws.com/api/streams"
+        /*let uri : String = "http://ec2-54-183-142-37.us-west-1.compute.amazonaws.com/api/streams"
         let parameters : [String: String] = ["name": name, "password": password, "host": , "pubnub": ]
         let headers : [String: String]? = ["x-access-token": FBSDKAccessToken.currentAccessToken().tokenString]
         
         Alamofire.request(.POST, uri, parameters: parameters, headers:headers, encoding: .JSON)
             .responseJSON {response in
                 print(response)
-        }
+        } */
         
         
     }

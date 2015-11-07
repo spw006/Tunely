@@ -100,10 +100,12 @@ class ViewController: UIViewController, FBSDKLoginButtonDelegate {
                 Alamofire.request(.POST, uri, parameters: parameters, headers:headers, encoding: .JSON)
                     .responseJSON {response in
                         print(response)
+                        
+                        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+                        appDelegate.userID = response.SUCCESS._id
+                        
                 }
-                
-                let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-                appDelegate.userFBID = userFBID
+
             }
         })
         
