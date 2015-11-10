@@ -7,6 +7,8 @@
 //
 
 import Alamofire
+import SwiftyJSON
+
 import UIKit
 
 class HostViewController: UIViewController {
@@ -27,16 +29,6 @@ class HostViewController: UIViewController {
         // initially hide the private stream options
         passwordPrompt.hidden = true
         passwordField.hidden = true
-
-//        // Do any additional setup after loading the view.
-//        let uri : String = "http://ec2-54-183-142-37.us-west-1.compute.amazonaws.com/api/streams/563918ef7579b04a6629f14b"
-//        let parameters : [String: String] = ["song": "new song"]
-//        let headers : [String: String]? = ["x-access-token": FBSDKAccessToken.currentAccessToken().tokenString]
-//        
-//        Alamofire.request(.PUT, uri, parameters: parameters, headers:headers, encoding: .JSON)
-//            .responseJSON {response in
-//                print(response)
-//        }
     }
     
     @IBAction func cancel() {
@@ -44,8 +36,52 @@ class HostViewController: UIViewController {
     }
     
     @IBAction func viewStream(sender: AnyObject) {
-        let streamView:StreamViewController = StreamViewController(nibName: "StreamViewController", bundle: nil)
-        self.presentViewController(streamView, animated: true, completion: nil)
+        
+        // Create a pubnub channel and subscribe to it
+        let channelName = defaults.stringForKey("userid")!
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        appDelegate.client?.subscribeToChannels([channelName], withPresence: true)
+        
+        // create a stream for the user
+        let uri : String = "http://ec2-54-183-142-37.us-west-1.compute.amazonaws.com/api/streams"
+        let parameters : [String: AnyObject] = [
+            "name": "New Stream",
+            "host": channelName,
+            "pubnub": channelName,
+            "password": 123 //check if there even is a password
+        ]
+        let headers : [String: String]? = ["x-access-token": FBSDKAccessToken.currentAccessToken().tokenString]
+        
+        Alamofire
+            .request(.POST, uri, parameters: parameters, headers:headers)
+            .responseJSON { json in
+                
+                let stream = JSON(data: json.data!)
+                
+                print(stream)
+                
+                let errors : Bool = (stream["errors"] != nil)
+                let duplicate : Bool = (stream["code"] == 11000)
+                
+                // Do not proceed if a user already has a stream created
+                if (duplicate) {
+                    print("User already has a stream")
+                    return;
+                }
+                
+                // Do not proceed if there was an error during the POST request
+                else if (errors) {
+                    print("Error POST stream")
+                    return;
+                }
+                    
+                // stream was created, proceed to the stream view
+                else {
+                    print("SUCCESSFUL POST stream")
+                    let streamView:StreamViewController = StreamViewController(nibName: "StreamViewController", bundle: nil)
+                    self.presentViewController(streamView, animated: true, completion: nil)
+                }
+        }
     }
     
     @IBAction func changeSlider() {
@@ -71,12 +107,6 @@ class HostViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func hostButtonPressed(sender: AnyObject) {
-        print("LOL")
-        let streamView:StreamViewController = StreamViewController(nibName: "StreamViewController", bundle: nil)
-        self.presentViewController(streamView, animated: true, completion: nil)
-    }
-
     /*
     // MARK: - Navigation
 
