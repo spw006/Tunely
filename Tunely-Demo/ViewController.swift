@@ -6,22 +6,23 @@
 //  Copyright © 2015 Tracy Nham. All rights reserved.
 //
 
+import Alamofire
+import SwiftyJSON
 
 import UIKit
 import FBSDKLoginKit
 import FBSDKCoreKit
 
+var userid: String = "hello"
+
 class ViewController: UIViewController, FBSDKLoginButtonDelegate {
     
     @IBOutlet weak var loginView : UIView!
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-
-        if (FBSDKAccessToken.currentAccessToken() != nil)
-        {
+        if (FBSDKAccessToken.currentAccessToken() != nil) {
             // User is already logged in, do work such as go to next view controller.
         }
         // Do any additional setup after loading the view, typically from a nib.
@@ -52,9 +53,7 @@ class ViewController: UIViewController, FBSDKLoginButtonDelegate {
         else {
             // If you ask for multiple permissions at once, you
             // should check if specific permissions missing
-            if result.grantedPermissions.contains("email")
-            {
-                // Do work
+            if result.grantedPermissions.contains("email") {
                 returnUserData()
             }
         }
@@ -68,39 +67,51 @@ class ViewController: UIViewController, FBSDKLoginButtonDelegate {
     func returnUserData()
     {
         let graphRequest : FBSDKGraphRequest = FBSDKGraphRequest(graphPath: "me", parameters: ["fields":"id,email,name,friends, picture.width(480).height(480)"])
+        
         graphRequest.startWithCompletionHandler({ (connection, result, error) -> Void in
             
-            if ((error) != nil)
-            {
+            if ((error) != nil) {
                 // Process error
                 print("Error: \(error)")
             }
-            else
-            {
-                print("fetched user: \(result)")
+            else {
                 let userName : NSString = result.valueForKey("name") as! NSString
-                print("User Name is: \(userName)")
                 let userEmail : NSString = result.valueForKey("email") as! NSString
-                print("User Email is: \(userEmail)")
+                //let userFriends: NSDictionary = result.valueForKey("friends") as! NSDictionary
+                let userFBID: String = result.valueForKey("id") as! String
                 
+                //print(userFriends);
                 
-                let userFriends: NSDictionary = result.valueForKey("friends") as! NSDictionary
-                print("User Friends are: \(userFriends)")
+                let uri : String = "http://ec2-54-183-142-37.us-west-1.compute.amazonaws.com/api/users"
+                let parameters : [String: AnyObject] = [
+                    "name": userName,
+                    "email": userEmail,
+                    "fbid": userFBID
+                ]
+                let headers : [String: String]? = ["x-access-token": FBSDKAccessToken.currentAccessToken().tokenString]
                 
-                
-                
+                Alamofire
+                    .request(.POST, uri, parameters: parameters, headers:headers)
+                    .responseJSON { json in
+                        
+                        let user = JSON(data: json.data!)
+                        
+                        // user is already created
+                        if (user["code"]) {
+                            let id = user["op"]["_id"].stringValue
+                            print("User already exists: " + id)
+                            userid = id;
+                        }
+                            
+                        // new user created
+                        else {
+                            let id = user["_id"].stringValue
+                            print("User created: " + id)
+                            userid = id;
+                        }
+                    }
             }
         })
-        
-//        let request = FBSDKGraphRequest(graphPath:"/me/friends", parameters: nil);
-//        
-//        request.startWithCompletionHandler { (connection : FBSDKGraphRequestConnection!, result : AnyObject!, error : NSError!) -> Void in
-//            if error == nil {
-//                print("Friends are : \(result)")
-//            } else {
-//                print("Error Getting Friends \(error)");
-//            }
-//        }
     }
     
     @IBAction func revealSideBar(sender: AnyObject) {
@@ -122,6 +133,8 @@ class ViewController: UIViewController, FBSDKLoginButtonDelegate {
     }
     
     override func viewDidAppear(animated: Bool) {
+        print(userid)
+        
         if let _ = FBSDKAccessToken.currentAccessToken()
         {
             // user is logged in

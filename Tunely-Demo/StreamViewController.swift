@@ -6,13 +6,15 @@
 //  Copyright © 2015 Tracy Nham. All rights reserved.
 //
 
+import Alamofire
 import UIKit
 
 class StreamViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        print("hello")
         // Do any additional setup after loading the view.
     }
 
