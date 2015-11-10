@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		149390F31BF27EC200F02132 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 149390F21BF27EC200F02132 /* AVFoundation.framework */; };
+		149390F51BF27ED000F02132 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 149390F41BF27ED000F02132 /* SystemConfiguration.framework */; };
 		21FCE77A92E181AB102F1D51 /* Pods_Tunely_Demo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBAC6CE0561895928CA53A5B /* Pods_Tunely_Demo.framework */; };
 		6E908C2E1BD1B5C400CA2744 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E908C2B1BD1B5C400CA2744 /* FBSDKCoreKit.framework */; };
 		6E908C2F1BD1B5C400CA2744 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E908C2C1BD1B5C400CA2744 /* FBSDKLoginKit.framework */; };
@@ -41,6 +43,8 @@
 /* Begin PBXFileReference section */
 		0979AB6C2E20C9EFC1A8FB07 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		0B6F901B2C7C0B4D2335DA3A /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		149390F21BF27EC200F02132 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		149390F41BF27ED000F02132 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		6E908C2B1BD1B5C400CA2744 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		6E908C2C1BD1B5C400CA2744 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		6E908C2D1BD1B5C400CA2744 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKShareKit.framework; sourceTree = "<group>"; };
@@ -72,6 +76,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				149390F51BF27ED000F02132 /* SystemConfiguration.framework in Frameworks */,
+				149390F31BF27EC200F02132 /* AVFoundation.framework in Frameworks */,
 				6E908C2F1BD1B5C400CA2744 /* FBSDKLoginKit.framework in Frameworks */,
 				6E908C2E1BD1B5C400CA2744 /* FBSDKCoreKit.framework in Frameworks */,
 				6E908C301BD1B5C400CA2744 /* FBSDKShareKit.framework in Frameworks */,
@@ -102,6 +108,8 @@
 		6E908C291BD1B58300CA2744 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				149390F41BF27ED000F02132 /* SystemConfiguration.framework */,
+				149390F21BF27EC200F02132 /* AVFoundation.framework */,
 				6E908C2B1BD1B5C400CA2744 /* FBSDKCoreKit.framework */,
 				6E908C2C1BD1B5C400CA2744 /* FBSDKLoginKit.framework */,
 				6E908C2D1BD1B5C400CA2744 /* FBSDKShareKit.framework */,
@@ -470,6 +478,16 @@
 				);
 				INFOPLIST_FILE = "Tunely-Demo/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-framework",
+					"\"Alamofire\"",
+					"-framework",
+					"\"CocoaLumberjack\"",
+					"-framework",
+					"\"PubNub\"",
+					"-ObjC",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.example.Tunely-Demo";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Tunely-Demo/Tunely-Demo-Bridging-Header.h";
@@ -489,6 +507,16 @@
 				);
 				INFOPLIST_FILE = "Tunely-Demo/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-framework",
+					"\"Alamofire\"",
+					"-framework",
+					"\"CocoaLumberjack\"",
+					"-framework",
+					"\"PubNub\"",
+					"-ObjC",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.example.Tunely-Demo";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Tunely-Demo/Tunely-Demo-Bridging-Header.h";

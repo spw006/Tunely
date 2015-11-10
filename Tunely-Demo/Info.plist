@@ -21,6 +21,18 @@
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>cse190.Tunely-Demo.spotify-auth</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>Tunely-Demo</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>fb769971346462326</string>
