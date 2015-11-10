@@ -12,7 +12,7 @@ import FBSDKLoginKit
 class SideBarTableViewController: UIViewController {
     
     @IBOutlet weak var tableView : UITableView!
-    var sideBarArray : [ String ] = [ "Home", "Logout" ]
+    var sideBarArray : [ String ] = [ "Home", "Logout", "End Stream" ]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,6 +25,8 @@ class SideBarTableViewController: UIViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
+    
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -57,7 +59,9 @@ class SideBarTableViewController: UIViewController {
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         if sideBarArray[indexPath.row] == "Home" {
-            dismissViewControllerAnimated(true, completion: nil)
+            let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let vc : UIViewController = storyBoard.instantiateViewControllerWithIdentifier("mainIdent")
+            self.presentViewController(vc, animated: false, completion: nil)
         }
         
         if sideBarArray[indexPath.row] == "Search" {
@@ -67,6 +71,8 @@ class SideBarTableViewController: UIViewController {
         
         if sideBarArray[indexPath.row] == "Logout" {
             FBSDKLoginManager().logOut()
+            let view:ViewController = ViewController(nibName: "ViewController", bundle: nil)
+            self.presentViewController(view, animated: true, completion: nil)
             dismissViewControllerAnimated(true, completion: nil)
         }
         

@@ -43,6 +43,11 @@ class HostViewController: UIViewController {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
+    @IBAction func viewStream(sender: AnyObject) {
+        let streamView:StreamViewController = StreamViewController(nibName: "StreamViewController", bundle: nil)
+        self.presentViewController(streamView, animated: true, completion: nil)
+    }
+    
     @IBAction func changeSlider() {
         if isPrivateStream.on == false {
             
