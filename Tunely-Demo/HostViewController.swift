@@ -66,7 +66,8 @@ class HostViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func host(sender: AnyObject) {
+    @IBAction func hostButtonPressed(sender: AnyObject) {
+        print("LOL")
         let streamView:StreamViewController = StreamViewController(nibName: "StreamViewController", bundle: nil)
         self.presentViewController(streamView, animated: true, completion: nil)
     }
