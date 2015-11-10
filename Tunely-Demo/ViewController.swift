@@ -13,7 +13,8 @@ import UIKit
 import FBSDKLoginKit
 import FBSDKCoreKit
 
-var userid: String = "hello"
+let defaults = NSUserDefaults.standardUserDefaults()
+
 
 class ViewController: UIViewController, FBSDKLoginButtonDelegate {
     
@@ -100,14 +101,14 @@ class ViewController: UIViewController, FBSDKLoginButtonDelegate {
                         if (user["code"]) {
                             let id = user["op"]["_id"].stringValue
                             print("User already exists: " + id)
-                            userid = id;
+                            defaults.setObject(id, forKey: "userid")
                         }
                             
                         // new user created
                         else {
                             let id = user["_id"].stringValue
                             print("User created: " + id)
-                            userid = id;
+                            defaults.setObject(id, forKey: "userid")
                         }
                     }
             }
@@ -133,7 +134,7 @@ class ViewController: UIViewController, FBSDKLoginButtonDelegate {
     }
     
     override func viewDidAppear(animated: Bool) {
-        print(userid)
+        print(defaults.stringForKey("userid")!)
         
         if let _ = FBSDKAccessToken.currentAccessToken()
         {
