@@ -15,7 +15,6 @@ class ViewController: UIViewController, FBSDKLoginButtonDelegate {
     
     @IBOutlet weak var loginView : UIView!
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
