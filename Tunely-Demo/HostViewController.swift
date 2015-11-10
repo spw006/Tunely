@@ -38,7 +38,8 @@ class HostViewController: UIViewController {
     @IBAction func viewStream(sender: AnyObject) {
         
         // Create a pubnub channel and subscribe to it
-        let channelName = defaults.stringForKey("userid")!
+        let userid = defaults.stringForKey("userid")!
+        let channelName = userid + "stream"
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         appDelegate.client?.subscribeToChannels([channelName], withPresence: true)
         
@@ -46,7 +47,7 @@ class HostViewController: UIViewController {
         let uri : String = "http://ec2-54-183-142-37.us-west-1.compute.amazonaws.com/api/streams"
         let parameters : [String: AnyObject] = [
             "name": "New Stream",
-            "host": channelName,
+            "host": userid,
             "pubnub": channelName,
             "password": 123 //check if there even is a password
         ]
@@ -63,6 +64,12 @@ class HostViewController: UIViewController {
                 let errors : Bool = (stream["errors"] != nil)
                 let duplicate : Bool = (stream["code"] == 11000)
                 
+                // Do not proceed if server is not running
+                if (stream == nil) {
+                    print("server is not running")
+                    return
+                }
+                
                 // Do not proceed if a user already has a stream created
                 if (duplicate) {
                     print("User already has a stream")
@@ -78,6 +85,8 @@ class HostViewController: UIViewController {
                 // stream was created, proceed to the stream view
                 else {
                     print("SUCCESSFUL POST stream")
+                    
+                    defaults.setObject(channelName, forKey: "stream")
                     let streamView:StreamViewController = StreamViewController(nibName: "StreamViewController", bundle: nil)
                     self.presentViewController(streamView, animated: true, completion: nil)
                 }
