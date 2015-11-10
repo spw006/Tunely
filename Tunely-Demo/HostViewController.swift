@@ -6,6 +6,7 @@
 //  Copyright © 2015 Tracy Nham. All rights reserved.
 //
 
+import Alamofire
 import UIKit
 
 class HostViewController: UIViewController {
@@ -21,11 +22,21 @@ class HostViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        print("userid: " + defaults.stringForKey("userid")!)
+        
         // initially hide the private stream options
         passwordPrompt.hidden = true
         passwordField.hidden = true
 
-        // Do any additional setup after loading the view.
+//        // Do any additional setup after loading the view.
+//        let uri : String = "http://ec2-54-183-142-37.us-west-1.compute.amazonaws.com/api/streams/563918ef7579b04a6629f14b"
+//        let parameters : [String: String] = ["song": "new song"]
+//        let headers : [String: String]? = ["x-access-token": FBSDKAccessToken.currentAccessToken().tokenString]
+//        
+//        Alamofire.request(.PUT, uri, parameters: parameters, headers:headers, encoding: .JSON)
+//            .responseJSON {response in
+//                print(response)
+//        }
     }
     
     @IBAction func cancel() {
@@ -60,7 +71,8 @@ class HostViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func host(sender: AnyObject) {
+    @IBAction func hostButtonPressed(sender: AnyObject) {
+        print("LOL")
         let streamView:StreamViewController = StreamViewController(nibName: "StreamViewController", bundle: nil)
         self.presentViewController(streamView, animated: true, completion: nil)
     }

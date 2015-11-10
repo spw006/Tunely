@@ -6,6 +6,7 @@
 //  Copyright © 2015 Tracy Nham. All rights reserved.
 //
 
+import Alamofire
 import UIKit
 
 class StreamViewController: UIViewController {
