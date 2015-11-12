@@ -94,7 +94,6 @@ class JoinViewController: UIViewController {
         }
         
         if streamList[indexPath.row] == "Search" {
-            
         }
         
         
