@@ -24,7 +24,7 @@ class HostViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print("userid: " + defaults.stringForKey("userid")!)
+        //print("userid: " + defaults.stringForKey("userid")!)
         
         // initially hide the private stream options
         passwordPrompt.hidden = true

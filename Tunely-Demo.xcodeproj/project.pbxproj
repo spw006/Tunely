@@ -17,6 +17,7 @@
 		6EA1EEB41BD0B77D00E83778 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6EA1EEB31BD0B77D00E83778 /* Assets.xcassets */; };
 		6EA1EEB71BD0B77D00E83778 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6EA1EEB51BD0B77D00E83778 /* LaunchScreen.storyboard */; };
 		6EA1EEC21BD0B77D00E83778 /* Tunely_DemoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EA1EEC11BD0B77D00E83778 /* Tunely_DemoTests.swift */; };
+		6EFEC0971BF29F8A00CA4C0E /* OurPubNub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EFEC0961BF29F8A00CA4C0E /* OurPubNub.swift */; settings = {ASSET_TAGS = (); }; };
 		94738CA21BD2FD4A00161C9D /* SideBarTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94738CA01BD2FD4A00161C9D /* SideBarTableViewController.swift */; };
 		94738CA31BD2FD4A00161C9D /* SideBarTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 94738CA11BD2FD4A00161C9D /* SideBarTableViewController.xib */; };
 		94D1578E1BE851E10048BAF8 /* HostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D1578C1BE851E10048BAF8 /* HostViewController.swift */; };
@@ -55,6 +56,7 @@
 		6EA1EEC11BD0B77D00E83778 /* Tunely_DemoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tunely_DemoTests.swift; sourceTree = "<group>"; };
 		6EA1EEC31BD0B77D00E83778 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6EA1EED31BD0B87700E83778 /* Tunely-Demo-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tunely-Demo-Bridging-Header.h"; sourceTree = "<group>"; };
+		6EFEC0961BF29F8A00CA4C0E /* OurPubNub.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OurPubNub.swift; sourceTree = "<group>"; };
 		94738CA01BD2FD4A00161C9D /* SideBarTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideBarTableViewController.swift; sourceTree = "<group>"; };
 		94738CA11BD2FD4A00161C9D /* SideBarTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SideBarTableViewController.xib; sourceTree = "<group>"; };
 		94D1578C1BE851E10048BAF8 /* HostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HostViewController.swift; sourceTree = "<group>"; };
@@ -141,6 +143,7 @@
 				94738CA11BD2FD4A00161C9D /* SideBarTableViewController.xib */,
 				94D1578C1BE851E10048BAF8 /* HostViewController.swift */,
 				94D1578D1BE851E10048BAF8 /* HostViewController.xib */,
+				6EFEC0961BF29F8A00CA4C0E /* OurPubNub.swift */,
 				94D157941BE935C90048BAF8 /* StreamViewController.swift */,
 				94D157951BE935C90048BAF8 /* StreamViewController.xib */,
 				94D157901BE86AFD0048BAF8 /* JoinViewController.swift */,
@@ -334,6 +337,7 @@
 				94738CA21BD2FD4A00161C9D /* SideBarTableViewController.swift in Sources */,
 				94D157921BE86AFD0048BAF8 /* JoinViewController.swift in Sources */,
 				6EA1EEAD1BD0B77D00E83778 /* AppDelegate.swift in Sources */,
+				6EFEC0971BF29F8A00CA4C0E /* OurPubNub.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
