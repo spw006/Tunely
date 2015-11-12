@@ -39,20 +39,36 @@ class HostViewController: UIViewController {
         
         // Create a pubnub channel and subscribe to it
         let userid = defaults.stringForKey("userid")!
-        let channelName = userid + "stream"
+        let channelName = userid + "channel"
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        appDelegate.client?.subscribeToChannels([channelName], withPresence: true)
         
-        // create a stream for the user
         let uri : String = "http://ec2-54-183-142-37.us-west-1.compute.amazonaws.com/api/streams"
-        let parameters : [String: AnyObject] = [
-            "name": "New Stream",
-            "host": userid,
-            "pubnub": channelName,
-            "password": 123 //check if there even is a password
-        ]
-        let headers : [String: String]? = ["x-access-token": FBSDKAccessToken.currentAccessToken().tokenString]
         
+        
+        var parameters: [String: AnyObject]
+        
+        if (passwordField.text == nil) {
+            parameters = [
+                "name": "New Stream",
+                "host": userid,
+                "pubnub": channelName
+            ]
+        }
+        
+        else {
+            parameters = [
+                "name": "New Stream",
+                "host": userid,
+                "pubnub": channelName,
+                "password": passwordField.text!
+            ]
+        }
+        
+        let headers : [String: String] = [
+            "x-access-token": FBSDKAccessToken.currentAccessToken().tokenString
+        ]
+        
+        // server POST request
         Alamofire
             .request(.POST, uri, parameters: parameters, headers:headers)
             .responseJSON { json in
@@ -64,32 +80,33 @@ class HostViewController: UIViewController {
                 let errors : Bool = (stream["errors"] != nil)
                 let duplicate : Bool = (stream["code"] == 11000)
                 
-                // Do not proceed if server is not running
+                // Do not proceed if server did not respond
                 if (stream == nil) {
-                    print("server is not running")
+                    print("No response from server.")
                     return
                 }
                 
                 // Do not proceed if a user already has a stream created
                 if (duplicate) {
-                    print("User already has a stream")
+                    print("User already has a stream.")
                     return;
                 }
                 
                 // Do not proceed if there was an error during the POST request
                 else if (errors) {
-                    print("Error POST stream")
+                    print("Error POST stream.")
                     return;
                 }
-                    
-                // stream was created, proceed to the stream view
-                else {
-                    print("SUCCESSFUL POST stream")
-                    
-                    defaults.setObject(channelName, forKey: "stream")
-                    let streamView:StreamViewController = StreamViewController(nibName: "StreamViewController", bundle: nil)
-                    self.presentViewController(streamView, animated: true, completion: nil)
-                }
+                
+                print("SUCCESSFUL POST stream to server, creating channel...")
+                
+                // subscribe the host to the channel
+                appDelegate.client?.subscribeToChannels([channelName], withPresence: true)
+                defaults.setObject(channelName, forKey: "channel")
+                
+                // go to stream view
+                let streamView:StreamViewController = StreamViewController(nibName: "StreamViewController", bundle: nil)
+                self.presentViewController(streamView, animated: true, completion: nil)
         }
     }
     
