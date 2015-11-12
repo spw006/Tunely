@@ -24,8 +24,6 @@ class HostViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //print("userid: " + defaults.stringForKey("userid")!)
-        
         // initially hide the private stream options
         passwordPrompt.hidden = true
         passwordField.hidden = true
@@ -91,6 +89,10 @@ class HostViewController: UIViewController {
                 }
                 
                 print("SUCCESSFUL POST stream to server, creating channel...")
+                
+                let streamID = stream["_id"].stringValue
+                print(streamID)
+                defaults.setObject(streamID, forKey: "hostedStream")
                 
                 // subscribe the host to the channel
                 appDelegate.client?.subscribeToChannels([channelName], withPresence: true)
