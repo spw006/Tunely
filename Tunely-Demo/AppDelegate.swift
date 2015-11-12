@@ -130,7 +130,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
             // UI / internal notifications, etc
             
             // Select last object from list of channels and send message to it.
-            let targetChannel = client.channels().last as! String
+        /*    let targetChannel = client.channels().last as! String
             client.publish("Hello from the PubNub Swift SDK", toChannel: targetChannel,
                 compressed: false, withCompletion: { (status) -> Void in
                     
@@ -148,9 +148,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
                         // Request can be resent using: status.retry()
                     }
             })
-        }
-        else if status.category == .PNReconnectedCategory {
+        } */
             
+        let targetChannel = client.channels().last as! String
+        client.publish("Hello from the PubNub Swift SDK", toChannel: targetChannel,
+            compressed: false, withCompletion: { (status) -> Void in
+                
+                if !status.error {
+                    
+                    // Message successfully published to specified channel.
+                }
+                else{
+                    
+                    // Handle message publish error. Check 'category' property
+                    // to find out possible reason because of which request did fail.
+                    // Review 'errorData' property (which has PNErrorData data type) of status
+                    // object to get additional information about issue.
+                    //
+                    // Request can be resent using: status.retry()
+                }
+            })
+        }
+    
+        else if status.category == .PNReconnectedCategory {
+    
             // Happens as part of our regular operation. This event happens when
             // radio / connectivity is lost, then regained.
         }

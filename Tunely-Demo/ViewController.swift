@@ -81,8 +81,10 @@ class ViewController: UIViewController, FBSDKLoginButtonDelegate {
                 let userEmail : NSString = result.valueForKey("email") as! NSString
                 //let userFriends: NSDictionary = result.valueForKey("friends") as! NSDictionary
                 let userFBID: String = result.valueForKey("id") as! String
+                let picURL: String = result.valueForKey("picture") as! String
                 
                 //print(userFriends);
+                
                 
                 let uri : String = "http://ec2-54-183-142-37.us-west-1.compute.amazonaws.com/api/users"
                 let parameters : [String: AnyObject] = [
@@ -118,6 +120,16 @@ class ViewController: UIViewController, FBSDKLoginButtonDelegate {
                             defaults.setObject(username, forKey: "username")
                         }
                     }
+            
+            
+                // store user picture
+                let url : NSURL = NSURL(fileURLWithPath: picURL)
+                let data : NSData = NSData(contentsOfURL: url)!
+
+                let picture: UIImageView = UIImageView(image: UIImage(data: data)!)
+                
+                defaults.setObject(picture, forKey: "picture")
+                
             }
         })
     }
