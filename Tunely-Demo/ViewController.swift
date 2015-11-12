@@ -103,6 +103,9 @@ class ViewController: UIViewController, FBSDKLoginButtonDelegate {
                             let id = user["op"]["_id"].stringValue
                             print("User already exists: " + id)
                             defaults.setObject(id, forKey: "userid")
+                            
+                            let username = user["op"]["name"].stringValue
+                            defaults.setObject(username, forKey: "username")
                         }
                             
                         // new user created
@@ -110,6 +113,9 @@ class ViewController: UIViewController, FBSDKLoginButtonDelegate {
                             let id = user["_id"].stringValue
                             print("User created: " + id)
                             defaults.setObject(id, forKey: "userid")
+                            
+                            let username = user["name"].stringValue
+                            defaults.setObject(username, forKey: "username")
                         }
                     }
             }

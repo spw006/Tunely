@@ -39,29 +39,21 @@ class HostViewController: UIViewController {
         
         // Create a pubnub channel and subscribe to it
         let userid = defaults.stringForKey("userid")!
+        let username = defaults.stringForKey("username")!
         let channelName = userid + "channel"
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         
         let uri : String = "http://ec2-54-183-142-37.us-west-1.compute.amazonaws.com/api/streams"
         
         
-        var parameters: [String: AnyObject]
+        var parameters: [String: AnyObject] = [
+            "name": username + "'s Stream",
+            "host": userid,
+            "pubnub": channelName
+        ]
         
-        if (passwordField.text == nil) {
-            parameters = [
-                "name": "New Stream",
-                "host": userid,
-                "pubnub": channelName
-            ]
-        }
-        
-        else {
-            parameters = [
-                "name": "New Stream",
-                "host": userid,
-                "pubnub": channelName,
-                "password": passwordField.text!
-            ]
+        if (passwordField.text != nil) {
+            parameters["password"] = passwordField.text
         }
         
         let headers : [String: String] = [
