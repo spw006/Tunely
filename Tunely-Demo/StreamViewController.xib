@@ -6,6 +6,10 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="StreamViewController" customModule="Tunely_Demo" customModuleProvider="target">
             <connections>
+                <outlet property="Back" destination="laV-3r-NiN" id="7eF-Ah-ef0"/>
+                <outlet property="Next" destination="HL9-4G-UmE" id="pao-N1-a0i"/>
+                <outlet property="PlayPause" destination="K7M-BC-Ghx" id="AjW-hv-Q9b"/>
+                <outlet property="SearchButton" destination="Isc-zd-uol" id="vJk-sn-7hM"/>
                 <outlet property="titleLabel" destination="m6b-bM-8MP" id="kZJ-Vs-Zgr"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -38,11 +42,6 @@
                         <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                     </collectionViewFlowLayout>
                 </collectionView>
-                <searchBar contentMode="redraw" fixedFrame="YES" placeholder="Search a song" translatesAutoresizingMaskIntoConstraints="NO" id="vIx-U0-WBr">
-                    <rect key="frame" x="0.0" y="124" width="375" height="44"/>
-                    <animations/>
-                    <textInputTraits key="textInputTraits"/>
-                </searchBar>
                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KQY-fO-6FM">
                     <rect key="frame" x="8" y="21" width="69" height="31"/>
                     <animations/>
@@ -72,14 +71,28 @@
                         <barButtonItem width="42" style="plain" systemItem="fixedSpace" id="sZV-d1-GIv"/>
                         <barButtonItem systemItem="play" id="K7M-BC-Ghx">
                             <color key="tintColor" red="0.24313725489999999" green="0.72549019609999998" blue="0.5568627451" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="PlayPause:" destination="-1" id="dr0-HO-vKe"/>
+                            </connections>
                         </barButtonItem>
                         <barButtonItem width="42" style="plain" systemItem="fixedSpace" id="sJ0-ex-qmg"/>
                         <barButtonItem systemItem="fastForward" id="HL9-4G-UmE">
                             <color key="tintColor" red="0.24313725489999999" green="0.72549019609999998" blue="0.5568627451" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="SkipForwardSong:" destination="-1" id="Mr4-4s-BgX"/>
+                            </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="z65-Zy-ejg"/>
                     </items>
                 </toolbar>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Isc-zd-uol">
+                    <rect key="frame" x="163" y="130" width="48" height="30"/>
+                    <animations/>
+                    <state key="normal" title="Search"/>
+                    <connections>
+                        <action selector="searchSongs:" destination="-1" eventType="touchUpInside" id="afq-ZB-Ukj"/>
+                    </connections>
+                </button>
             </subviews>
             <animations/>
             <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>

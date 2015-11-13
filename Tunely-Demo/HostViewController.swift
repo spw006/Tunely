@@ -9,15 +9,29 @@
 import Alamofire
 import UIKit
 
+var SpotifyLoginFlag = false;
+
+
 class HostViewController: UIViewController {
     
+    
+    var session:SPTSession!
+
     // Stream object
     var newStream : NSMutableDictionary = [ "name" : "", "password" : "" ]
     
+    //Spotify
+    let kClientID = "bc9df159847e473bac13ac944653af50";
+    let kCallBackURL = "Tunely-Demo://callback"
+
     // UI elements
     @IBOutlet weak var isPrivateStream : UISwitch!
     @IBOutlet weak var passwordField : UITextField!
     @IBOutlet weak var passwordPrompt : UILabel!
+    
+
+    @IBOutlet weak var loginButton: UIButton!
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,6 +51,52 @@ class HostViewController: UIViewController {
 //            .responseJSON {response in
 //                print(response)
 //        }
+        
+        
+        
+        loginButton.hidden = true;
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "UpdateAfterFirstLogin", name: "loginSuccessful", object: nil)
+        let userDefaults = NSUserDefaults.standardUserDefaults()
+        print("viewdidload")
+        if let sessionObj:AnyObject = userDefaults.objectForKey("SpotifySession") {
+            //session available
+            print("session available");
+            let sessionDataObj = sessionObj as! NSData
+            let session = NSKeyedUnarchiver.unarchiveObjectWithData(sessionDataObj) as! SPTSession
+            if !session.isValid() {
+                SPTAuth.defaultInstance().renewSession(session, callback: { (error:NSError!, renewedSession: SPTSession!) ->
+                    Void in
+                    if error == nil {
+                        let sessionData = NSKeyedArchiver.archivedDataWithRootObject(session)
+                        userDefaults.setObject(sessionData, forKey: "SpotifySession")
+                        userDefaults.synchronize()
+                        
+                        self.session = renewedSession
+                        
+                        //self.playUsingSession(renewedSession)
+                        
+                    }
+                    else {
+                        print("error refresshing session")
+                    }
+                })
+                
+                
+            }else {
+                print("sessionValid")
+                //playUsingSession(session)
+            }
+            
+        } else {
+            print("session not available");
+            
+            loginButton.hidden = false;
+        }
+        
+        
+        
+        
+        
     }
     
     @IBAction func cancel() {
@@ -76,6 +136,56 @@ class HostViewController: UIViewController {
         let streamView:StreamViewController = StreamViewController(nibName: "StreamViewController", bundle: nil)
         self.presentViewController(streamView, animated: true, completion: nil)
     }
+    
+    
+    
+    
+    
+    
+    
+    @IBAction func loginWithSpotify(sender: AnyObject) {
+        print("buttonclicked");
+        SpotifyLoginFlag = true;
+        let auth = SPTAuth.defaultInstance()
+        auth.clientID = kClientID;
+        auth.redirectURL = NSURL(string: kCallBackURL);
+        auth.requestedScopes = [SPTAuthStreamingScope];
+        let loginURL : NSURL = auth.loginURL;
+        // let loginURL = SPTAuth.loginURLForClientId(kClientID, withRedirectURL: NSURL(string: kCallBackURL), scopes: [SPTAuthStreamingScope], responseType: "code")
+        
+        let seconds = 0.5
+        let delay = seconds * Double(NSEC_PER_MSEC)
+        let dispatchTime = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
+        
+        dispatch_after(dispatchTime, dispatch_get_main_queue(), {
+            print(UIApplication.sharedApplication().openURL(loginURL))
+        })
+        
+        
+        
+        
+    }
+    
+    func UpdateAfterFirstLogin() {
+        loginButton.hidden = true;
+        
+        let userDefaults = NSUserDefaults.standardUserDefaults()
+        
+        if let sessionObj:AnyObject = userDefaults.objectForKey("SpotifySession") {
+            let sessionDataObj = sessionObj as! NSData
+            let firstTimeSession = NSKeyedUnarchiver.unarchiveObjectWithData(sessionDataObj) as! SPTSession
+            
+            //playUsingSession(firstTimeSession)
+            
+        }
+        
+        
+    }
+    
+    
+    
+    
+    
 
     /*
     // MARK: - Navigation

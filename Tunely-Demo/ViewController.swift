@@ -134,7 +134,7 @@ class ViewController: UIViewController, FBSDKLoginButtonDelegate {
     }
     
     override func viewDidAppear(animated: Bool) {
-        print(defaults.stringForKey("userid")!)
+        //print(defaults.stringForKey("userid")!)
         
         if let _ = FBSDKAccessToken.currentAccessToken()
         {

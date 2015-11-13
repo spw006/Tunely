@@ -7,6 +7,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HostViewController" customModule="Tunely_Demo" customModuleProvider="target">
             <connections>
                 <outlet property="isPrivateStream" destination="yyY-NP-H4L" id="wQ2-2C-8lW"/>
+                <outlet property="loginButton" destination="FBE-Dy-Xf1" id="qfh-l6-qWc"/>
                 <outlet property="passwordField" destination="jGG-OG-Phj" id="tye-Vi-VtG"/>
                 <outlet property="passwordPrompt" destination="2Sl-Qg-VST" id="hZ1-Qa-9eu"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -72,6 +73,14 @@
                     </state>
                     <connections>
                         <action selector="cancel" destination="-1" eventType="touchUpInside" id="8af-vn-9pM"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FBE-Dy-Xf1">
+                    <rect key="frame" x="168" y="453" width="38" height="30"/>
+                    <animations/>
+                    <state key="normal" title="Login"/>
+                    <connections>
+                        <action selector="loginWithSpotify:" destination="-1" eventType="touchUpInside" id="tmN-gd-nG5"/>
                     </connections>
                 </button>
             </subviews>

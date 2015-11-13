@@ -15,6 +15,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
     var window: UIWindow?
     var client: PubNub?
     
+    let kClientID = "bc9df159847e473bac13ac944653af50";
+    let kCallBackURL = "Tunely-Demo://callback"
+    
     // For demo purposes the initialization is done in the init function so that
     // the PubNub client is instantiated before it is used.
     override init() {
@@ -29,16 +32,47 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
     }
     
 
+    
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+    
+
+        
+        
         
         self.client?.subscribeToChannels(["my_channel"], withPresence: true)
+        
 
         
         return FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
     }
     
     func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
+        
+        //
+        if(SpotifyLoginFlag == true) {
+        if SPTAuth.defaultInstance().canHandleURL(NSURL(string:kCallBackURL)) {
+            SPTAuth.defaultInstance().handleAuthCallbackWithTriggeredAuthURL(url, callback: {(error: NSError!, session: SPTSession!) -> Void in
+                if error != nil {
+                    print(error)
+                    print("Authentication error")
+                    return
+                }
+                let userDefaults = NSUserDefaults.standardUserDefaults()
+                let sessionData = NSKeyedArchiver.archivedDataWithRootObject(session)
+                userDefaults.setObject(sessionData, forKey: "SpotifySession")
+                userDefaults.synchronize();
+                
+                NSNotificationCenter.defaultCenter().postNotificationName("loginSuccessful", object: nil)
+                print("Authentication successful")
+            })
+            
+            }
+            return true;
+        }
+        //
+        
+        
         return FBSDKApplicationDelegate.sharedInstance().application(application, openURL: url, sourceApplication: sourceApplication, annotation: annotation)
     }
 
