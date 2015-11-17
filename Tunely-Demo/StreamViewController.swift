@@ -16,6 +16,7 @@ class StreamViewController: UIViewController, PNObjectEventListener {
     @IBOutlet weak var listenersView: UICollectionView!
     
     
+    var listenersPic : [String] = []
     var listeners : [String] = []
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     var client: PubNub?
@@ -25,15 +26,13 @@ class StreamViewController: UIViewController, PNObjectEventListener {
         
         titleLabel?.text = "My Stream"
         
-        //self.listenersView.registerClass(CollectionViewCell.self, forCellWithReuseIdentifier: "reuseIdentifier")
-        
         
         let nib = UINib(nibName: "CollectionViewCell", bundle: nil)
         
         self.listenersView.registerNib(nib, forCellWithReuseIdentifier: "reuseIdentifier")
+        
         client = appDelegate.client!
         client?.addListener(self)
-
 
         // Do any additional setup after loading the view.
     }
@@ -73,7 +72,7 @@ class StreamViewController: UIViewController, PNObjectEventListener {
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // Return the number of items in the section
-        return listeners.count
+        return listenersPic.count
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
@@ -82,7 +81,7 @@ class StreamViewController: UIViewController, PNObjectEventListener {
         
         //let pic_url = "http://www.joomlaworks.net/images/demos/galleries/abstract/7.jpg"
         
-        let url : NSURL = NSURL(string : listeners[indexPath.row])!
+        let url : NSURL = NSURL(string : listenersPic[indexPath.row])!
         
         print(url)
         
@@ -112,10 +111,12 @@ class StreamViewController: UIViewController, PNObjectEventListener {
         }
         
         if let obj = message.data.message["pic"]{
-            self.listeners.append(obj["url"] as! String)
-            print("heeyeyeyeyye")
-            print(listeners)
-            self.listenersView.reloadData()
+            if !self.listeners.contains(message.uuid) {
+                print("heyeyeyeyey")
+                self.listenersPic.append(obj["url"] as! String)
+                self.listeners.append(message.uuid)
+                self.listenersView.reloadData()
+            }
         }
         else {
             print("nooo")
@@ -143,6 +144,34 @@ class StreamViewController: UIViewController, PNObjectEventListener {
         }
         
         if event.data.presenceEvent != "state-change" {
+            
+            let targetChannel = client.channels().last as! String
+            
+            let uuid : String = (self.client?.uuid())!
+            
+            
+            
+            let picObject : [String : [String : String]] = ["pic" : ["url" : defaults.stringForKey("userPicURL")! , "uuid" : uuid]]
+            
+            
+            client.publish(picObject, toChannel: targetChannel,
+                compressed: false, withCompletion: { (status) -> Void in
+                    
+                    if !status.error {
+                        
+                        // Message successfully published to specified channel.
+                    }
+                    else{
+                        
+                        // Handle message publish error. Check 'category' property
+                        // to find out possible reason because of which request did fail.
+                        // Review 'errorData' property (which has PNErrorData data type) of status
+                        // object to get additional information about issue.
+                        //
+                        // Request can be resent using: status.retry()
+                    }
+            })
+
             
             print("\(event.data.presence.uuid) \"\(event.data.presenceEvent)'ed\"\n" +
                 "at: \(event.data.presence.timetoken) " +

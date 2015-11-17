@@ -21,8 +21,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
     // the PubNub client is instantiated before it is used.
     override init() {
         
-        let configuration = PNConfiguration(publishKey: "demo", subscribeKey: "demo")
-        configuration.uuid = "7878"
+       // let configuration = PNConfiguration(publishKey: "demo", subscribeKey: "demo")
+       // configuration.uuid = "7878"
         
         // Instantiate PubNub client
         //client = OurPubNub.clientWithConfiguration(configuration)

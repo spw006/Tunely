@@ -25,6 +25,12 @@ class ViewController: UIViewController, FBSDKLoginButtonDelegate {
         super.viewDidLoad()
         
         if (FBSDKAccessToken.currentAccessToken() != nil) {
+            let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+            let configuration = PNConfiguration(publishKey: "demo", subscribeKey: "demo")
+            configuration.uuid = defaults.stringForKey("userFbid")
+            
+            appDelegate.client = PubNub.clientWithConfiguration(configuration)
+            
             // User is already logged in, do work such as go to next view controller.
         }
             
@@ -79,7 +85,6 @@ class ViewController: UIViewController, FBSDKLoginButtonDelegate {
             else {
                 let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
                 let configuration = PNConfiguration(publishKey: "demo", subscribeKey: "demo")
-                configuration.uuid = "7878"
         
                 let userName : NSString = result.valueForKey("name") as! NSString
                 let userFbid: String = result.valueForKey("id") as! String
@@ -95,7 +100,11 @@ class ViewController: UIViewController, FBSDKLoginButtonDelegate {
                 
                 // create PubNub
                 configuration.uuid = userFbid
-                appDelegate.client? = PubNub.clientWithConfiguration(configuration)
+                appDelegate.client = PubNub.clientWithConfiguration(configuration)
+                
+                if (appDelegate.client != nil) {
+                    print("view controller good")
+                }
                 
                 // Attempt to create a new Facebook user
                 var uri : String = "http://ec2-54-183-142-37.us-west-1.compute.amazonaws.com/api/users"
