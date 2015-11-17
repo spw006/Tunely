@@ -12,7 +12,10 @@ import UIKit
 var player:SPTAudioStreamingController?
 var userPlaylistTrackStrings = [NSURL]()
 
-class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate {
+class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, UITableViewDataSource, UITableViewDelegate {
+    
+    
+    @IBOutlet weak var tableView: UITableView!
     
     @IBOutlet weak var titleLabel : UILabel?
 
@@ -238,8 +241,18 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("streamviewcontroller view loaded")
         
         titleLabel?.text = "My Stream"
+        
+        
+        /* Table Setup delegates */
+        tableView.delegate = self
+        tableView.dataSource = self
+        self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        
+        self.tableView!.reloadData()
+        
 
         // Do any additional setup after loading the view.
     }
@@ -280,5 +293,68 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate {
         // Pass the selected object to the new view controller.
     }
     */
+    
+    
+    
+    //TABLE VIEW STUFF:
+    
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        // #warning Incomplete implementation, return the number of sections
+        return 1
+    }
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        // #warning Incomplete implementation, return the number of rows
+        return playlistTrackname.count
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        /*
+        let row = indexPath.row
+        print(songs[row].title)
+        //ViewController().addSongtoPlaylist(songs[row].trackID)
+        //ViewController.addSongtoPlaylist(ViewController)
+        var formattedTrackName = NSURL(string: "spotify:track:"+songs[row].trackID);
+        print(formattedTrackName)
+        
+        userPlaylistTrackStrings.append(formattedTrackName!)
+
+    */
+        //player?.queueURI(formattedTrackName, callback: nil)
+        //player?.playURI(formattedTrackName, callback: nil)
+        //.ViewController.addSongtoPlaylist(songs[row].trackID)
+        
+        
+        
+    }
+
+    
+    
+    
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        print("tableView called")
+        let cell = self.tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
+        //var cell = self.tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
+        
+        
+        
+        
+        
+        
+        print(indexPath.row)
+        //print(songs.count)
+        
+        if(playlistTrackname.count > 0){
+            let song = playlistTrackname[indexPath.row]
+            
+            cell.textLabel?.text = song.title
+            
+            cell.detailTextLabel?.text = song.artist + " - " + song.album
+        }
+
+        return cell
+    }
 
 }

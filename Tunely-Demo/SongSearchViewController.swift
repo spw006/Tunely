@@ -10,6 +10,8 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 
+var playlistTrackname = [Song]()
+
 class SongSearchViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchDisplayDelegate {
     
 
@@ -164,6 +166,7 @@ class SongSearchViewController: UIViewController, UITableViewDataSource, UITable
         print(formattedTrackName)
         
         userPlaylistTrackStrings.append(formattedTrackName!)
+        playlistTrackname.append(songs[row])
         //player?.queueURI(formattedTrackName, callback: nil)
         //player?.playURI(formattedTrackName, callback: nil)
         //.ViewController.addSongtoPlaylist(songs[row].trackID)
