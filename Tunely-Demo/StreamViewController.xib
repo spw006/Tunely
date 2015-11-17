@@ -6,6 +6,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="StreamViewController" customModule="Tunely_Demo" customModuleProvider="target">
             <connections>
+                <outlet property="listenersView" destination="fFL-uJ-Gi4" id="x73-XU-AFc"/>
                 <outlet property="titleLabel" destination="m6b-bM-8MP" id="kZJ-Vs-Zgr"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -37,6 +38,10 @@
                         <size key="footerReferenceSize" width="0.0" height="0.0"/>
                         <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                     </collectionViewFlowLayout>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="ntT-9T-NBP"/>
+                        <outlet property="delegate" destination="-1" id="Fh7-E8-Hha"/>
+                    </connections>
                 </collectionView>
                 <searchBar contentMode="redraw" fixedFrame="YES" placeholder="Search a song" translatesAutoresizingMaskIntoConstraints="NO" id="vIx-U0-WBr">
                     <rect key="frame" x="0.0" y="124" width="375" height="44"/>
