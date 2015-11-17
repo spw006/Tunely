@@ -90,7 +90,7 @@ class ViewController: UIViewController, FBSDKLoginButtonDelegate {
                 
                 // Attempt to create a new Facebook user
                 var uri : String = "http://ec2-54-183-142-37.us-west-1.compute.amazonaws.com/api/fbusers"
-                let parameters : [String: AnyObject] = ["name": userName, "fbid": userFbid, "email": userEmail]
+                let parameters : [String: AnyObject] = ["name": userName, "fbid": userFbid, "email": userEmail, "picture": userPicURL]
                 let headers : [String: String]? = ["x-access-token": FBSDKAccessToken.currentAccessToken().tokenString]
                 
                 Alamofire.request(.POST, uri, parameters: parameters, headers:headers)
@@ -105,7 +105,7 @@ class ViewController: UIViewController, FBSDKLoginButtonDelegate {
                         
                         // Do not proceed if server did not respond
                         if (user == nil) {
-                            print("No response from server.")
+                            print("No response from server or user does not exist.")
                             return
                         }
                         

@@ -83,7 +83,7 @@ class SideBarTableViewController: UIViewController {
                         
                         // Do not proceed if server did not respond
                         if (deletedStream == nil) {
-                            print("No response from server.")
+                            print("No response from server or stream does not exist.")
                             return
                         }
                         
