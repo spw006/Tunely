@@ -98,7 +98,7 @@ class ViewController: UIViewController, FBSDKLoginButtonDelegate {
                 appDelegate.client? = PubNub.clientWithConfiguration(configuration)
                 
                 // Attempt to create a new Facebook user
-                var uri : String = "http://ec2-54-183-142-37.us-west-1.compute.amazonaws.com/api/fbusers"
+                var uri : String = "http://ec2-54-183-142-37.us-west-1.compute.amazonaws.com/api/users"
                 let parameters : [String: AnyObject] = ["name": userName, "fbid": userFbid, "email": userEmail, "picture": userPicURL]
                 let headers : [String: String]? = ["x-access-token": FBSDKAccessToken.currentAccessToken().tokenString]
                 
@@ -127,7 +127,7 @@ class ViewController: UIViewController, FBSDKLoginButtonDelegate {
                         if (duplicate) {
                             print("User: " + (userName as String) + ", already exists.")
                             
-                            uri = "http://ec2-54-183-142-37.us-west-1.compute.amazonaws.com/api/fbusers/" + userFbid
+                            uri = "http://ec2-54-183-142-37.us-west-1.compute.amazonaws.com/api/users/fbid/" + userFbid
                             
                             Alamofire.request(.PUT, uri, parameters: parameters, headers:headers)
                                 .responseJSON { json in

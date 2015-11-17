@@ -8,6 +8,8 @@
 
 import UIKit
 import PubNub
+import Alamofire
+import SwiftyJSON
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
@@ -204,8 +206,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
         client?.unsubscribeFromChannels([targetChannel], withPresence: true)
             
     }
-    
-
-
 }
 
