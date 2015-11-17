@@ -72,13 +72,9 @@ class SideBarTableViewController: UIViewController {
             // delete the current stream
             if (hostedStream != nil) {
                 let uri : String = "http://ec2-54-183-142-37.us-west-1.compute.amazonaws.com/api/streams/" + hostedStream!
+                let headers : [String: String] = ["x-access-token": FBSDKAccessToken.currentAccessToken().tokenString]
                 
-                let headers : [String: String] = [
-                    "x-access-token": FBSDKAccessToken.currentAccessToken().tokenString
-                ]
-                
-                Alamofire
-                    .request(.DELETE, uri, headers:headers)
+                Alamofire.request(.DELETE, uri, headers:headers)
                     .responseJSON { json in
                         
                         let deletedStream = JSON(data: json.data!)

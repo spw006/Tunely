@@ -84,19 +84,15 @@ class ViewController: UIViewController, FBSDKLoginButtonDelegate {
                 //let userFriends: NSDictionary = result.valueForKey("friends") as! NSDictionary
                 
                 // store these variables in the defaults object on the client side
-                defaults.setObject(userName, forKey: "userName")    // userName -> User name
-                defaults.setObject(userFbid, forKey: "userFbid")    // userFbid -> User Facebook ID
-                defaults.setObject(userEmail, forKey: "userEmail")  // userEmail -> User email
-                defaults.setObject(userPicURL, forKey: "userPicURL")// userPicURL -> User profile picture url
+                defaults.setObject(userName, forKey: "userName")        // userName -> User name
+                defaults.setObject(userFbid, forKey: "userFbid")        // userFbid -> User Facebook ID
+                defaults.setObject(userEmail, forKey: "userEmail")      // userEmail -> User email
+                defaults.setObject(userPicURL, forKey: "userPicURL")    // userPicURL -> User profile picture url
                 
                 
                 // Attempt to create a new Facebook user
                 var uri : String = "http://ec2-54-183-142-37.us-west-1.compute.amazonaws.com/api/fbusers"
-                let parameters : [String: AnyObject] = [
-                    "name": userName,
-                    "fbid": userFbid,
-                    "email": userEmail
-                ]
+                let parameters : [String: AnyObject] = ["name": userName, "fbid": userFbid, "email": userEmail]
                 let headers : [String: String]? = ["x-access-token": FBSDKAccessToken.currentAccessToken().tokenString]
                 
                 Alamofire.request(.POST, uri, parameters: parameters, headers:headers)
@@ -104,7 +100,10 @@ class ViewController: UIViewController, FBSDKLoginButtonDelegate {
                         
                         var user = JSON(data: json.data!)
                         
-                        //print(user);
+                        print(user);
+                        
+                        let errors : Bool = (user["errors"] != nil)
+                        let duplicate : Bool = (user["code"] == 11000)
                         
                         // Do not proceed if server did not respond
                         if (user == nil) {
@@ -112,8 +111,13 @@ class ViewController: UIViewController, FBSDKLoginButtonDelegate {
                             return
                         }
                         
+                        if (errors) {
+                            print("Error POST stream.")
+                            return;
+                        }
+                        
                         // user is already created so update the user
-                        if (user["code"] == 11000) {
+                        if (duplicate) {
                             print("User: " + (userName as String) + ", already exists.")
                             
                             uri = "http://ec2-54-183-142-37.us-west-1.compute.amazonaws.com/api/fbusers/" + userFbid
