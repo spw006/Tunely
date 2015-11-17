@@ -30,6 +30,9 @@ class JoinViewController: UIViewController {
             .responseJSON { json in
                 
                 let streams = JSON(data: json.data!)
+                
+                print(streams)
+                
                 self.streams = streams
                 
                 // Do not proceed if server did not respond
@@ -43,8 +46,6 @@ class JoinViewController: UIViewController {
                         self.streamList.append(title)
                     }
                 }
-                
-                print(self.streams)
                 
                 // re-populate the table view with the data received
                 self.tableView.reloadData()
