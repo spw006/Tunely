@@ -88,6 +88,14 @@ class SideBarTableViewController: UIViewController {
                         }
                 }
                 
+                // unsubscribe from pubnub
+                let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+                if let targetChannel = appDelegate.client?.channels().last {
+                    print("unsubscribed from " + (targetChannel as! String))
+                    appDelegate.client?.unsubscribeFromChannels([targetChannel as! String], withPresence: true)
+                }
+                
+                
                 // go back to home after delete
                 let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
                 let vc : UIViewController = storyBoard.instantiateViewControllerWithIdentifier("mainIdent")

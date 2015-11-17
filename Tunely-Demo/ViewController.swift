@@ -77,6 +77,10 @@ class ViewController: UIViewController, FBSDKLoginButtonDelegate {
             }
                 
             else {
+                let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+                let configuration = PNConfiguration(publishKey: "demo", subscribeKey: "demo")
+                configuration.uuid = "7878"
+        
                 let userName : NSString = result.valueForKey("name") as! NSString
                 let userFbid: String = result.valueForKey("id") as! String
                 let userEmail : NSString = result.valueForKey("email") as! NSString
@@ -89,6 +93,9 @@ class ViewController: UIViewController, FBSDKLoginButtonDelegate {
                 defaults.setObject(userEmail, forKey: "userEmail")      // userEmail -> User email
                 defaults.setObject(userPicURL, forKey: "userPicURL")    // userPicURL -> User profile picture url
                 
+                // create PubNub
+                configuration.uuid = userFbid
+                appDelegate.client? = PubNub.clientWithConfiguration(configuration)
                 
                 // Attempt to create a new Facebook user
                 var uri : String = "http://ec2-54-183-142-37.us-west-1.compute.amazonaws.com/api/fbusers"

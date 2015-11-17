@@ -20,11 +20,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
     override init() {
         
         let configuration = PNConfiguration(publishKey: "demo", subscribeKey: "demo")
-        // Instantiate PubNub client.
-        client = OurPubNub.clientWithConfiguration(configuration)
+        configuration.uuid = "7878"
         
-        super.init()
-        client?.addListener(self)
+        // Instantiate PubNub client
+        //client = OurPubNub.clientWithConfiguration(configuration)
+        
+        //super.init()
+        //client?.addListener(self)
 
     }
     
