@@ -8,6 +8,8 @@
 
 import UIKit
 import PubNub
+import Alamofire
+import SwiftyJSON
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
@@ -217,9 +219,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
 
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+        
+        // delete user's hosted stream here!
+//        let hostedStream = defaults.stringForKey("hostedStream")
+//        
+//        // delete the current stream
+//        if (hostedStream != nil) {
+//            let uri : String = "http://ec2-54-183-142-37.us-west-1.compute.amazonaws.com/api/streams/" + hostedStream!
+//            let headers : [String: String] = ["x-access-token": FBSDKAccessToken.currentAccessToken().tokenString]
+//            
+//            Alamofire.request(.DELETE, uri, headers:headers)
+//                .responseJSON { json in
+//                    
+//                    let deletedStream = JSON(data: json.data!)
+//                    
+//                    print (deletedStream)
+//                    
+//                    // Do not proceed if server did not respond
+//                    if (deletedStream == nil) {
+//                        print("No response from server or stream does not exist.")
+//                        return
+//                    }
+//                    
+//                    // delete the value for the hostedStream key
+//                    defaults.setObject(nil, forKey: "hostedStream")
+//                    
+//                    print("Deleted hosted stream on shutdown.")
+//            }
+//        }
     }
-    
-
-
 }
 

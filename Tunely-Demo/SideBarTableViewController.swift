@@ -87,6 +87,9 @@ class SideBarTableViewController: UIViewController {
                             return
                         }
                         
+                        // delete the value for the hostedStream key
+                        defaults.setObject(nil, forKey: "hostedStream")
+                        
                         print("Deleted hosted stream.")
                 }
                 
