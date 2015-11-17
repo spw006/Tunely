@@ -128,6 +128,16 @@ class ViewController: UIViewController, FBSDKLoginButtonDelegate {
                             print("New User: " + (userName as String) + ", created.")
                         }
                     }
+            
+            
+                // store user picture
+                /*let url : NSURL = NSURL(fileURLWithPath: picURL)
+                let data : NSData = NSData(contentsOfURL: url)!
+
+                let picture: UIImageView = UIImageView(image: UIImage(data: data)!)
+                
+                defaults.setObject(picture, forKey: "picture") */
+                
             }
         })
     }
