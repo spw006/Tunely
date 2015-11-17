@@ -8,9 +8,11 @@
 
 import UIKit
 import PubNub
+import Alamofire
+import SwiftyJSON
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
+class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     var client: PubNub?
@@ -203,9 +205,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
 
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+        
+        let targetChannel = client?.channels().last as! String
+        client?.unsubscribeFromChannels([targetChannel], withPresence: true)
+            
     }
-    
-
-
 }
 
