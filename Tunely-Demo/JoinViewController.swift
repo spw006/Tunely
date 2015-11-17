@@ -9,6 +9,7 @@
 import Alamofire
 import SwiftyJSON
 import UIKit
+import PubNub
 
 class JoinViewController: UIViewController {
 
@@ -16,6 +17,7 @@ class JoinViewController: UIViewController {
     
     var streams : JSON = nil
     var streamList : [String] = []
+    var pubnubChannels : [String] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,6 +46,9 @@ class JoinViewController: UIViewController {
                 for (_, stream) in streams {
                     if let title = stream["name"].string {
                         self.streamList.append(title)
+                    }
+                    if let pubnub = stream["pubnub"].string {
+                        self.pubnubChannels.append(pubnub)
                     }
                 }
                 
@@ -85,18 +90,15 @@ class JoinViewController: UIViewController {
     
     /* Handle cell touches */
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         
-        if streamList[indexPath.row] == "Home" {
-            
-        }
+        // subscribe to specified channel
+        appDelegate.client?.subscribeToChannels([pubnubChannels[indexPath.row]], withPresence: true)
         
-        if streamList[indexPath.row] == "Search" {
-        }
-        
-        
-        if streamList[indexPath.row] == "Logout" {
-        }
-        
+        // go to streamview
+        let streamView:StreamViewController = StreamViewController(nibName: "StreamViewController", bundle: nil)
+        streamView.streamName = streamList[indexPath.row]
+        self.presentViewController(streamView, animated: true, completion: nil)
     }
     
     /*

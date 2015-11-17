@@ -20,11 +20,13 @@ class StreamViewController: UIViewController, PNObjectEventListener {
     var listeners : [String] = []
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     var client: PubNub?
+    var streamName : String!
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        titleLabel?.text = "My Stream"
+        titleLabel?.text = streamName
         
         
         let nib = UINib(nibName: "CollectionViewCell", bundle: nil)
@@ -79,18 +81,12 @@ class StreamViewController: UIViewController, PNObjectEventListener {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("reuseIdentifier", forIndexPath: indexPath) as! CollectionViewCell
         
         
-        //let pic_url = "http://www.joomlaworks.net/images/demos/galleries/abstract/7.jpg"
-        
         let url : NSURL = NSURL(string : listenersPic[indexPath.row])!
-        
-        print(url)
-        
         let data : NSData = NSData(contentsOfURL: url)!
         
         cell.imageView.image = UIImage(data: data);
         
         return cell
-        
     }
     
     /************************** PUBNUB FUNCTIONS ************************/
@@ -112,10 +108,13 @@ class StreamViewController: UIViewController, PNObjectEventListener {
         
         if let obj = message.data.message["pic"]{
             if !self.listeners.contains(message.uuid) {
-                print("heyeyeyeyey")
+                print("adding " + message.uuid + " to my list of listeners")
                 self.listenersPic.append(obj["url"] as! String)
                 self.listeners.append(message.uuid)
                 self.listenersView.reloadData()
+            }
+            else {
+                print("ERROR: " + message.uuid + " is already a listener")
             }
         }
         else {
@@ -149,8 +148,7 @@ class StreamViewController: UIViewController, PNObjectEventListener {
             
             let uuid : String = (self.client?.uuid())!
             
-            
-            
+
             let picObject : [String : [String : String]] = ["pic" : ["url" : defaults.stringForKey("userPicURL")! , "uuid" : uuid]]
             
             
