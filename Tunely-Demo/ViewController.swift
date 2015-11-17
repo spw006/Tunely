@@ -102,7 +102,7 @@ class ViewController: UIViewController, FBSDKLoginButtonDelegate {
                         
                         var user = JSON(data: json.data!)
                         
-                        print(user);
+                        //print(user);
                         
                         // Do not proceed if server did not respond
                         if (user == nil) {

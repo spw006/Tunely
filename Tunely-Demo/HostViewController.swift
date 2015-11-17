@@ -36,27 +36,26 @@ class HostViewController: UIViewController {
     @IBAction func viewStream(sender: AnyObject) {
         
         // Create a pubnub channel and subscribe to it
-        let userid = defaults.stringForKey("userid")!
-        let username = defaults.stringForKey("username")!
-        let channelName = userid + "channel"
+        let userFbid = defaults.stringForKey("userFbid")!
+        let userName = defaults.stringForKey("userName")!
+        let channelName = userFbid + "channel"
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         
         let uri : String = "http://ec2-54-183-142-37.us-west-1.compute.amazonaws.com/api/streams"
         
         
         var parameters: [String: AnyObject] = [
-            "name": username + "'s Stream",
-            "host": userid,
+            "name": userName + "'s Stream",
+            "host": userFbid,
             "pubnub": channelName
         ]
         
+        // password field
         if (passwordField.text != nil) {
             parameters["password"] = passwordField.text
         }
         
-        let headers : [String: String] = [
-            "x-access-token": FBSDKAccessToken.currentAccessToken().tokenString
-        ]
+        let headers : [String: String] = ["x-access-token": FBSDKAccessToken.currentAccessToken().tokenString]
         
         appDelegate.client?.subscribeToChannels([channelName], withPresence: true)
         defaults.setObject(channelName, forKey: "channel")
