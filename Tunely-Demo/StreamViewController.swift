@@ -8,11 +8,13 @@
 
 import Alamofire
 import UIKit
+import PubNub
+
 
 var player:SPTAudioStreamingController?
 var userPlaylistTrackStrings = [NSURL]()
 
-class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, UITableViewDataSource, UITableViewDelegate {
+class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, UITableViewDataSource, UITableViewDelegate, PNObjectEventListener {
     
     
     @IBOutlet weak var tableView: UITableView!
@@ -58,6 +60,12 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
     
     @IBOutlet weak var Back: UIBarButtonItem!
     @IBOutlet weak var Next: UIBarButtonItem!
+    
+    
+    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+    
+    
+    
     @IBAction func PlayPause(sender: AnyObject) {
         pausePressed = true
         if player == nil {
@@ -245,6 +253,9 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
         
         titleLabel?.text = "My Stream"
         
+        appDelegate.client?.addListener(self)
+        
+        
         
         /* Table Setup delegates */
         tableView.delegate = self
@@ -356,5 +367,120 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
 
         return cell
     }
+    
+    
+    
+    
+    
+    //PUBNUB STUFF
+    
+    func client(client: PubNub!, didReceiveMessage message: PNMessageResult!) {
+        
+        // Handle new message stored in message.data.message
+        if message.data.actualChannel != nil {
+            
+            // Message has been received on channel group stored in
+            // message.data.subscribedChannel
+        }
+        else {
+            
+            // Message has been received on channel stored in
+            // message.data.subscribedChannel
+        }
+        
+        print("Received message: \(message.data.message) on channel " +
+            "\((message.data.actualChannel ?? message.data.subscribedChannel)!) at " +
+            "\(message.data.timetoken)")
+    }
+    
+    // New presence event handling.
+    func client(client: PubNub!, didReceivePresenceEvent event: PNPresenceEventResult!) {
+        
+        // Handle presence event event.data.presenceEvent (one of: join, leave, timeout,
+        // state-change).
+        if event.data.actualChannel != nil {
+            
+            // Presence event has been received on channel group stored in
+            // event.data.subscribedChannel
+        }
+        else {
+            
+            // Presence event has been received on channel stored in
+            // event.data.subscribedChannel
+        }
+        
+        if event.data.presenceEvent != "state-change" {
+            
+            print("\(event.data.presence.uuid) \"\(event.data.presenceEvent)'ed\"\n" +
+                "at: \(event.data.presence.timetoken) " +
+                "on \((event.data.actualChannel ?? event.data.subscribedChannel)!) " +
+                "(Occupancy: \(event.data.presence.occupancy))");
+        }
+        else {
+            
+            print("\(event.data.presence.uuid) changed state at: " +
+                "\(event.data.presence.timetoken) " +
+                "on \((event.data.actualChannel ?? event.data.subscribedChannel)!) to:\n" +
+                "\(event.data.presence.state)");
+        }
+    }
+    
+    
+    // Handle subscription status change.
+    
+    // Handle subscription status change.
+    func client(client: PubNub!, didReceiveStatus status: PNStatus!) {
+        if status.category == .PNUnexpectedDisconnectCategory {
+            
+            // This event happens when radio / connectivity is lost
+        }
+        else if status.category == .PNConnectedCategory {
+            
+            // Connect event. You can do stuff like publish, and know you'll get it.
+            // Or just use the connected event to confirm you are subscribed for
+            // UI / internal notifications, etc
+            
+            // Select last object from list of channels and send message to it.
+            let targetChannel = client.channels().last as! String
+            client.publish("Hello from the PubNub Swift SDK", toChannel: targetChannel,
+                compressed: false, withCompletion: { (status) -> Void in
+                    
+                    if !status.error {
+                        
+                        // Message successfully published to specified channel.
+                    }
+                    else{
+                        
+                        // Handle message publish error. Check 'category' property
+                        // to find out possible reason because of which request did fail.
+                        // Review 'errorData' property (which has PNErrorData data type) of status
+                        // object to get additional information about issue.
+                        //
+                        // Request can be resent using: status.retry()
+                    }
+            })
+        }
+        else if status.category == .PNReconnectedCategory {
+            
+            // Happens as part of our regular operation. This event happens when
+            // radio / connectivity is lost, then regained.
+        }
+        else if status.category == .PNDecryptionErrorCategory {
+            
+            // Handle messsage decryption error. Probably client configured to
+            // encrypt messages and on live data feed it received plain text.
+        }
+    }
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
 }

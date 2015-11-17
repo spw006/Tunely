@@ -20,16 +20,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
     
     // For demo purposes the initialization is done in the init function so that
     // the PubNub client is instantiated before it is used.
+    /*
     override init() {
         
         // Instantiate configuration instance.
-        let configuration = PNConfiguration(publishKey: "demo", subscribeKey: "demo")
         // Instantiate PubNub client.
         client = PubNub.clientWithConfiguration(configuration)
         
         super.init()
         client?.addListener(self)
-    }
+    }*/
     
 
     
@@ -85,6 +85,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
     /************************** PUBNUB FUNCTIONS ************************/
     
     // Handle new message from one of channels on which client has been subscribed.
+    /*
     func client(client: PubNub!, didReceiveMessage message: PNMessageResult!) {
         
         // Handle new message stored in message.data.message
@@ -181,7 +182,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
             // Handle messsage decryption error. Probably client configured to
             // encrypt messages and on live data feed it received plain text.
         }
-    }
+    }*/
     
     /************************ END PUBNUB FUNCTIONS ****************************/
     
