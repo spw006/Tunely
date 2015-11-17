@@ -17,7 +17,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="tgk-vT-KqQ">
-                    <rect key="frame" x="0.0" y="145" width="600" height="455"/>
+                    <rect key="frame" x="0.0" y="72" width="600" height="528"/>
                     <animations/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <searchBar key="tableHeaderView" contentMode="redraw" id="QBa-Yr-FxY">
@@ -31,6 +31,14 @@
                         <outlet property="delegate" destination="-1" id="tUd-vB-heu"/>
                     </connections>
                 </tableView>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z5D-1g-hT6">
+                    <rect key="frame" x="45" y="23" width="34" height="30"/>
+                    <animations/>
+                    <state key="normal" title="Back"/>
+                    <connections>
+                        <action selector="goBack:" destination="-1" eventType="touchUpInside" id="Gg5-EJ-BLE"/>
+                    </connections>
+                </button>
             </subviews>
             <animations/>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>

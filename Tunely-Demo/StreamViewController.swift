@@ -23,10 +23,7 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate {
         self.presentViewController(searchSongView, animated: true, completion: nil)
     }
     
-    @IBAction func hostStream(sender: AnyObject) {
-        let hostView:HostViewController = HostViewController(nibName: "HostViewController", bundle: nil)
-        self.presentViewController(hostView, animated: true, completion: nil)
-    }
+
     
     
     let kClientID = "4d63faabbbed404384264f330f8610b7";
@@ -59,34 +56,36 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate {
     @IBOutlet weak var Back: UIBarButtonItem!
     @IBOutlet weak var Next: UIBarButtonItem!
     @IBAction func PlayPause(sender: AnyObject) {
+        pausePressed = true
         if player == nil {
             player = SPTAudioStreamingController(clientId: kClientID)
+            player?.playbackDelegate = self;
+            print("no player")
         }
         if(firstPlay == true)
         {
+            print("first play")
+            playUsingSession(session)
             player?.playURI(userPlaylistTrackStrings[0], callback: nil)
-            firstPlay = false;
+            //isPlaying = true;
+            firstPlay = false
         }
-        player?.setIsPlaying(isPlaying, callback: nil)
+        else {
+            player?.setIsPlaying(isPlaying, callback: nil)
+
+            if(isPlaying == false){
+                isPlaying = true;
+                print("music paused")
+            }
+            else
+            {
+                print("music played")
+                isPlaying = false;
+            }
+        }
+        pausePressed = false
+        //playUsingSession(session)
         
-        if(isPlaying == false){
-            isPlaying = true;
-            print("music paused")
-        }
-        else
-        {
-            print("music played")
-            isPlaying = false;
-        }
-        if(pausePressed == false){
-            pausePressed = true;
-            print("music paused")
-        }
-        else
-        {
-            print("music played")
-            pausePressed = false;
-        }
         //self.player?.setIsPlaying(isPlaying, callback: nil)
         /*
         Alamofire.request(.GET, "https://api.spotify.com/v1/search?q=loveland&type=track")
@@ -124,6 +123,7 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate {
         
     }
     @IBAction func SkipForwardSong(sender: AnyObject) {
+        print("next song button pressed")
         if player == nil {
             player = SPTAudioStreamingController(clientId: kClientID)
         }
@@ -132,6 +132,18 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate {
         //self.addSongtoPlaylist("1UfBAJfmofTffrae5ls6DA") //fairytale
         
         player?.skipNext(nil)
+    }
+    
+    @IBAction func SkipBackSong(sender: AnyObject) {
+        print("back song button pressed")
+        if player == nil {
+            player = SPTAudioStreamingController(clientId: kClientID)
+        }
+        
+        //debug
+        //self.addSongtoPlaylist("1UfBAJfmofTffrae5ls6DA") //fairytale
+        
+        player?.skipPrevious(nil)
     }
     
     func addSongtoPlaylist(trackID: String)
@@ -185,7 +197,7 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate {
             //SPTTrack.trackWithURI(<#T##uri: NSURL!##NSURL!#>, session: <#T##SPTSession!#>, callback: <#T##SPTRequestCallback!##SPTRequestCallback!##(NSError!, AnyObject!) -> Void#>)
             
             //self.addSongtoPlaylist("3KUs7BeZGMze6HDDdFlb7j") //loveland
-            self.addSongtoPlaylist("24w8CSNGN34hYPCrjdRLob") //fairytale
+            //self.addSongtoPlaylist("24w8CSNGN34hYPCrjdRLob") //fairytale
             
             SPTTrack.trackWithURI(NSURL(string: "spotify:track:3f9zqUnrnIq0LANhmnaF0V"), session: sessionObj, callback: { (error:NSError!, trackObj:AnyObject!) -> Void in
                 if error != nil {
@@ -196,7 +208,7 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate {
                 //self.player?.playTrackProvider(track, callback: nil)
                 print("song will play lol")
                 //self.player?.playURI(NSURL(string: "spotify:track:4gqgQQHynn86YrJ9dEuMfc"), callback: nil)
-                //self.player?.playURI(NSURL(string: "spotify:track:4gqgQQHynn86YrJ9dEuMfc"), callback: nil)
+                //player?.playURI(NSURL(string: "spotify:track:4gqgQQHynn86YrJ9dEuMfc"), callback: nil)
                 
                 //player?.playURIs(userPlaylistTrackStrings, fromIndex: 0, callback: nil)
                 //player?.playURI(

@@ -13,6 +13,15 @@ import SwiftyJSON
 class SongSearchViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchDisplayDelegate {
     
 
+    @IBOutlet weak var BackButton: UIButton!
+    
+    @IBAction func goBack(sender: AnyObject) {
+        let streamView:StreamViewController = StreamViewController(nibName: "StreamViewController", bundle: nil)
+        self.presentViewController(streamView, animated: true, completion: nil)
+    }
+    
+    
+    
     @IBOutlet weak var tableView: UITableView!
 
     var searchActive : Bool = false
@@ -176,6 +185,12 @@ class SongSearchViewController: UIViewController, UITableViewDataSource, UITable
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         print("tableView called")
         let cell = self.tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
+        //var cell = self.tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
+        
+        
+
+
+        
         
         print(indexPath.row)
         //print(songs.count)

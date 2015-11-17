@@ -10,12 +10,12 @@ import Alamofire
 import UIKit
 
 var SpotifyLoginFlag = false;
+var session:SPTSession!
 
 
 class HostViewController: UIViewController {
     
     
-    var session:SPTSession!
 
     // Stream object
     var newStream : NSMutableDictionary = [ "name" : "", "password" : "" ]
@@ -62,16 +62,17 @@ class HostViewController: UIViewController {
             //session available
             print("session available");
             let sessionDataObj = sessionObj as! NSData
-            let session = NSKeyedUnarchiver.unarchiveObjectWithData(sessionDataObj) as! SPTSession
+            session = NSKeyedUnarchiver.unarchiveObjectWithData(sessionDataObj) as! SPTSession
             if !session.isValid() {
                 SPTAuth.defaultInstance().renewSession(session, callback: { (error:NSError!, renewedSession: SPTSession!) ->
                     Void in
+                    print("session not valid")
                     if error == nil {
                         let sessionData = NSKeyedArchiver.archivedDataWithRootObject(session)
                         userDefaults.setObject(sessionData, forKey: "SpotifySession")
                         userDefaults.synchronize()
                         
-                        self.session = renewedSession
+                        session = renewedSession
                         
                         //self.playUsingSession(renewedSession)
                         
@@ -87,7 +88,7 @@ class HostViewController: UIViewController {
                 //playUsingSession(session)
             }
             
-        } else {
+        }else {
             print("session not available");
             
             loginButton.hidden = false;
@@ -167,6 +168,7 @@ class HostViewController: UIViewController {
     }
     
     func UpdateAfterFirstLogin() {
+        print("update after first login")
         loginButton.hidden = true;
         
         let userDefaults = NSUserDefaults.standardUserDefaults()
@@ -176,6 +178,7 @@ class HostViewController: UIViewController {
             let firstTimeSession = NSKeyedUnarchiver.unarchiveObjectWithData(sessionDataObj) as! SPTSession
             
             //playUsingSession(firstTimeSession)
+            session = firstTimeSession
             
         }
         
