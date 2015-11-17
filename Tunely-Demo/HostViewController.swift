@@ -58,8 +58,15 @@ class HostViewController: UIViewController {
             "x-access-token": FBSDKAccessToken.currentAccessToken().tokenString
         ]
         
+        appDelegate.client?.subscribeToChannels([channelName], withPresence: true)
+        defaults.setObject(channelName, forKey: "channel")
+        
+        // go to stream view
+        let streamView:StreamViewController = StreamViewController(nibName: "StreamViewController", bundle: nil)
+        self.presentViewController(streamView, animated: true, completion: nil)
+        
         // server POST request
-        Alamofire
+        /*Alamofire
             .request(.POST, uri, parameters: parameters, headers:headers)
             .responseJSON { json in
                 
@@ -101,7 +108,7 @@ class HostViewController: UIViewController {
                 // go to stream view
                 let streamView:StreamViewController = StreamViewController(nibName: "StreamViewController", bundle: nil)
                 self.presentViewController(streamView, animated: true, completion: nil)
-        }
+        } */
     }
     
     @IBAction func changeSlider() {

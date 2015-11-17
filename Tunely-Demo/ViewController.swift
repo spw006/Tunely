@@ -81,9 +81,12 @@ class ViewController: UIViewController, FBSDKLoginButtonDelegate {
                 let userEmail : NSString = result.valueForKey("email") as! NSString
                 //let userFriends: NSDictionary = result.valueForKey("friends") as! NSDictionary
                 let userFBID: String = result.valueForKey("id") as! String
-                let picURL: String = result.valueForKey("picture") as! String
+
+                let picURL: String = result.valueForKey("picture")?.valueForKey("data")?.valueForKey("url") as! String
+                
                 
                 //print(userFriends);
+                
                 
                 
                 let uri : String = "http://ec2-54-183-142-37.us-west-1.compute.amazonaws.com/api/users"
@@ -108,6 +111,7 @@ class ViewController: UIViewController, FBSDKLoginButtonDelegate {
                             
                             let username = user["op"]["name"].stringValue
                             defaults.setObject(username, forKey: "username")
+                            defaults.setObject(picURL, forKey: "picURL")
                         }
                             
                         // new user created
@@ -118,17 +122,18 @@ class ViewController: UIViewController, FBSDKLoginButtonDelegate {
                             
                             let username = user["name"].stringValue
                             defaults.setObject(username, forKey: "username")
+                            defaults.setObject(picURL, forKey: "picURL")
                         }
                     }
             
             
                 // store user picture
-                let url : NSURL = NSURL(fileURLWithPath: picURL)
+                /*let url : NSURL = NSURL(fileURLWithPath: picURL)
                 let data : NSData = NSData(contentsOfURL: url)!
 
                 let picture: UIImageView = UIImageView(image: UIImage(data: data)!)
                 
-                defaults.setObject(picture, forKey: "picture")
+                defaults.setObject(picture, forKey: "picture") */
                 
             }
         })

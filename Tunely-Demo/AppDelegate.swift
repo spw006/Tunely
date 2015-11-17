@@ -20,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
     override init() {
         /* NSUserDefaults can only store NSObjects (ex. NSStrings, NSData, etc) so we have to convert a PubNub object to a NSData object. Only objects that implement the NSCoding class can be encoded into NSData objects. We create OurPubNub.swift that inherits from the PubNub class and NSCoding and use that. */
         
-        var encodedData: NSData? = defaults.objectForKey("pubnub") as? NSData
+        /*var encodedData: NSData? = defaults.objectForKey("pubnub") as? NSData
         
         if encodedData == nil {
             print("new pubnub instance created")
@@ -37,7 +37,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
         else {
             print("pubnub instance exists")
             client = NSKeyedUnarchiver.unarchiveObjectWithData(encodedData!) as? PubNub   // decode from NSData
-        }
+        } */
+        
+        let configuration = PNConfiguration(publishKey: "demo", subscribeKey: "demo")
+        // Instantiate PubNub client.
+        client = OurPubNub.clientWithConfiguration(configuration)    // used OurPubNub instead of PubNub
         
         super.init()
         client?.addListener(self)
@@ -63,7 +67,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
     /************************** PUBNUB FUNCTIONS ************************/
     
     // Handle new message from one of channels on which client has been subscribed.
-    func client(client: PubNub!, didReceiveMessage message: PNMessageResult!) {
+    /*func client(client: PubNub!, didReceiveMessage message: PNMessageResult!) {
         
         // Handle new message stored in message.data.message
         if message.data.actualChannel != nil {
@@ -75,6 +79,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
             
             // Message has been received on channel stored in
             // message.data.subscribedChannel
+        }
+        
+        if let obj = message.data.message["pic"]{
+            StreamViewController().listeners.append(obj["url"] as! String)
         }
         
         print("Received message: \(message.data.message) on channel " +
@@ -151,7 +159,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
         } */
             
         let targetChannel = client.channels().last as! String
-        client.publish("Hello from the PubNub Swift SDK", toChannel: targetChannel,
+            
+            let uuid : String = (self.client?.uuid())!
+
+            
+            
+            let picObject : [String : [String : String]] = ["pic" : ["url" : defaults.stringForKey("picURL")! , "uuid" : uuid]]
+
+            
+        client.publish(picObject, toChannel: targetChannel,
             compressed: false, withCompletion: { (status) -> Void in
                 
                 if !status.error {
@@ -180,7 +196,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
             // Handle messsage decryption error. Probably client configured to
             // encrypt messages and on live data feed it received plain text.
         }
-    }
+    } */
     
     /************************ END PUBNUB FUNCTIONS ****************************/
     
