@@ -79,19 +79,21 @@ class ViewController: UIViewController, FBSDKLoginButtonDelegate {
                 let userName : NSString = result.valueForKey("name") as! NSString
                 let userFbid: String = result.valueForKey("id") as! String
                 let userEmail : NSString = result.valueForKey("email") as! NSString
+                let userPicURL: String = result.valueForKey("picture")?.valueForKey("data")?.valueForKey("url") as! String
                 //let userFriends: NSDictionary = result.valueForKey("friends") as! NSDictionary
                 
                 // store these variables in the defaults object on the client side
                 defaults.setObject(userName, forKey: "userName")    // userName -> User name
                 defaults.setObject(userFbid, forKey: "userFbid")    // userFbid -> User Facebook ID
                 defaults.setObject(userEmail, forKey: "userEmail")  // userEmail -> User email
+                defaults.setObject(userPicURL, forKey: "userPicURL")// userPicURL -> User profile picture url
                 
                 // Attempt to create a new Facebook user
                 var uri : String = "http://ec2-54-183-142-37.us-west-1.compute.amazonaws.com/api/fbusers"
                 let parameters : [String: AnyObject] = [
                     "name": userName,
-                    "email": userEmail,
-                    "fbid": userFbid
+                    "fbid": userFbid,
+                    "email": userEmail
                 ]
                 let headers : [String: String]? = ["x-access-token": FBSDKAccessToken.currentAccessToken().tokenString]
                 
