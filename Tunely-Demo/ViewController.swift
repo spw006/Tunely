@@ -12,6 +12,7 @@ import SwiftyJSON
 import UIKit
 import FBSDKLoginKit
 import FBSDKCoreKit
+import PubNub
 
 let defaults = NSUserDefaults.standardUserDefaults()
 
@@ -87,6 +88,7 @@ class ViewController: UIViewController, FBSDKLoginButtonDelegate {
                 defaults.setObject(userFbid, forKey: "userFbid")    // userFbid -> User Facebook ID
                 defaults.setObject(userEmail, forKey: "userEmail")  // userEmail -> User email
                 defaults.setObject(userPicURL, forKey: "userPicURL")// userPicURL -> User profile picture url
+                
                 
                 // Attempt to create a new Facebook user
                 var uri : String = "http://ec2-54-183-142-37.us-west-1.compute.amazonaws.com/api/fbusers"

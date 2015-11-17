@@ -18,30 +18,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
     // For demo purposes the initialization is done in the init function so that
     // the PubNub client is instantiated before it is used.
     override init() {
-        /* NSUserDefaults can only store NSObjects (ex. NSStrings, NSData, etc) so we have to convert a PubNub object to a NSData object. Only objects that implement the NSCoding class can be encoded into NSData objects. We create OurPubNub.swift that inherits from the PubNub class and NSCoding and use that. */
-        
-        /*var encodedData: NSData? = defaults.objectForKey("pubnub") as? NSData
-        
-        if encodedData == nil {
-            print("new pubnub instance created")
-            
-            
-            // Instantiate configuration instance.
-            let configuration = PNConfiguration(publishKey: "demo", subscribeKey: "demo")
-            // Instantiate PubNub client.
-            client = OurPubNub.clientWithConfiguration(configuration)    // used OurPubNub instead of PubNub
-            encodedData = NSKeyedArchiver.archivedDataWithRootObject(client!)  // encode into NSData
-
-            defaults.setObject(encodedData, forKey: "pubnub")
-        }
-        else {
-            print("pubnub instance exists")
-            client = NSKeyedUnarchiver.unarchiveObjectWithData(encodedData!) as? PubNub   // decode from NSData
-        } */
         
         let configuration = PNConfiguration(publishKey: "demo", subscribeKey: "demo")
         // Instantiate PubNub client.
-        client = OurPubNub.clientWithConfiguration(configuration)    // used OurPubNub instead of PubNub
+        client = OurPubNub.clientWithConfiguration(configuration)
         
         super.init()
         client?.addListener(self)
@@ -217,6 +197,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
 
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+        
+        let targetChannel = client?.channels().last as! String
+        client?.unsubscribeFromChannels([targetChannel], withPresence: true)
+            
     }
     
 
