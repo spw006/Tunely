@@ -86,6 +86,8 @@ class SideBarTableViewController: UIViewController {
                             print("No response from server.")
                             return
                         }
+                        
+                        print("Deleted hosted stream.")
                 }
                 
                 // go back to home after delete

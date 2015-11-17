@@ -33,6 +33,7 @@ class HostViewController: UIViewController {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
+    /** Populate the list with all streams */
     @IBAction func viewStream(sender: AnyObject) {
         
         // Create a pubnub channel and subscribe to it

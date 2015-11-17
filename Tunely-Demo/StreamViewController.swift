@@ -201,7 +201,7 @@ class StreamViewController: UIViewController, PNObjectEventListener {
             
             
             
-            let picObject : [String : [String : String]] = ["pic" : ["url" : defaults.stringForKey("picURL")! , "uuid" : uuid]]
+            let picObject : [String : [String : String]] = ["pic" : ["url" : defaults.stringForKey("userPicURL")! , "uuid" : uuid]]
             
             
             client.publish(picObject, toChannel: targetChannel,
