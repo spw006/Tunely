@@ -54,7 +54,7 @@
                         <outlet property="delegate" destination="-1" id="Fh7-E8-Hha"/>
                     </connections>
                 </collectionView>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KQY-fO-6FM">
+                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KQY-fO-6FM">
                     <rect key="frame" x="8" y="21" width="69" height="31"/>
                     <animations/>
                     <constraints>
