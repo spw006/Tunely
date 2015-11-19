@@ -580,7 +580,6 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         
         let row = indexPath.row
-        print(songs[row].title)
         
         
         let tmpString = userPlaylistTrackStrings[row].trackID //as! String
