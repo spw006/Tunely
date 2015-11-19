@@ -347,6 +347,8 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
         let playlistObject : [String : [Array]] = ["playlistObj": [playlistTrackname]]
         
         appDelegate.client!.publish(playlistObject, toChannel: targetChannel, compressed: false, withCompletion: { (status) -> Void in })
+        
+        print("PUBLISHED PLAYLIST")
 
         
         
