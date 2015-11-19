@@ -12,7 +12,8 @@ import PubNub
 
 
 var player:SPTAudioStreamingController?
-var userPlaylistTrackStrings = [NSURL]()
+//var userPlaylistTrackStrings = [NSURL]()
+var userPlaylistTrackStrings = [Song]()
 
 class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, UITableViewDataSource, UITableViewDelegate, PNObjectEventListener {
     
@@ -71,8 +72,6 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
     @IBOutlet weak var Next: UIBarButtonItem!
     
     
-    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-    
     
     
     @IBAction func PlayPause(sender: AnyObject) {
@@ -86,7 +85,10 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
         {
             print("first play")
             playUsingSession(session)
-            player?.playURI(userPlaylistTrackStrings[0], callback: nil)
+            //player?.playURI(userPlaylistTrackStrings[0], callback: nil)
+            var tmpString = userPlaylistTrackStrings[0].trackID as! String
+            var formattedTrackName = NSURL(string: "spotify:track:"+tmpString);
+            player?.playURI(formattedTrackName, callback: nil)
             //isPlaying = true;
             firstPlay = false
         }
@@ -178,7 +180,8 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
         var formattedTrackName = NSURL(string: "spotify:track:"+trackID);
         print(formattedTrackName)
         
-        userPlaylistTrackStrings.append(formattedTrackName!)
+        //userPlaylistTrackStrings.append(formattedTrackName!)
+        //userPlaylistTrackStrings.append(formattedTrackName!)
         
         
         //player?.queueURI(formattedTrackName, callback: nil)
@@ -197,7 +200,9 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
             trackListPosition++;
             if(trackListPosition < userPlaylistTrackStrings.count)
             {
-                player.playURI(userPlaylistTrackStrings[trackListPosition], callback: nil)
+                var tmpString = userPlaylistTrackStrings[trackListPosition].trackID as! String
+                var formattedTrackName = NSURL(string: "spotify:track:"+tmpString);
+                player.playURI(formattedTrackName, callback: nil)
             }
         }
     }
@@ -260,18 +265,28 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
         super.viewDidLoad()
         print("streamviewcontroller view loaded")
         
-        titleLabel?.text = "My Stream"
+        titleLabel?.text = streamName
         
         appDelegate.client?.addListener(self)
         
+        let nib = UINib(nibName: "CollectionViewCell", bundle: nil)
         
+        self.listenersView.registerNib(nib, forCellWithReuseIdentifier: "reuseIdentifier")
+        
+        client = appDelegate.client!
+        client?.addListener(self)
         
         /* Table Setup delegates */
-        tableView.delegate = self
-        tableView.dataSource = self
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
         self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
         
-        self.tableView!.reloadData()
+        //self.tableView.reloadData()
+        //self.tableView.reloadData()
+        self.tableView.reloadData()
+
+
+        print("endofviewload")
         
 
         // Do any additional setup after loading the view.
@@ -344,7 +359,8 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
             // message.data.subscribedChannel
         }
         
-        if let obj = message.data.message["pic"]{
+        if let obj = message.data.message["songObj"] {
+            /*
             if !self.listeners.contains(message.uuid) {
                 print("adding " + message.uuid + " to my list of listeners")
                 self.listenersPic.append(obj["url"] as! String)
@@ -353,7 +369,27 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
             }
             else {
                 print("ERROR: " + message.uuid + " is already a listener")
+            }*/
+            if(obj != nil){
+            
+                
+                
+            var song = Song()
+                
+            song.title = obj["title"] as! String
+            song.album = obj["album"] as! String
+            song.artist = obj["artist"] as! String
+            song.trackID = obj["trackID"] as! String
+            //var tmpString = song.trackID
+            //var formattedTrackName = NSURL(string: "spotify:track:"+tmpString);
+                
+            
+            userPlaylistTrackStrings.append(song)
+            //var tempString2 = obj["title"] as! String
+            //playlistTrackname.append(tempString2)
+            
             }
+            
         }
         else {
             print("nooo")
@@ -527,30 +563,20 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
         // #warning Incomplete implementation, return the number of rows
         return playlistTrackname.count
     }
+    /*
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        /*
+        
         let row = indexPath.row
         print(songs[row].title)
-        //ViewController().addSongtoPlaylist(songs[row].trackID)
-        //ViewController.addSongtoPlaylist(ViewController)
-        var formattedTrackName = NSURL(string: "spotify:track:"+songs[row].trackID);
-        print(formattedTrackName)
-        
-        userPlaylistTrackStrings.append(formattedTrackName!)
-
-    */
-        //player?.queueURI(formattedTrackName, callback: nil)
-        //player?.playURI(formattedTrackName, callback: nil)
-        //.ViewController.addSongtoPlaylist(songs[row].trackID)
         
         
+        let tmpString = userPlaylistTrackStrings[row].trackID //as! String
+        let formattedTrackName = NSURL(string: "spotify:track:"+tmpString);
+        player?.playURI(formattedTrackName, callback: nil)
         
-    }
-
-    
-    
+    }*/
     
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -558,136 +584,26 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
         let cell = self.tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
         //var cell = self.tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
         
-        
-        
-        
-        
-        
         print(indexPath.row)
         //print(songs.count)
         
-        if(playlistTrackname.count > 0){
+        if(userPlaylistTrackStrings.count > 0){
+            /*
             let song = playlistTrackname[indexPath.row]
             
             cell.textLabel?.text = song.title
             
             cell.detailTextLabel?.text = song.artist + " - " + song.album
+*/
+            //code for join stream but not host
+            //cell.textLabel?.text = playlistTrackname[indexPath.row]
+            
+            print(userPlaylistTrackStrings[indexPath.row].title)
+            cell.textLabel?.text = userPlaylistTrackStrings[indexPath.row].title
         }
 
         return cell
     }
-    
-    
-    
-    
-    
-    //PUBNUB STUFF
-    
-    func client(client: PubNub!, didReceiveMessage message: PNMessageResult!) {
-        
-        // Handle new message stored in message.data.message
-        if message.data.actualChannel != nil {
-            
-            // Message has been received on channel group stored in
-            // message.data.subscribedChannel
-        }
-        else {
-            
-            // Message has been received on channel stored in
-            // message.data.subscribedChannel
-        }
-        
-        print("Received message: \(message.data.message) on channel " +
-            "\((message.data.actualChannel ?? message.data.subscribedChannel)!) at " +
-            "\(message.data.timetoken)")
-    }
-    
-    // New presence event handling.
-    func client(client: PubNub!, didReceivePresenceEvent event: PNPresenceEventResult!) {
-        
-        // Handle presence event event.data.presenceEvent (one of: join, leave, timeout,
-        // state-change).
-        if event.data.actualChannel != nil {
-            
-            // Presence event has been received on channel group stored in
-            // event.data.subscribedChannel
-        }
-        else {
-            
-            // Presence event has been received on channel stored in
-            // event.data.subscribedChannel
-        }
-        
-        if event.data.presenceEvent != "state-change" {
-            
-            print("\(event.data.presence.uuid) \"\(event.data.presenceEvent)'ed\"\n" +
-                "at: \(event.data.presence.timetoken) " +
-                "on \((event.data.actualChannel ?? event.data.subscribedChannel)!) " +
-                "(Occupancy: \(event.data.presence.occupancy))");
-        }
-        else {
-            
-            print("\(event.data.presence.uuid) changed state at: " +
-                "\(event.data.presence.timetoken) " +
-                "on \((event.data.actualChannel ?? event.data.subscribedChannel)!) to:\n" +
-                "\(event.data.presence.state)");
-        }
-    }
-    
-    
-    // Handle subscription status change.
-    
-    // Handle subscription status change.
-    func client(client: PubNub!, didReceiveStatus status: PNStatus!) {
-        if status.category == .PNUnexpectedDisconnectCategory {
-            
-            // This event happens when radio / connectivity is lost
-        }
-        else if status.category == .PNConnectedCategory {
-            
-            // Connect event. You can do stuff like publish, and know you'll get it.
-            // Or just use the connected event to confirm you are subscribed for
-            // UI / internal notifications, etc
-            
-            // Select last object from list of channels and send message to it.
-            let targetChannel = client.channels().last as! String
-            client.publish("Hello from the PubNub Swift SDK", toChannel: targetChannel,
-                compressed: false, withCompletion: { (status) -> Void in
-                    
-                    if !status.error {
-                        
-                        // Message successfully published to specified channel.
-                    }
-                    else{
-                        
-                        // Handle message publish error. Check 'category' property
-                        // to find out possible reason because of which request did fail.
-                        // Review 'errorData' property (which has PNErrorData data type) of status
-                        // object to get additional information about issue.
-                        //
-                        // Request can be resent using: status.retry()
-                    }
-            })
-        }
-        else if status.category == .PNReconnectedCategory {
-            
-            // Happens as part of our regular operation. This event happens when
-            // radio / connectivity is lost, then regained.
-        }
-        else if status.category == .PNDecryptionErrorCategory {
-            
-            // Handle messsage decryption error. Probably client configured to
-            // encrypt messages and on live data feed it received plain text.
-        }
-    }
-
-    
-    
-    
-    
-    
-    
-    
     
     
     

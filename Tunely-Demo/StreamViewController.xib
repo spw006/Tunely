@@ -10,6 +10,7 @@
                 <outlet property="Next" destination="HL9-4G-UmE" id="pao-N1-a0i"/>
                 <outlet property="PlayPause" destination="K7M-BC-Ghx" id="AjW-hv-Q9b"/>
                 <outlet property="SearchButton" destination="Isc-zd-uol" id="vJk-sn-7hM"/>
+                <outlet property="listenersView" destination="fFL-uJ-Gi4" id="x73-XU-AFc"/>
                 <outlet property="tableView" destination="RAu-IV-SEY" id="aVf-wE-TGG"/>
                 <outlet property="titleLabel" destination="m6b-bM-8MP" id="kZJ-Vs-Zgr"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>

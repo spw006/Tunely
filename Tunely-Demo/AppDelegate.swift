@@ -36,16 +36,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Override point for customization after application launch.
-    
-
-        
-        
-        
-        self.client?.subscribeToChannels(["my_channel"], withPresence: true)
-        
-
-        
+        // Override point for customization after application launch.        
         return FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
     }
     

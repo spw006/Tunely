@@ -124,6 +124,7 @@ class HostViewController: UIViewController {
         }
         
         // create a stream
+        /*
         Alamofire.request(.POST, uri, parameters: parameters, headers:headers)
             .responseJSON { json in
                 
@@ -164,7 +165,13 @@ class HostViewController: UIViewController {
                 // go to stream view
                 let streamView:StreamViewController = StreamViewController(nibName: "StreamViewController", bundle: nil)
                 self.presentViewController(streamView, animated: true, completion: nil)
-        }
+        }*/
+        appDelegate.client?.subscribeToChannels([channelName], withPresence: true)
+
+        
+        // go to stream view
+        let streamView:StreamViewController = StreamViewController(nibName: "StreamViewController", bundle: nil)
+        self.presentViewController(streamView, animated: true, completion: nil)
     }
     
     @IBAction func changeSlider() {
@@ -239,7 +246,6 @@ class HostViewController: UIViewController {
             session = firstTimeSession
             
         }
-        
         
     }
     
