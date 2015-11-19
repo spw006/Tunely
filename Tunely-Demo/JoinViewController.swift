@@ -96,7 +96,7 @@ class JoinViewController: UIViewController {
         appDelegate.client?.subscribeToChannels([pubnubChannels[indexPath.row]], withPresence: true)
         
         // go to streamview
-        let streamView:StreamViewController = StreamViewController(nibName: "StreamViewController", bundle: nil)
+        let streamView:JoinStreamViewController = JoinStreamViewController(nibName: "JoinStreamViewController", bundle: nil)
         streamView.streamName = streamList[indexPath.row]
         self.presentViewController(streamView, animated: true, completion: nil)
     }

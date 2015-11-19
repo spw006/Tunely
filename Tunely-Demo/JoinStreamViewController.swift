@@ -88,9 +88,9 @@ class JoinStreamViewController: UIViewController,SPTAudioStreamingPlaybackDelega
             firstLoad = false
         }
         
-        let nib = UINib(nibName: "CollectionViewCell", bundle: nil)
+        //let nib = UINib(nibName: "CollectionViewCell", bundle: nil)
         
-        self.listenersView.registerNib(nib, forCellWithReuseIdentifier: "reuseIdentifier")
+        //self.listenersView.registerNib(nib, forCellWithReuseIdentifier: "reuseIdentifier")
         
         //client = appDelegate.client!
         //client?.addListener(self)
