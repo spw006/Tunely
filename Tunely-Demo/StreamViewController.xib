@@ -73,6 +73,9 @@
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="GpF-wR-KZ0"/>
                         <barButtonItem systemItem="rewind" id="laV-3r-NiN">
                             <color key="tintColor" red="0.24313725489999999" green="0.72549019609999998" blue="0.5568627451" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="SkipBackSong:" destination="-1" id="Hgp-CJ-R4u"/>
+                            </connections>
                         </barButtonItem>
                         <barButtonItem width="42" style="plain" systemItem="fixedSpace" id="sZV-d1-GIv"/>
                         <barButtonItem systemItem="play" id="K7M-BC-Ghx">

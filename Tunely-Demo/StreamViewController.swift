@@ -162,15 +162,20 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
             let formattedTrackName = NSURL(string: "spotify:track:"+tmpString);
             print(userPlaylistTrackStrings[TrackListPosition].title)
             //player!.setIsPlaying(false, callback: nil)
-            player!.stop(nil)
-            player!.playURI(formattedTrackName, callback: nil)
+            //player!.stop(nil)
+            player!.playURI(formattedTrackName, callback: { error -> Void in
+                if error == nil {
+                    self.skipSongs = false;
+                    return
+                }
+            })
         }
 
         //debug
         //self.addSongtoPlaylist("1UfBAJfmofTffrae5ls6DA") //fairytale
         
         //player?.skipNext(nil)
-        skipSongs = false;
+        //skipSongs = false;
     }
     
     @IBAction func SkipBackSong(sender: AnyObject) {
@@ -185,16 +190,21 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
             let tmpString = userPlaylistTrackStrings[TrackListPosition].trackID
             let formattedTrackName = NSURL(string: "spotify:track:"+tmpString);
             //player!.setIsPlaying(false, callback: nil)
-            player!.stop(nil)
+            //player!.stop(nil)
 
-            player!.playURI(formattedTrackName, callback: nil)
+            player!.playURI(formattedTrackName, callback: { error -> Void in
+                if error == nil {
+                    self.skipSongs = false;
+                    return
+                }
+            })
         }
 
         //debug
         //self.addSongtoPlaylist("1UfBAJfmofTffrae5ls6DA") //fairytale
         
         //player?.skipPrevious(nil)
-        skipSongs = false;
+        //skipSongs = false;
     }
     
     func addSongtoPlaylist(trackID: String)
@@ -416,7 +426,7 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
         let row = indexPath.row
         
         
-        player!.stop(nil)
+        //player!.stop(nil)
         isPlaying = false;
         TrackListPosition = row
         
@@ -439,10 +449,24 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         print("tableView called")
-        let cell = self.tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
+        
+        
+        
+        var cell:UITableViewCell? = tableView.dequeueReusableCellWithIdentifier("cell") as UITableViewCell?
+        
+        if (cell != nil) {
+            cell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "cell")
+        }
+        
+        
+        
+        
+        
+        
+        //let cell = self.tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
         //var cell = self.tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
         
-        print(indexPath.row)
+        //print(indexPath.row)
         //print(songs.count)
         
         if(userPlaylistTrackStrings.count > 0){
@@ -457,10 +481,12 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
             //cell.textLabel?.text = playlistTrackname[indexPath.row]
             
             print(userPlaylistTrackStrings[indexPath.row].title)
-            cell.textLabel?.text = userPlaylistTrackStrings[indexPath.row].title
+            cell!.textLabel?.text = userPlaylistTrackStrings[indexPath.row].title
+            cell!.detailTextLabel?.text = userPlaylistTrackStrings[indexPath.row].artist
+
         }
 
-        return cell
+        return cell!
     }
     
     
