@@ -267,7 +267,7 @@ class JoinStreamViewController: UIViewController,SPTAudioStreamingPlaybackDelega
             print("other channel")
         }
         
-        if let obj = message.data.message["playlistObj"] {
+        let obj = message.data.message["playlistObj"]
             /*
             if !self.listeners.contains(message.uuid) {
             print("adding " + message.uuid + " to my list of listeners")
@@ -278,6 +278,7 @@ class JoinStreamViewController: UIViewController,SPTAudioStreamingPlaybackDelega
             else {
             print("ERROR: " + message.uuid + " is already a listener")
             }*/
+            
             if(obj != nil){
                 
                 
@@ -301,10 +302,8 @@ class JoinStreamViewController: UIViewController,SPTAudioStreamingPlaybackDelega
                 playlist = obj as! [String]
             }
             
-        }
-        else {
-            print("nooo")
-        }
+        
+        
         
         print("Received message: \(message.data.message) on channel " +
             "\((message.data.actualChannel ?? message.data.subscribedChannel)!) at " +
