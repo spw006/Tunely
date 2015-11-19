@@ -11,6 +11,7 @@ import UIKit
 import PubNub
 
 var playlistTrackname = [String]()
+var playlistArtistname = [String]()
 var player:SPTAudioStreamingController?
 //var userPlaylistTrackStrings = [NSURL]()
 
@@ -340,11 +341,21 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
         
         // CODE TO PUBLISH PLAYLISTS
         let targetChannel =  appDelegate.client?.channels().last as! String
+        playlistTrackname.removeAll()
         for(var i = 0; i < userPlaylistTrackStrings.count; i++)
         {
             playlistTrackname.append(userPlaylistTrackStrings[i].title)
         }
-        let playlistObject : [String : [Array]] = ["playlistObj": [playlistTrackname]]
+        var tmpString = ""
+        for(var i = 0; i < playlistTrackname.count; i++)
+        {
+            tmpString = tmpString + playlistTrackname[i] + ","
+        }
+        
+        
+        
+        //let playlistObject : [String : [Array]] = ["playlistObj": [playlistTrackname]]
+        let playlistObject: [String : [String:String]] = ["playlistObj" : ["tracks" : tmpString]]
         
         appDelegate.client!.publish(playlistObject, toChannel: targetChannel, compressed: false, withCompletion: { (status) -> Void in })
         

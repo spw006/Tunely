@@ -197,7 +197,7 @@ class JoinStreamViewController: UIViewController,SPTAudioStreamingPlaybackDelega
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return userPlaylistTrackStrings.count
+        return playlist.count
     }
     
     
@@ -267,9 +267,9 @@ class JoinStreamViewController: UIViewController,SPTAudioStreamingPlaybackDelega
             print("other channel")
         }
         
-        var msg = message.data.message as! Dictionary<String, AnyObject>
+        //var msg = message.data.message as! Dictionary<String, AnyObject>
         
-        if let obj = msg["playlistObj"] {
+        if let obj = message.data.message["playlistObj"] {
             /*
             if !self.listeners.contains(message.uuid) {
             print("adding " + message.uuid + " to my list of listeners")
@@ -280,9 +280,12 @@ class JoinStreamViewController: UIViewController,SPTAudioStreamingPlaybackDelega
             else {
             print("ERROR: " + message.uuid + " is already a listener")
             }*/
-            
+            if(obj != nil) {
+                var tmp = obj["tracks"] as! String
+                playlist = tmp.componentsSeparatedByString(",")
+                self.tableView.reloadData()
+            }
 
-                playlist = obj as! [String]
             
             
         }
