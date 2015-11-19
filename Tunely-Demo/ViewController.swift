@@ -193,7 +193,7 @@ class ViewController: UIViewController, FBSDKLoginButtonDelegate {
         }
         else
         {
-            // user is logged out
+            //user is logged out
             UIView.beginAnimations(nil, context: nil)
             UIView.setAnimationDuration(1)
             UIView.setAnimationDelay(0.2)
