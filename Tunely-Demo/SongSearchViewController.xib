@@ -16,7 +16,7 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="tgk-vT-KqQ">
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="tgk-vT-KqQ">
                     <rect key="frame" x="0.0" y="72" width="600" height="528"/>
                     <animations/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -31,8 +31,8 @@
                         <outlet property="delegate" destination="-1" id="tUd-vB-heu"/>
                     </connections>
                 </tableView>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z5D-1g-hT6">
-                    <rect key="frame" x="45" y="23" width="34" height="30"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z5D-1g-hT6">
+                    <rect key="frame" x="29" y="18" width="34" height="30"/>
                     <animations/>
                     <state key="normal" title="Back"/>
                     <connections>
@@ -42,6 +42,14 @@
             </subviews>
             <animations/>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="tgk-vT-KqQ" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="2Rz-00-S5b"/>
+                <constraint firstItem="tgk-vT-KqQ" firstAttribute="top" secondItem="Z5D-1g-hT6" secondAttribute="bottom" constant="24" id="7Os-ha-TlG"/>
+                <constraint firstAttribute="trailing" secondItem="tgk-vT-KqQ" secondAttribute="trailing" id="KSM-gz-wGk"/>
+                <constraint firstItem="Z5D-1g-hT6" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="18" id="LDo-v8-af6"/>
+                <constraint firstAttribute="bottom" secondItem="tgk-vT-KqQ" secondAttribute="bottom" id="jlZ-Gp-dqh"/>
+                <constraint firstItem="Z5D-1g-hT6" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="29" id="uSu-5m-cyf"/>
+            </constraints>
         </view>
     </objects>
 </document>

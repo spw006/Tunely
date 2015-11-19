@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		145EC06A1BFDCBCD006C3D27 /* JoinStreamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 145EC0681BFDCBCD006C3D27 /* JoinStreamViewController.swift */; };
-		145EC06B1BFDCBCD006C3D27 /* JoinStreamViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 145EC0691BFDCBCD006C3D27 /* JoinStreamViewController.xib */; };
 		14BDC8351BF28BC20073F455 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14BDC8341BF28BC20073F455 /* AVFoundation.framework */; };
 		14BDC8371BF28BC90073F455 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14BDC8361BF28BC90073F455 /* SystemConfiguration.framework */; };
 		14BDC8421BF51F140073F455 /* Song.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14BDC8411BF51F140073F455 /* Song.swift */; };
@@ -53,8 +51,6 @@
 /* Begin PBXFileReference section */
 		0979AB6C2E20C9EFC1A8FB07 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		0B6F901B2C7C0B4D2335DA3A /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		145EC0681BFDCBCD006C3D27 /* JoinStreamViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JoinStreamViewController.swift; sourceTree = "<group>"; };
-		145EC0691BFDCBCD006C3D27 /* JoinStreamViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JoinStreamViewController.xib; sourceTree = "<group>"; };
 		14BDC8341BF28BC20073F455 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		14BDC8361BF28BC90073F455 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		14BDC8411BF51F140073F455 /* Song.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Song.swift; sourceTree = "<group>"; };
@@ -188,8 +184,6 @@
 				6EA1EEB51BD0B77D00E83778 /* LaunchScreen.storyboard */,
 				6EA1EEB81BD0B77D00E83778 /* Info.plist */,
 				6EA1EED31BD0B87700E83778 /* Tunely-Demo-Bridging-Header.h */,
-				145EC0681BFDCBCD006C3D27 /* JoinStreamViewController.swift */,
-				145EC0691BFDCBCD006C3D27 /* JoinStreamViewController.xib */,
 			);
 			path = "Tunely-Demo";
 			sourceTree = "<group>";
@@ -304,7 +298,6 @@
 				6EA1EEB41BD0B77D00E83778 /* Assets.xcassets in Resources */,
 				94D1578F1BE851E10048BAF8 /* HostViewController.xib in Resources */,
 				6EFEC0AB1BFA726B00CA4C0E /* CollectionViewCell.xib in Resources */,
-				145EC06B1BFDCBCD006C3D27 /* JoinStreamViewController.xib in Resources */,
 				6EA1EEB21BD0B77D00E83778 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -373,7 +366,6 @@
 			files = (
 				94D1578E1BE851E10048BAF8 /* HostViewController.swift in Sources */,
 				6EA1EEAF1BD0B77D00E83778 /* ViewController.swift in Sources */,
-				145EC06A1BFDCBCD006C3D27 /* JoinStreamViewController.swift in Sources */,
 				6EFEC0AA1BFA726B00CA4C0E /* CollectionViewCell.swift in Sources */,
 				94D157961BE935C90048BAF8 /* StreamViewController.swift in Sources */,
 				14BDC8421BF51F140073F455 /* Song.swift in Sources */,

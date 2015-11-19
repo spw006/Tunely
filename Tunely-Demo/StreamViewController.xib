@@ -21,7 +21,7 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v1m-hx-qYs">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v1m-hx-qYs">
                     <rect key="frame" x="-113" y="0.0" width="600" height="73"/>
                     <animations/>
                     <color key="backgroundColor" red="0.24313725489999999" green="0.72549019609999998" blue="0.5568627451" alpha="1" colorSpace="calibratedRGB"/>
@@ -29,12 +29,15 @@
                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="RAu-IV-SEY">
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="RAu-IV-SEY">
                     <rect key="frame" x="0.0" y="168" width="375" height="455"/>
                     <animations/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="455" id="t8F-Ha-Vf7"/>
+                    </constraints>
                 </tableView>
-                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="fFL-uJ-Gi4">
+                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="fFL-uJ-Gi4">
                     <rect key="frame" x="0.0" y="72" width="375" height="52"/>
                     <animations/>
                     <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="vMD-vY-plC">
@@ -59,14 +62,14 @@
                         <action selector="revealSideBar:" destination="-1" eventType="touchUpInside" id="Qu7-5V-61f"/>
                     </connections>
                 </button>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="My Stream" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m6b-bM-8MP">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="My Stream" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m6b-bM-8MP">
                     <rect key="frame" x="87" y="21" width="201" height="31"/>
                     <animations/>
                     <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aCY-Tk-IZQ">
+                <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aCY-Tk-IZQ">
                     <rect key="frame" x="0.0" y="623" width="375" height="44"/>
                     <animations/>
                     <items>
@@ -94,7 +97,7 @@
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="z65-Zy-ejg"/>
                     </items>
                 </toolbar>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Isc-zd-uol">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Isc-zd-uol">
                     <rect key="frame" x="163" y="130" width="48" height="30"/>
                     <animations/>
                     <state key="normal" title="Search"/>
@@ -105,6 +108,20 @@
             </subviews>
             <animations/>
             <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstItem="RAu-IV-SEY" firstAttribute="top" secondItem="Isc-zd-uol" secondAttribute="bottom" constant="8" symbolic="YES" id="01t-Tg-F0E"/>
+                <constraint firstItem="RAu-IV-SEY" firstAttribute="centerX" secondItem="Isc-zd-uol" secondAttribute="centerX" id="ABw-y6-3op"/>
+                <constraint firstItem="RAu-IV-SEY" firstAttribute="leading" secondItem="fFL-uJ-Gi4" secondAttribute="leading" id="DE9-T2-2AR"/>
+                <constraint firstItem="RAu-IV-SEY" firstAttribute="centerX" secondItem="v1m-hx-qYs" secondAttribute="centerX" id="Mi3-YR-oTG"/>
+                <constraint firstItem="RAu-IV-SEY" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="PwR-31-NDC"/>
+                <constraint firstItem="aCY-Tk-IZQ" firstAttribute="trailing" secondItem="RAu-IV-SEY" secondAttribute="trailing" id="gLZ-Z1-0AC"/>
+                <constraint firstItem="aCY-Tk-IZQ" firstAttribute="top" secondItem="RAu-IV-SEY" secondAttribute="bottom" id="ksZ-Kt-c9c"/>
+                <constraint firstItem="RAu-IV-SEY" firstAttribute="trailing" secondItem="fFL-uJ-Gi4" secondAttribute="trailing" id="kxA-0O-Qfi"/>
+                <constraint firstItem="RAu-IV-SEY" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="168" id="u2J-vd-ILO"/>
+                <constraint firstItem="RAu-IV-SEY" firstAttribute="centerX" secondItem="m6b-bM-8MP" secondAttribute="centerX" id="uZs-yn-alz"/>
+                <constraint firstItem="aCY-Tk-IZQ" firstAttribute="leading" secondItem="RAu-IV-SEY" secondAttribute="leading" id="uvu-De-soy"/>
+                <constraint firstAttribute="trailing" secondItem="RAu-IV-SEY" secondAttribute="trailing" id="v1k-Yb-zVa"/>
+            </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
         </view>
     </objects>

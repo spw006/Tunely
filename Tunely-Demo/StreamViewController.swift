@@ -10,7 +10,7 @@ import Alamofire
 import UIKit
 import PubNub
 
-
+var playlistTrackname = [String]()
 var player:SPTAudioStreamingController?
 //var userPlaylistTrackStrings = [NSURL]()
 
@@ -333,7 +333,25 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
         //self.tableView.reloadData()
         //self.tableView.reloadData()
         self.tableView.reloadData()
+        
+        
+        
+        
+        
+        // CODE TO PUBLISH PLAYLISTS
+        let targetChannel =  appDelegate.client?.channels().last as! String
+        for(var i = 0; i < userPlaylistTrackStrings.count; i++)
+        {
+            playlistTrackname.append(userPlaylistTrackStrings[i].title)
+        }
+        let playlistObject : [String : [Array]] = ["playlistObj": [playlistTrackname]]
+        
+        appDelegate.client!.publish(playlistObject, toChannel: targetChannel, compressed: false, withCompletion: { (status) -> Void in })
 
+        
+        
+        
+        
 
         print("endofviewload")
         
@@ -482,7 +500,7 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
             
             print(userPlaylistTrackStrings[indexPath.row].title)
             cell!.textLabel?.text = userPlaylistTrackStrings[indexPath.row].title
-            cell!.detailTextLabel?.text = userPlaylistTrackStrings[indexPath.row].artist
+            cell!.detailTextLabel?.text = userPlaylistTrackStrings[indexPath.row].artist + " - " + userPlaylistTrackStrings[indexPath.row].album
 
         }
 

@@ -12,7 +12,6 @@ import SwiftyJSON
 import PubNub
 
 //var playlistTrackname = [Song]()
-var playlistTrackname = [String]()
 
 class SongSearchViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchDisplayDelegate, PNObjectEventListener {
     
