@@ -214,10 +214,14 @@ class SongSearchViewController: UIViewController, UITableViewDataSource, UITable
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         print("tableView in songsearch called")
-        let cell = self.tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
-        //var cell = self.tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
+        //let cell = self.tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
+
         
-        
+        var cell:UITableViewCell? = tableView.dequeueReusableCellWithIdentifier("cell") as UITableViewCell?
+
+        if (cell != nil) {
+            cell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "cell")
+        }
 
 
         
@@ -227,132 +231,12 @@ class SongSearchViewController: UIViewController, UITableViewDataSource, UITable
         if(songs.count > 0){
             let song = songs[indexPath.row]
             
-            cell.textLabel?.text = song.title
+            cell!.textLabel?.text = song.title
             
-            cell.detailTextLabel?.text = song.artist + " - " + song.album
+            cell!.detailTextLabel?.text = song.artist + " - " + song.album
         }
-        return cell
+        return cell!
     }
-    
-    
-    
-    /*
-    /************************** PUBNUB FUNCTIONS ************************/
-     
-     // Handle new message from one of channels on which client has been subscribed.
-    func client(client: PubNub!, didReceiveMessage message: PNMessageResult!) {
-        print("testreceive")
-        
-        // Handle new message stored in message.data.message
-        if message.data.actualChannel != nil {
-            
-            // Message has been received on channel group stored in
-            // message.data.subscribedChannel
-        }
-        else {
-            
-            // Message has been received on channel stored in
-            // message.data.subscribedChannel
-        }
-        
-
-        
-        print("Received message: \(message.data.message) on channel " +
-            "\((message.data.actualChannel ?? message.data.subscribedChannel)!) at " +
-            "\(message.data.timetoken)")
-    }
-    
-    // New presence event handling.
-    func client(client: PubNub!, didReceivePresenceEvent event: PNPresenceEventResult!) {
-        
-        // Handle presence event event.data.presenceEvent (one of: join, leave, timeout,
-        // state-change).
-        if event.data.actualChannel != nil {
-            
-            // Presence event has been received on channel group stored in
-            // event.data.subscribedChannel
-        }
-        else {
-            
-            // Presence event has been received on channel stored in
-            // event.data.subscribedChannel
-        }
-        
-        if event.data.presenceEvent != "state-change" {
-
-            
-            
-
-            
-            
-            print("\(event.data.presence.uuid) \"\(event.data.presenceEvent)'ed\"\n" +
-                "at: \(event.data.presence.timetoken) " +
-                "on \((event.data.actualChannel ?? event.data.subscribedChannel)!) " +
-                "(Occupancy: \(event.data.presence.occupancy))");
-        }
-        else {
-            
-            print("\(event.data.presence.uuid) changed state at: " +
-                "\(event.data.presence.timetoken) " +
-                "on \((event.data.actualChannel ?? event.data.subscribedChannel)!) to:\n" +
-                "\(event.data.presence.state)");
-        }
-    }
-    
-    
-    // Handle subscription status change.
-    
-    // Handle subscription status change.
-    func client(client: PubNub!, didReceiveStatus status: PNStatus!) {
-        if status.category == .PNUnexpectedDisconnectCategory {
-            
-            // This event happens when radio / connectivity is lost
-        }
-        else if status.category == .PNConnectedCategory {
-            
-            // Connect event. You can do stuff like publish, and know you'll get it.
-            // Or just use the connected event to confirm you are subscribed for
-            // UI / internal notifications, etc
-            
-            // Select last object from list of channels and send message to it.
-            /*    let targetChannel = client.channels().last as! String
-            client.publish("Hello from the PubNub Swift SDK", toChannel: targetChannel,
-            compressed: false, withCompletion: { (status) -> Void in
-            
-            if !status.error {
-            
-            // Message successfully published to specified channel.
-            }
-            else{
-            
-            // Handle message publish error. Check 'category' property
-            // to find out possible reason because of which request did
-            ail.
-            // Review 'errorData' property (which has PNErrorData data type) of status
-            // object to get additional information about issue.
-            //
-            // Request can be resent using: status.retry()
-            }
-            })
-            } */
-            
-
-            
-            
-
-        }
-            
-        else if status.category == .PNReconnectedCategory {
-            
-            // Happens as part of our regular operation. This event happens when
-            // radio / connectivity is lost, then regained.
-        }
-        else if status.category == .PNDecryptionErrorCategory {
-            
-            // Handle messsage decryption error. Probably client configured to
-            // encrypt messages and on live data feed it received plain text.
-        }
-    }*/
     
     
 }

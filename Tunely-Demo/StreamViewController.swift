@@ -51,9 +51,10 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
     
     
     var isPlaying = false;
-    var trackListPosition = 0;
+    var TrackListPosition = 0;
     var firstPlay = true;
     var pausePressed = true;
+    var skipSongs = false;
     
     
     //table view
@@ -149,14 +150,27 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
     }
     @IBAction func SkipForwardSong(sender: AnyObject) {
         print("next song button pressed")
+        
         if player == nil {
             player = SPTAudioStreamingController(clientId: kClientID)
         }
-        
+        skipSongs = true;
+        TrackListPosition=TrackListPosition+1;
+        if(TrackListPosition < userPlaylistTrackStrings.count)
+        {
+            let tmpString = userPlaylistTrackStrings[TrackListPosition].trackID
+            let formattedTrackName = NSURL(string: "spotify:track:"+tmpString);
+            print(userPlaylistTrackStrings[TrackListPosition].title)
+            //player!.setIsPlaying(false, callback: nil)
+            player!.stop(nil)
+            player!.playURI(formattedTrackName, callback: nil)
+        }
+
         //debug
         //self.addSongtoPlaylist("1UfBAJfmofTffrae5ls6DA") //fairytale
         
-        player?.skipNext(nil)
+        //player?.skipNext(nil)
+        skipSongs = false;
     }
     
     @IBAction func SkipBackSong(sender: AnyObject) {
@@ -164,11 +178,23 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
         if player == nil {
             player = SPTAudioStreamingController(clientId: kClientID)
         }
-        
+        skipSongs = true;
+        TrackListPosition=TrackListPosition-1;
+        if(TrackListPosition >= 0)
+        {
+            let tmpString = userPlaylistTrackStrings[TrackListPosition].trackID
+            let formattedTrackName = NSURL(string: "spotify:track:"+tmpString);
+            //player!.setIsPlaying(false, callback: nil)
+            player!.stop(nil)
+
+            player!.playURI(formattedTrackName, callback: nil)
+        }
+
         //debug
         //self.addSongtoPlaylist("1UfBAJfmofTffrae5ls6DA") //fairytale
         
-        player?.skipPrevious(nil)
+        //player?.skipPrevious(nil)
+        skipSongs = false;
     }
     
     func addSongtoPlaylist(trackID: String)
@@ -200,12 +226,17 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
     func audioStreaming(player: SPTAudioStreamingController, didStopPlayingTrack uri: NSURL) {
         print("track ended" )
         if(pausePressed == false){
-            trackListPosition++;
-            if(trackListPosition < userPlaylistTrackStrings.count)
+            print(skipSongs)
+            if(skipSongs == false){
+                print("fuck life")
+                TrackListPosition=TrackListPosition+1;
+            if(TrackListPosition < userPlaylistTrackStrings.count)
             {
-                var tmpString = userPlaylistTrackStrings[trackListPosition].trackID
+                print("audio streaming next song")
+                let tmpString = userPlaylistTrackStrings[TrackListPosition].trackID
                 let formattedTrackName = NSURL(string: "spotify:track:"+tmpString);
                 player.playURI(formattedTrackName, callback: nil)
+            }
             }
         }
     }
@@ -350,9 +381,96 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
         return cell
     }
     
-    /************************** PUBNUB FUNCTIONS ************************/
+
     
-    // Handle new message from one of channels on which client has been subscribed.
+    
+    
+    /*
+    // MARK: - Navigation
+
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        // Get the new view controller using segue.destinationViewController.
+        // Pass the selected object to the new view controller.
+    }
+    */
+    
+    
+    
+    //TABLE VIEW STUFF:
+    
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        // #warning Incomplete implementation, return the number of sections
+        return 1
+    }
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        // #warning Incomplete implementation, return the number of rows
+        return userPlaylistTrackStrings.count
+    }
+    
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        skipSongs = true
+        let row = indexPath.row
+        
+        
+        player!.stop(nil)
+        isPlaying = false;
+        TrackListPosition = row
+        
+        
+        let tmpString = userPlaylistTrackStrings[row].trackID //as! String
+        print(userPlaylistTrackStrings[row].title)
+        let formattedTrackName = NSURL(string: "spotify:track:"+tmpString);
+        print("x")
+        player?.playURI(formattedTrackName, callback: { error -> Void in
+            if error == nil {
+                self.skipSongs = false;
+                return
+            }
+        })
+        print("y")
+        //skipSongs = false
+        
+    }
+    
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        print("tableView called")
+        let cell = self.tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
+        //var cell = self.tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
+        
+        print(indexPath.row)
+        //print(songs.count)
+        
+        if(userPlaylistTrackStrings.count > 0){
+            /*
+            let song = playlistTrackname[indexPath.row]
+            
+            cell.textLabel?.text = song.title
+            
+            cell.detailTextLabel?.text = song.artist + " - " + song.album
+*/
+            //code for join stream but not host
+            //cell.textLabel?.text = playlistTrackname[indexPath.row]
+            
+            print(userPlaylistTrackStrings[indexPath.row].title)
+            cell.textLabel?.text = userPlaylistTrackStrings[indexPath.row].title
+        }
+
+        return cell
+    }
+    
+    
+    
+    
+    
+    
+    /************************** PUBNUB FUNCTIONS ************************/
+     
+     // Handle new message from one of channels on which client has been subscribed.
     func client(client: PubNub!, didReceiveMessage message: PNMessageResult!) {
         
         // Handle new message stored in message.data.message
@@ -372,32 +490,32 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
         if let obj = message.data.message["songObj"] {
             /*
             if !self.listeners.contains(message.uuid) {
-                print("adding " + message.uuid + " to my list of listeners")
-                self.listenersPic.append(obj["url"] as! String)
-                self.listeners.append(message.uuid)
-                self.listenersView.reloadData()
+            print("adding " + message.uuid + " to my list of listeners")
+            self.listenersPic.append(obj["url"] as! String)
+            self.listeners.append(message.uuid)
+            self.listenersView.reloadData()
             }
             else {
-                print("ERROR: " + message.uuid + " is already a listener")
+            print("ERROR: " + message.uuid + " is already a listener")
             }*/
             if(obj != nil){
-            
                 
                 
-            var song = Song()
                 
-            song.title = obj["title"] as! String
-            song.album = obj["album"] as! String
-            song.artist = obj["artist"] as! String
-            song.trackID = obj["trackID"] as! String
-            //var tmpString = song.trackID
-            //var formattedTrackName = NSURL(string: "spotify:track:"+tmpString);
+                let song = Song()
                 
-            
-            userPlaylistTrackStrings.append(song)
-            //var tempString2 = obj["title"] as! String
-            //playlistTrackname.append(tempString2)
-            
+                song.title = obj["title"] as! String
+                song.album = obj["album"] as! String
+                song.artist = obj["artist"] as! String
+                song.trackID = obj["trackID"] as! String
+                //var tmpString = song.trackID
+                //var formattedTrackName = NSURL(string: "spotify:track:"+tmpString);
+                
+                
+                userPlaylistTrackStrings.append(song)
+                //var tempString2 = obj["title"] as! String
+                //playlistTrackname.append(tempString2)
+                
             }
             
         }
@@ -433,7 +551,7 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
             //let uuid : String = (self.client?.uuid())!
             let uuid: String = client.uuid()
             
-
+            
             let picObject : [String : [String : String]] = ["pic" : ["url" : defaults.stringForKey("userPicURL")! , "uuid" : uuid]]
             
             
@@ -454,7 +572,7 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
                         // Request can be resent using: status.retry()
                     }
             })
-
+            
             
             print("\(event.data.presence.uuid) \"\(event.data.presenceEvent)'ed\"\n" +
                 "at: \(event.data.presence.timetoken) " +
@@ -548,74 +666,6 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
     }
     
     /************************ END PUBNUB FUNCTIONS ****************************/
-    
-    
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-    
-    
-    
-    //TABLE VIEW STUFF:
-    
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 1
-    }
-    
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return userPlaylistTrackStrings.count
-    }
-    
-    
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        
-        let row = indexPath.row
-        
-        
-        let tmpString = userPlaylistTrackStrings[row].trackID //as! String
-        let formattedTrackName = NSURL(string: "spotify:track:"+tmpString);
-        player?.playURI(formattedTrackName, callback: nil)
-        
-    }
-    
-    
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        print("tableView called")
-        let cell = self.tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
-        //var cell = self.tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
-        
-        print(indexPath.row)
-        //print(songs.count)
-        
-        if(userPlaylistTrackStrings.count > 0){
-            /*
-            let song = playlistTrackname[indexPath.row]
-            
-            cell.textLabel?.text = song.title
-            
-            cell.detailTextLabel?.text = song.artist + " - " + song.album
-*/
-            //code for join stream but not host
-            //cell.textLabel?.text = playlistTrackname[indexPath.row]
-            
-            print(userPlaylistTrackStrings[indexPath.row].title)
-            cell.textLabel?.text = userPlaylistTrackStrings[indexPath.row].title
-        }
-
-        return cell
-    }
-    
-    
     
 
 }
