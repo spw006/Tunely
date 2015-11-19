@@ -13,6 +13,7 @@ import UIKit
 
 var SpotifyLoginFlag = false;
 var session:SPTSession!
+var firstLoad = true;
 
 
 class HostViewController: UIViewController {

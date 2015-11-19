@@ -13,6 +13,7 @@ import PubNub
 
 var player:SPTAudioStreamingController?
 //var userPlaylistTrackStrings = [NSURL]()
+
 var userPlaylistTrackStrings = [Song]()
 
 class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, UITableViewDataSource, UITableViewDelegate, PNObjectEventListener {
@@ -27,7 +28,7 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
     var listenersPic : [String] = []
     var listeners : [String] = []
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-    var client: PubNub?
+    //var client: PubNub?
     var streamName : String!
     
 
@@ -35,6 +36,8 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
     
     @IBAction func searchSongs(sender: AnyObject) {
         let searchSongView:SongSearchViewController = SongSearchViewController(nibName: "SongSearchViewController", bundle: nil)
+        //appDelegate.client?.removeListener(self)
+        
         self.presentViewController(searchSongView, animated: true, completion: nil)
     }
     
@@ -86,8 +89,8 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
             print("first play")
             playUsingSession(session)
             //player?.playURI(userPlaylistTrackStrings[0], callback: nil)
-            var tmpString = userPlaylistTrackStrings[0].trackID as! String
-            var formattedTrackName = NSURL(string: "spotify:track:"+tmpString);
+            let tmpString = userPlaylistTrackStrings[0].trackID 
+            let formattedTrackName = NSURL(string: "spotify:track:"+tmpString);
             player?.playURI(formattedTrackName, callback: nil)
             //isPlaying = true;
             firstPlay = false
@@ -177,7 +180,7 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
             player = SPTAudioStreamingController(clientId: kClientID)
         }
         
-        var formattedTrackName = NSURL(string: "spotify:track:"+trackID);
+        let formattedTrackName = NSURL(string: "spotify:track:"+trackID);
         print(formattedTrackName)
         
         //userPlaylistTrackStrings.append(formattedTrackName!)
@@ -200,8 +203,8 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
             trackListPosition++;
             if(trackListPosition < userPlaylistTrackStrings.count)
             {
-                var tmpString = userPlaylistTrackStrings[trackListPosition].trackID as! String
-                var formattedTrackName = NSURL(string: "spotify:track:"+tmpString);
+                var tmpString = userPlaylistTrackStrings[trackListPosition].trackID
+                let formattedTrackName = NSURL(string: "spotify:track:"+tmpString);
                 player.playURI(formattedTrackName, callback: nil)
             }
         }
@@ -267,14 +270,19 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
         
         titleLabel?.text = streamName
         
-        appDelegate.client?.addListener(self)
+        if(firstLoad == true)
+        {
+            appDelegate.client?.addListener(self)
+            firstLoad = false
+        }
         
         let nib = UINib(nibName: "CollectionViewCell", bundle: nil)
         
         self.listenersView.registerNib(nib, forCellWithReuseIdentifier: "reuseIdentifier")
         
-        client = appDelegate.client!
-        client?.addListener(self)
+        //client = appDelegate.client!
+        //client?.addListener(self)
+        //appDelegate.client!.addListener(self)
         
         /* Table Setup delegates */
         self.tableView.delegate = self
@@ -352,11 +360,13 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
             
             // Message has been received on channel group stored in
             // message.data.subscribedChannel
+            print("actual channel")
         }
         else {
             
             // Message has been received on channel stored in
             // message.data.subscribedChannel
+            print("other channel")
         }
         
         if let obj = message.data.message["songObj"] {
@@ -420,7 +430,8 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
             
             let targetChannel = client.channels().last as! String
             
-            let uuid : String = (self.client?.uuid())!
+            //let uuid : String = (self.client?.uuid())!
+            let uuid: String = client.uuid()
             
 
             let picObject : [String : [String : String]] = ["pic" : ["url" : defaults.stringForKey("userPicURL")! , "uuid" : uuid]]
@@ -498,8 +509,8 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
             
             let targetChannel = client.channels().last as! String
             
-            let uuid : String = (self.client?.uuid())!
-            
+            //let uuid : String = (self.client?.uuid())!
+            let uuid : String = (client?.uuid())!
             
             
             let picObject : [String : [String : String]] = ["pic" : ["url" : defaults.stringForKey("userPicURL")! , "uuid" : uuid]]
@@ -561,9 +572,9 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return playlistTrackname.count
+        return userPlaylistTrackStrings.count
     }
-    /*
+    
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
@@ -576,7 +587,7 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
         let formattedTrackName = NSURL(string: "spotify:track:"+tmpString);
         player?.playURI(formattedTrackName, callback: nil)
         
-    }*/
+    }
     
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
