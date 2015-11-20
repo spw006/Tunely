@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9060" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="JoinSearchViewController" customModule="Tunely_Demo" customModuleProvider="target">
+            <connections>
+                <outlet property="BackButton" destination="nlN-0c-Z2V" id="gmm-F7-23J"/>
+                <outlet property="SongSearchBar" destination="XQX-nJ-fhz" id="4MG-in-uaD"/>
+                <outlet property="tableView" destination="Cbk-ao-nmB" id="GRE-8B-mH9"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nlN-0c-Z2V">
+                    <rect key="frame" x="36" y="8" width="34" height="30"/>
+                    <animations/>
+                    <state key="normal" title="Back"/>
+                    <connections>
+                        <action selector="goBack:" destination="-1" eventType="touchUpInside" id="Zrv-15-AVZ"/>
+                    </connections>
+                </button>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Cbk-ao-nmB">
+                    <rect key="frame" x="0.0" y="46" width="600" height="554"/>
+                    <animations/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <searchBar key="tableHeaderView" contentMode="redraw" id="XQX-nJ-fhz">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                        <animations/>
+                        <textInputTraits key="textInputTraits"/>
+                    </searchBar>
+                </tableView>
+            </subviews>
+            <animations/>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="Cbk-ao-nmB" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="CGp-Ag-xe5"/>
+                <constraint firstItem="Cbk-ao-nmB" firstAttribute="top" secondItem="nlN-0c-Z2V" secondAttribute="bottom" constant="8" symbolic="YES" id="EnL-3d-S2n"/>
+                <constraint firstItem="nlN-0c-Z2V" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="36" id="Tjm-lE-WcT"/>
+                <constraint firstItem="nlN-0c-Z2V" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="topMargin" id="YPC-Ur-zxB"/>
+                <constraint firstAttribute="trailing" secondItem="Cbk-ao-nmB" secondAttribute="trailing" id="dF2-y5-GR9"/>
+                <constraint firstAttribute="bottom" secondItem="Cbk-ao-nmB" secondAttribute="bottom" id="q3K-yf-RqG"/>
+            </constraints>
+        </view>
+    </objects>
+</document>

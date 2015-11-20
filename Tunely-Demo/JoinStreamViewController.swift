@@ -19,6 +19,7 @@ class JoinStreamViewController: UIViewController,SPTAudioStreamingPlaybackDelega
     @IBOutlet weak var titleLabel : UILabel?
     @IBOutlet weak var listenersView: UICollectionView!
     
+    @IBOutlet weak var backButton: UIButton!
     
     var playlist: [String] = []
     var playlist2: [String] = []
@@ -32,8 +33,13 @@ class JoinStreamViewController: UIViewController,SPTAudioStreamingPlaybackDelega
     
     @IBOutlet weak var SearchButton: UIButton!
     
+    @IBAction func goBack(sender: AnyObject) {
+        let streamView:JoinViewController = JoinViewController(nibName: "JoinViewController", bundle: nil)
+        self.presentViewController(streamView, animated: true, completion: nil)
+    }
+    
     @IBAction func searchSongs(sender: AnyObject) {
-        let searchSongView:SongSearchViewController = SongSearchViewController(nibName: "SongSearchViewController", bundle: nil)
+        let searchSongView:JoinSearchViewController = JoinSearchViewController(nibName: "JoinSearchViewController", bundle: nil)
         //appDelegate.client?.removeListener(self)
         
         self.presentViewController(searchSongView, animated: true, completion: nil)
@@ -292,9 +298,9 @@ class JoinStreamViewController: UIViewController,SPTAudioStreamingPlaybackDelega
             }*/
             if(obj != nil) {
                 var tmp = obj["tracks"] as! String
-                playlist = tmp.componentsSeparatedByString(",")
+                playlist = tmp.componentsSeparatedByString("|")
                 var tmp2 = obj["artists"] as! String
-                playlist2 = tmp.componentsSeparatedByString(",")
+                playlist2 = tmp2.componentsSeparatedByString("|")
                 self.tableView.reloadData()
             }
 
