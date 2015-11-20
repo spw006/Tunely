@@ -21,6 +21,7 @@ class JoinStreamViewController: UIViewController,SPTAudioStreamingPlaybackDelega
     
     
     var playlist: [String] = []
+    var playlist2: [String] = []
     
     var listenersPic : [String] = []
     var listeners : [String] = []
@@ -103,6 +104,15 @@ class JoinStreamViewController: UIViewController,SPTAudioStreamingPlaybackDelega
         
         //self.tableView.reloadData()
         //self.tableView.reloadData()
+        
+        let targetChannel =  appDelegate.client?.channels().last as! String
+        
+        let songObject : [String : [String:String]] = ["publish": ["publish1" : "publish2"]]
+        
+        appDelegate.client!.publish(songObject, toChannel: targetChannel, compressed: false, withCompletion: { (status) -> Void in })
+        
+        
+        
         self.tableView.reloadData()
         
         
@@ -236,7 +246,7 @@ class JoinStreamViewController: UIViewController,SPTAudioStreamingPlaybackDelega
             //cell.textLabel?.text = playlistTrackname[indexPath.row]
             
             cell!.textLabel?.text = playlist[indexPath.row]
-           // cell!.detailTextLabel?.text = userPlaylistTrackStrings[indexPath.row].artist + " - " + userPlaylistTrackStrings[indexPath.row].album
+            cell!.detailTextLabel?.text = playlist2[indexPath.row]
             
         }
         
@@ -283,6 +293,8 @@ class JoinStreamViewController: UIViewController,SPTAudioStreamingPlaybackDelega
             if(obj != nil) {
                 var tmp = obj["tracks"] as! String
                 playlist = tmp.componentsSeparatedByString(",")
+                var tmp2 = obj["artists"] as! String
+                playlist2 = tmp.componentsSeparatedByString(",")
                 self.tableView.reloadData()
             }
 

@@ -342,20 +342,24 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
         // CODE TO PUBLISH PLAYLISTS
         let targetChannel =  appDelegate.client?.channels().last as! String
         playlistTrackname.removeAll()
+        playlistArtistname.removeAll()
         for(var i = 0; i < userPlaylistTrackStrings.count; i++)
         {
             playlistTrackname.append(userPlaylistTrackStrings[i].title)
+            playlistArtistname.append(userPlaylistTrackStrings[i].artist)
         }
         var tmpString = ""
+        var tmpArtists = ""
         for(var i = 0; i < playlistTrackname.count; i++)
         {
             tmpString = tmpString + playlistTrackname[i] + ","
+            tmpArtists = tmpArtists + playlistArtistname[i] + ","
         }
         
         
         
         //let playlistObject : [String : [Array]] = ["playlistObj": [playlistTrackname]]
-        let playlistObject: [String : [String:String]] = ["playlistObj" : ["tracks" : tmpString]]
+        let playlistObject: [String : [String:String]] = ["playlistObj" : ["tracks" : tmpString, "artists" : tmpArtists] ]
         
         appDelegate.client!.publish(playlistObject, toChannel: targetChannel, compressed: false, withCompletion: { (status) -> Void in })
         
@@ -572,6 +576,38 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
                 userPlaylistTrackStrings.append(song)
                 //var tempString2 = obj["title"] as! String
                 //playlistTrackname.append(tempString2)
+                
+            }
+            
+        }
+        if let obj = message.data.message["publish"]
+        {
+            if(obj != nil) {
+                // CODE TO PUBLISH PLAYLISTS
+                let targetChannel =  appDelegate.client?.channels().last as! String
+                playlistTrackname.removeAll()
+                playlistArtistname.removeAll()
+                for(var i = 0; i < userPlaylistTrackStrings.count; i++)
+                {
+                    playlistTrackname.append(userPlaylistTrackStrings[i].title)
+                    playlistArtistname.append(userPlaylistTrackStrings[i].artist)
+                }
+                var tmpString = ""
+                var tmpArtists = ""
+                for(var i = 0; i < playlistTrackname.count; i++)
+                {
+                    tmpString = tmpString + playlistTrackname[i] + ","
+                    tmpArtists = tmpArtists + playlistArtistname[i] + ","
+                }
+                
+                
+                
+                //let playlistObject : [String : [Array]] = ["playlistObj": [playlistTrackname]]
+                let playlistObject: [String : [String:String]] = ["playlistObj" : ["tracks" : tmpString, "artists" : tmpArtists] ]
+                
+                appDelegate.client!.publish(playlistObject, toChannel: targetChannel, compressed: false, withCompletion: { (status) -> Void in })
+                
+                print("PUBLISHED PLAYLIST")
                 
             }
             
