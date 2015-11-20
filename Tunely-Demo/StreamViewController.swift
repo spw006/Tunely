@@ -352,8 +352,8 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
         var tmpArtists = ""
         for(var i = 0; i < playlistTrackname.count; i++)
         {
-            tmpString = tmpString + playlistTrackname[i] + ","
-            tmpArtists = tmpArtists + playlistArtistname[i] + ","
+            tmpString = tmpString + playlistTrackname[i] + "|"
+            tmpArtists = tmpArtists + playlistArtistname[i] + "|"
         }
         
         
