@@ -115,17 +115,6 @@ class JoinStreamViewController: UIViewController,SPTAudioStreamingPlaybackDelega
         
         self.tableView.reloadData()
         
-        
-        
-        
-        
-
-        
-        
-        
-        
-        
-        
         print("endofviewload")
         
         

@@ -7,11 +7,27 @@
 //
 
 import Foundation
+import SwiftyJSON
 
 class Song {
+    var trackID: String
+    var title: String
+    var artist: String
+    var album: String
     
-    var title = ""
-    var album = ""
-    var artist = ""
-    var trackID = ""
+    init() {
+        trackID = ""
+        title = ""
+        artist = ""
+        album = ""
+    }
+    
+    func toSerializableData() -> AnyObject {
+        return [
+            "trackID": NSString(string: trackID),
+            "title": NSString(string: title),
+            "artist": NSString(string: artist),
+            "album": NSString(string: album)
+        ]
+    }
 }

@@ -108,10 +108,17 @@ class ViewController: UIViewController, FBSDKLoginButtonDelegate {
                 
                 // Attempt to create a new Facebook user
                 var uri : String = "http://ec2-54-183-142-37.us-west-1.compute.amazonaws.com/api/users"
-                let parameters : [String: AnyObject] = ["name": userName, "fbid": userFbid, "email": userEmail, "picture": userPicURL]
-                let headers : [String: String]? = ["x-access-token": FBSDKAccessToken.currentAccessToken().tokenString]
+                let parameters : [String: AnyObject] = [
+                    "name": userName,
+                    "fbid": userFbid,
+                    "email": userEmail,
+                    "picture": userPicURL
+                ]
+                let headers : [String: String]? = [
+                    "x-access-token": FBSDKAccessToken.currentAccessToken().tokenString
+                ]
                 
-                Alamofire.request(.POST, uri, parameters: parameters, headers:headers)
+                Alamofire.request(.POST, uri, parameters: parameters, headers: headers)
                     .responseJSON { json in
                         
                         var user = JSON(data: json.data!)

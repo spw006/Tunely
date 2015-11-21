@@ -155,6 +155,9 @@ class SongSearchViewController: UIViewController, UITableViewDataSource, UITable
         // Dispose of any resources that can be recreated.
     }
     
+    
+    
+    
     // MARK: - Table view data source
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -167,39 +170,42 @@ class SongSearchViewController: UIViewController, UITableViewDataSource, UITable
         return songs.count
     }
     
+    /** When a user selects a song */
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         
-        let row = indexPath.row
-        print(songs[row].title)
-        //ViewController().addSongtoPlaylist(songs[row].trackID)
-        //ViewController.addSongtoPlaylist(ViewController)
+        // get the song selected
+        let selectedSong = songs[indexPath.row]
         
-        /* FORMAT STRING ADD SONG OLD NO PUBNUB
+        // construct the song
+//        let song: [String: String] = [
+//            "trackID": selectedSong.trackID,
+//            "title": selectedSong.title,
+//            "artist": selectedSong.artist,
+//            "album": selectedSong.album
+//        ]
         
-        var formattedTrackName = NSURL(string: "spotify:track:"+songs[row].trackID);
-        print(formattedTrackName)
+        let songObject: [String: [String: String]] = [
+            "songObject": [
+                "trackID": selectedSong.trackID,
+                "title": selectedSong.title,
+                "artist": selectedSong.artist,
+                "album": selectedSong.album
+            ]
+        ]
         
-        userPlaylistTrackStrings.append(formattedTrackName!)
-        playlistTrackname.append(songs[row])*/
+        // Make the JSON to send
+        let message: AnyObject = JSON(songObject).object
         
-        /*    var title = ""
-        var album = ""
-        var artist = ""
-        var trackID = "" */
+        print(message)
         
+        // publish the song message to the target channel
+        // Only the host (StreamViewController should deal with this message)
         let targetChannel =  appDelegate.client?.channels().last as! String
-        let songObject : [String : [String:String]] = ["songObj": ["trackID" : songs[row].trackID, "title" : songs[row].title, "artist" : songs[row].artist, "album" : songs[row].album]]
-        
-        appDelegate.client!.publish(songObject, toChannel: targetChannel, compressed: false, withCompletion: { (status) -> Void in })
-        
-        //player?.queueURI(formattedTrackName, callback: nil)
-        //player?.playURI(formattedTrackName, callback: nil)
-        //.ViewController.addSongtoPlaylist(songs[row].trackID)
-        
-        
-        
+        appDelegate.client!.publish(message, toChannel: targetChannel, compressed: false, withCompletion: { (status) -> Void in })
     }
+    
+    
     /*
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
     tableView.deselectRowAtIndexPath(indexPath, animated: true)
@@ -210,30 +216,22 @@ class SongSearchViewController: UIViewController, UITableViewDataSource, UITable
     
     
     
-    
+    /** Populates the table with songs */
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        print("tableView in songsearch called")
-        //let cell = self.tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
-
-        
         var cell:UITableViewCell? = tableView.dequeueReusableCellWithIdentifier("cell") as UITableViewCell?
 
         if (cell != nil) {
             cell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "cell")
         }
-
-
         
-        
-        //print(indexPath.row)
-        //print(songs.count)
-        if(songs.count > 0){
+        // populate the table with the songs (title and artist)
+        if (songs.count > 0){
             let song = songs[indexPath.row]
             
             cell!.textLabel?.text = song.title
-            
             cell!.detailTextLabel?.text = song.artist + " - " + song.album
         }
+        
         return cell!
     }
     
