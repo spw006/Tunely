@@ -15,9 +15,6 @@ var playlistTrackname = [String]()
 var playlistArtistname = [String]()
 var player:SPTAudioStreamingController?
 
-// playlist of song objects
-var userPlaylistTrackStrings = [Song]()
-
 class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, UITableViewDataSource, UITableViewDelegate, PNObjectEventListener {
     
     
@@ -25,6 +22,8 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
     @IBOutlet weak var titleLabel : UILabel?
     @IBOutlet weak var listenersView: UICollectionView!
     
+    // playlist of song objects
+    var userPlaylistTrackStrings = [Song]()
     
     var listenersPic : [String] = []
     var listeners : [String] = []
@@ -38,10 +37,7 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
         //appDelegate.client?.removeListener(self)
         
         self.presentViewController(searchSongView, animated: true, completion: nil)
-    }
-    
-
-    
+    }    
     
     let kClientID = "4d63faabbbed404384264f330f8610b7";
     let kCallBackURL = "SpotifyTesting://callback"
@@ -300,8 +296,6 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print("StreamViewController Loaded.")
-        
         titleLabel?.text = streamName
         
         if (firstLoad == true) {
@@ -313,66 +307,17 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
         
         self.listenersView.registerNib(nib, forCellWithReuseIdentifier: "reuseIdentifier")
         
-        //client = appDelegate.client!
-        //client?.addListener(self)
-        //appDelegate.client!.addListener(self)
-        
         /* Table Setup delegates */
         self.tableView.delegate = self
         self.tableView.dataSource = self
         self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
         
-        
-        
         self.tableView.reloadData()
-        
-        
-        
-        
-        
-        // CODE TO PUBLISH PLAYLISTS
-//        let targetChannel =  appDelegate.client?.channels().last as! String
-//        
-//        
-//        playlistTrackname.removeAll()
-//        playlistArtistname.removeAll()
-//        
-//        for(var i = 0; i < userPlaylistTrackStrings.count; i++) {
-//            playlistTrackname.append(userPlaylistTrackStrings[i].title)
-//            playlistArtistname.append(userPlaylistTrackStrings[i].artist)
-//        }
-//        
-//        var tmpString = ""
-//        var tmpArtists = ""
-//        for(var i = 0; i < playlistTrackname.count; i++) {
-//            tmpString = tmpString + playlistTrackname[i] + ","
-//            tmpArtists = tmpArtists + playlistArtistname[i] + ","
-//        }
-//        
-//        
-//        
-//        //let playlistObject : [String : [Array]] = ["playlistObj": [playlistTrackname]]
-//        let playlistObject: [String : [String:String]] = ["playlistObj" : ["tracks" : tmpString, "artists" : tmpArtists] ]
-//        
-//        appDelegate.client!.publish(playlistObject, toChannel: targetChannel, compressed: false, withCompletion: { (status) -> Void in })
-//        
-//        print("PUBLISHED PLAYLIST")
-        
-
-        print("endofviewload")
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-    }
-    
-    @IBAction func revealSideBar(sender: AnyObject) {
-        
-        let sideBar:SideBarTableViewController = SideBarTableViewController(nibName: "SideBarTableViewController", bundle: nil)
-        sideBar.modalTransitionStyle = UIModalTransitionStyle.CoverVertical
-        self.presentViewController(sideBar, animated: true, completion: nil)
-        
     }
     
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
@@ -397,20 +342,54 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
         return cell
     }
     
-
     
-    
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    /** End the stream */
+    @IBAction func endStream(sender: AnyObject) {
+        let hostedStream = defaults.stringForKey("hostedStream")
+        
+        if (hostedStream != nil) {
+            
+            // delete the stream object in the database
+            let uri : String = "http://ec2-54-183-142-37.us-west-1.compute.amazonaws.com/api/streams/" + hostedStream!
+            let headers : [String: String] = ["x-access-token": FBSDKAccessToken.currentAccessToken().tokenString]
+            
+            Alamofire.request(.DELETE, uri, headers:headers)
+                .responseJSON { json in
+                    
+                    let deletedStream = JSON(data: json.data!)
+                    
+                    print (deletedStream)
+                    
+                    // Do not proceed if server did not respond
+                    if (deletedStream == nil) {
+                        print("No response from server or stream does not exist.")
+                        return
+                    }
+                    
+                    // delete the value for the hostedStream key
+                    defaults.setObject(nil, forKey: "hostedStream")
+                    
+                    print("Deleted hosted stream.")
+            }
+            
+            // unsubscribe from pubnub
+            let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+            if let targetChannel = appDelegate.client?.channels().last {
+                print("unsubscribed from " + (targetChannel as! String))
+                appDelegate.client?.unsubscribeFromChannels([targetChannel as! String], withPresence: true)
+            }
+            
+            print(appDelegate.client?.channels())
+            
+            // go back to home after delete
+            dismissViewControllerAnimated(true, completion: nil)
+        }
+            
+        // the user is not in a stream
+        else {
+            dismissViewControllerAnimated(true, completion: nil)
+        }
     }
-    */
-    
     
     
     //TABLE VIEW:
@@ -568,6 +547,7 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
             // event.data.subscribedChannel
         }
         
+        
         if event.data.presenceEvent != "state-change" {
             
             let targetChannel = client.channels().last as! String
@@ -617,6 +597,7 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
     
     // Handle subscription status change.
     func client(client: PubNub!, didReceiveStatus status: PNStatus!) {
+        
         if status.category == .PNUnexpectedDisconnectCategory {
             
             // This event happens when radio / connectivity is lost
@@ -653,7 +634,6 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
             
             //let uuid : String = (self.client?.uuid())!
             let uuid : String = (client?.uuid())!
-            
             
             let picObject : [String : [String : String]] = ["pic" : ["url" : defaults.stringForKey("userPicURL")! , "uuid" : uuid]]
             

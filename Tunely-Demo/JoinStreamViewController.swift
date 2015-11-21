@@ -20,14 +20,15 @@ class JoinStreamViewController: UIViewController,SPTAudioStreamingPlaybackDelega
     @IBOutlet weak var titleLabel : UILabel?
     @IBOutlet weak var listenersView: UICollectionView!
     
-    
+    /** this joined user's playlist */
     var playlist: [Song] = []
-    var playlist2: [String] = []
+    
+    var streamName : String!
+    
     
     var listenersPic : [String] = []
     var listeners : [String] = []
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-    var streamName : String!
 
     @IBOutlet weak var SearchButton: UIButton!
     
@@ -194,48 +195,6 @@ class JoinStreamViewController: UIViewController,SPTAudioStreamingPlaybackDelega
         print("Received message: \(message.data.message) on channel " +
             "\((message.data.actualChannel ?? message.data.subscribedChannel)!) at " +
             "\(message.data.timetoken)")
-        
-//        // Handle new message stored in message.data.message
-//        if message.data.actualChannel != nil {
-//            
-//            // Message has been received on channel group stored in
-//            // message.data.subscribedChannel
-//            print("actual channel")
-//        }
-//        else {
-//            
-//            // Message has been received on channel stored in
-//            // message.data.subscribedChannel
-//            print("other channel")
-//        }
-//        
-//        //var msg = message.data.message as! Dictionary<String, AnyObject>
-//        
-//        if let obj = message.data.message["playlistObj"] {
-//            /*
-//            if !self.listeners.contains(message.uuid) {
-//            print("adding " + message.uuid + " to my list of listeners")
-//            self.listenersPic.append(obj["url"] as! String)
-//            self.listeners.append(message.uuid)
-//            self.listenersView.reloadData()
-//            }
-//            else {
-//            print("ERROR: " + message.uuid + " is already a listener")
-//            }*/
-//            if(obj != nil) {
-//                var tmp = obj["tracks"] as! String
-//                playlist = tmp.componentsSeparatedByString(",")
-//                var tmp2 = obj["artists"] as! String
-//                playlist2 = tmp.componentsSeparatedByString(",")
-//                self.tableView.reloadData()
-//            }
-//
-//            
-//            
-//        }
-//        else {
-//            print("nooo")
-//        }
         
         
         // When a joined user receives the playist message from the host, they update their local playlist

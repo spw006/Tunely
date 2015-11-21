@@ -14,7 +14,7 @@ import FBSDKLoginKit
 class SideBarTableViewController: UIViewController {
     
     @IBOutlet weak var tableView : UITableView!
-    var sideBarArray : [ String ] = [ "Home", "Logout", "End Stream" ]
+    var sideBarArray : [ String ] = [ "Home", "Logout"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -64,54 +64,6 @@ class SideBarTableViewController: UIViewController {
             let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
             let vc : UIViewController = storyBoard.instantiateViewControllerWithIdentifier("mainIdent")
             self.presentViewController(vc, animated: false, completion: nil)
-        }
-        
-        if sideBarArray[indexPath.row] == "End Stream" {
-            let hostedStream = defaults.stringForKey("hostedStream")
-            
-            // delete the current stream
-            if (hostedStream != nil) {
-                let uri : String = "http://ec2-54-183-142-37.us-west-1.compute.amazonaws.com/api/streams/" + hostedStream!
-                let headers : [String: String] = ["x-access-token": FBSDKAccessToken.currentAccessToken().tokenString]
-                
-                Alamofire.request(.DELETE, uri, headers:headers)
-                    .responseJSON { json in
-                        
-                        let deletedStream = JSON(data: json.data!)
-                        
-                        print (deletedStream)
-                        
-                        // Do not proceed if server did not respond
-                        if (deletedStream == nil) {
-                            print("No response from server or stream does not exist.")
-                            return
-                        }
-                        
-                        // delete the value for the hostedStream key
-                        defaults.setObject(nil, forKey: "hostedStream")
-                        
-                        print("Deleted hosted stream.")
-                }
-                
-                // unsubscribe from pubnub
-                let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-                if let targetChannel = appDelegate.client?.channels().last {
-                    print("unsubscribed from " + (targetChannel as! String))
-                    appDelegate.client?.unsubscribeFromChannels([targetChannel as! String], withPresence: true)
-                }
-                
-                
-                // go back to home after delete
-                let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-                let vc : UIViewController = storyBoard.instantiateViewControllerWithIdentifier("mainIdent")
-                self.presentViewController(vc, animated: false, completion: nil)
-            }
-            
-            // the user is not in a stream
-            else {
-                print("No current stream")
-                dismissViewControllerAnimated(true, completion: nil)
-            }
         }
         
         if sideBarArray[indexPath.row] == "Logout" {

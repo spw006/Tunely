@@ -19,18 +19,11 @@ class SongSearchViewController: UIViewController, UITableViewDataSource, UITable
     @IBOutlet weak var BackButton: UIButton!
     
     @IBAction func goBack(sender: AnyObject) {
-        let streamView:StreamViewController = StreamViewController(nibName: "StreamViewController", bundle: nil)
-        self.presentViewController(streamView, animated: true, completion: nil)
+        dismissViewControllerAnimated(true, completion: nil)
     }
     
     //pubnub
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-    
-    
-    
-    
-    
-    
     
     
     @IBOutlet weak var tableView: UITableView!
@@ -87,8 +80,6 @@ class SongSearchViewController: UIViewController, UITableViewDataSource, UITable
     }
     
     func getSongs(timer: String!) {
-        
-        
         print("getSongs called")
         let searchTerm = timer
         
@@ -138,17 +129,6 @@ class SongSearchViewController: UIViewController, UITableViewDataSource, UITable
         }
         
     }
-    /*
-    func searchDisplayController(controller: UISearchDisplayController, shouldReloadTableForSearchString searchString: String?) -> Bool {
-    
-    print("searchDisplayController called")
-    
-    self.getSongs(searchString)
-    
-    return true
-    
-    
-    }*/
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -156,17 +136,15 @@ class SongSearchViewController: UIViewController, UITableViewDataSource, UITable
     }
     
     
-    
-    
     // MARK: - Table view data source
     
+    /** Number of sections  */
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
     
+    /** Number of rows in a section */
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         return songs.count
     }
     
@@ -176,14 +154,6 @@ class SongSearchViewController: UIViewController, UITableViewDataSource, UITable
         
         // get the song selected
         let selectedSong = songs[indexPath.row]
-        
-        // construct the song
-//        let song: [String: String] = [
-//            "trackID": selectedSong.trackID,
-//            "title": selectedSong.title,
-//            "artist": selectedSong.artist,
-//            "album": selectedSong.album
-//        ]
         
         let songObject: [String: [String: String]] = [
             "songObject": [
@@ -202,17 +172,6 @@ class SongSearchViewController: UIViewController, UITableViewDataSource, UITable
         let targetChannel =  appDelegate.client?.channels().last as! String
         appDelegate.client!.publish(message, toChannel: targetChannel, compressed: false, withCompletion: { (status) -> Void in })
     }
-    
-    
-    /*
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-    tableView.deselectRowAtIndexPath(indexPath, animated: true)
-    
-    let row = indexPath.row
-    println(swiftBlogs[row])
-    }*/
-    
-    
     
     /** Populates the table with songs */
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
