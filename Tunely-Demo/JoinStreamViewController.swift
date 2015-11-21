@@ -9,6 +9,7 @@
 import UIKit
 import PubNub
 import Alamofire
+import SwiftyJSON
 
 
 class JoinStreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, UITableViewDataSource, UITableViewDelegate, PNObjectEventListener {
@@ -20,16 +21,14 @@ class JoinStreamViewController: UIViewController,SPTAudioStreamingPlaybackDelega
     @IBOutlet weak var listenersView: UICollectionView!
     
     
-    var playlist: [String] = []
+    var playlist: [Song] = []
     var playlist2: [String] = []
     
     var listenersPic : [String] = []
     var listeners : [String] = []
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-    //var client: PubNub?
     var streamName : String!
-    
-    
+
     @IBOutlet weak var SearchButton: UIButton!
     
     @IBAction func searchSongs(sender: AnyObject) {
@@ -54,15 +53,6 @@ class JoinStreamViewController: UIViewController,SPTAudioStreamingPlaybackDelega
     var pausePressed = true;
     var skipSongs = false;
     
-    
-    //table view
-    //@IBOutlet
-    //var tableView: UITableView!
-    
-    //var timer: NSTimer = NSTimer()
-    
-    
-    
     //array of songs returned by spotify search request
     var songs: [Song] = []
     
@@ -73,18 +63,13 @@ class JoinStreamViewController: UIViewController,SPTAudioStreamingPlaybackDelega
     @IBOutlet weak var Back: UIBarButtonItem!
     @IBOutlet weak var Next: UIBarButtonItem!
     
-    
-    
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         print("streamviewcontroller view loaded")
         
         titleLabel?.text = streamName
         
-        if(firstLoad == true)
-        {
+        if(firstLoad == true) {
             appDelegate.client?.addListener(self)
             firstLoad = false
         }
@@ -102,37 +87,19 @@ class JoinStreamViewController: UIViewController,SPTAudioStreamingPlaybackDelega
         self.tableView.dataSource = self
         self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
         
-        //self.tableView.reloadData()
-        //self.tableView.reloadData()
         
+        
+        
+        
+        
+        
+        // When the user joins a stream, initially populate the table with the current playlist
+        // basically requests for the playlist from the host
         let targetChannel =  appDelegate.client?.channels().last as! String
-        
-        let songObject : [String : [String:String]] = ["publish": ["publish1" : "publish2"]]
-        
+        let songObject : [String : String] = ["joinRequest": "joinRequest"]
         appDelegate.client!.publish(songObject, toChannel: targetChannel, compressed: false, withCompletion: { (status) -> Void in })
         
-        
-        
         self.tableView.reloadData()
-        
-        print("endofviewload")
-        
-        
-        // Do any additional setup after loading the view.
-    }
-    
-    func loadStream(url: NSString) {
-        // STEP 1
-        // get title for url
-        // populate title label with it
-        
-        // STEP 2
-        // get songs for url
-        // populate table view with them
-        
-        // STEP 3
-        // get listeners for url
-        // populate collection view with them
     }
     
     override func didReceiveMemoryWarning() {
@@ -187,56 +154,29 @@ class JoinStreamViewController: UIViewController,SPTAudioStreamingPlaybackDelega
     
     
     
-    //TABLE VIEW STUFF:
+    //TABLE VIEW:
     
+    /** Number of sections */
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
     
+    /** Number of rows in a section */
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         return playlist.count
     }
     
-    
-    
+    /** Populates table */
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        print("tableView called")
-        
-        
-        
         var cell:UITableViewCell? = tableView.dequeueReusableCellWithIdentifier("cell") as UITableViewCell?
         
         if (cell != nil) {
             cell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "cell")
         }
         
-        
-        
-        
-        
-        
-        //let cell = self.tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
-        //var cell = self.tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
-        
-        //print(indexPath.row)
-        //print(songs.count)
-        
-        if(playlist.count > 0){
-            /*
-            let song = playlistTrackname[indexPath.row]
-            
-            cell.textLabel?.text = song.title
-            
-            cell.detailTextLabel?.text = song.artist + " - " + song.album
-            */
-            //code for join stream but not host
-            //cell.textLabel?.text = playlistTrackname[indexPath.row]
-            
-            cell!.textLabel?.text = playlist[indexPath.row]
-            cell!.detailTextLabel?.text = playlist2[indexPath.row]
-            
+        if (playlist.count > 0) {
+            cell!.textLabel?.text = playlist[indexPath.row].title
+            cell!.detailTextLabel?.text = playlist[indexPath.row].artist + " - " + playlist[indexPath.row].album
         }
         
         return cell!
@@ -249,54 +189,81 @@ class JoinStreamViewController: UIViewController,SPTAudioStreamingPlaybackDelega
     
     /************************** PUBNUB FUNCTIONS ************************/
      
-     // Handle new message from one of channels on which client has been subscribed.
+    /** Handle received message */
     func client(client: PubNub!, didReceiveMessage message: PNMessageResult!) {
-        
-        // Handle new message stored in message.data.message
-        if message.data.actualChannel != nil {
-            
-            // Message has been received on channel group stored in
-            // message.data.subscribedChannel
-            print("actual channel")
-        }
-        else {
-            
-            // Message has been received on channel stored in
-            // message.data.subscribedChannel
-            print("other channel")
-        }
-        
-        //var msg = message.data.message as! Dictionary<String, AnyObject>
-        
-        if let obj = message.data.message["playlistObj"] {
-            /*
-            if !self.listeners.contains(message.uuid) {
-            print("adding " + message.uuid + " to my list of listeners")
-            self.listenersPic.append(obj["url"] as! String)
-            self.listeners.append(message.uuid)
-            self.listenersView.reloadData()
-            }
-            else {
-            print("ERROR: " + message.uuid + " is already a listener")
-            }*/
-            if(obj != nil) {
-                var tmp = obj["tracks"] as! String
-                playlist = tmp.componentsSeparatedByString(",")
-                var tmp2 = obj["artists"] as! String
-                playlist2 = tmp.componentsSeparatedByString(",")
-                self.tableView.reloadData()
-            }
-
-            
-            
-        }
-        else {
-            print("nooo")
-        }
-        
         print("Received message: \(message.data.message) on channel " +
             "\((message.data.actualChannel ?? message.data.subscribedChannel)!) at " +
             "\(message.data.timetoken)")
+        
+//        // Handle new message stored in message.data.message
+//        if message.data.actualChannel != nil {
+//            
+//            // Message has been received on channel group stored in
+//            // message.data.subscribedChannel
+//            print("actual channel")
+//        }
+//        else {
+//            
+//            // Message has been received on channel stored in
+//            // message.data.subscribedChannel
+//            print("other channel")
+//        }
+//        
+//        //var msg = message.data.message as! Dictionary<String, AnyObject>
+//        
+//        if let obj = message.data.message["playlistObj"] {
+//            /*
+//            if !self.listeners.contains(message.uuid) {
+//            print("adding " + message.uuid + " to my list of listeners")
+//            self.listenersPic.append(obj["url"] as! String)
+//            self.listeners.append(message.uuid)
+//            self.listenersView.reloadData()
+//            }
+//            else {
+//            print("ERROR: " + message.uuid + " is already a listener")
+//            }*/
+//            if(obj != nil) {
+//                var tmp = obj["tracks"] as! String
+//                playlist = tmp.componentsSeparatedByString(",")
+//                var tmp2 = obj["artists"] as! String
+//                playlist2 = tmp.componentsSeparatedByString(",")
+//                self.tableView.reloadData()
+//            }
+//
+//            
+//            
+//        }
+//        else {
+//            print("nooo")
+//        }
+        
+        
+        // When a joined user receives the playist message from the host, they update their local playlist
+        if let playlistObject = message.data.message["playlistObject"] {
+            if (playlistObject != nil) {
+                
+                // reconstruct the playlist
+                let playlistJSON: JSON = JSON(playlistObject)
+                
+                // loop through the playlist to get the songs
+                var playlist: [Song] = []
+                for (_, songJSON) in playlistJSON {
+                    let song = Song()
+                    song.trackID = songJSON["trackID"].stringValue
+                    song.title = songJSON["title"].stringValue
+                    song.artist = songJSON["artist"].stringValue
+                    song.album = songJSON["album"].stringValue
+                    
+                    playlist.append(song)
+                }
+                
+                // update this joined user's playlist
+                self.playlist = playlist
+                
+                // update the table
+                self.tableView.reloadData()
+            }
+        }
     }
     
     // New presence event handling.

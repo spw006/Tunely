@@ -197,8 +197,6 @@ class SongSearchViewController: UIViewController, UITableViewDataSource, UITable
         // Make the JSON to send
         let message: AnyObject = JSON(songObject).object
         
-        print(message)
-        
         // publish the song message to the target channel
         // Only the host (StreamViewController should deal with this message)
         let targetChannel =  appDelegate.client?.channels().last as! String

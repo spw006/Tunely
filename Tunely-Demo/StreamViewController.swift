@@ -14,6 +14,8 @@ import PubNub
 var playlistTrackname = [String]()
 var playlistArtistname = [String]()
 var player:SPTAudioStreamingController?
+
+// playlist of song objects
 var userPlaylistTrackStrings = [Song]()
 
 class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, UITableViewDataSource, UITableViewDelegate, PNObjectEventListener {
@@ -29,7 +31,6 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     var streamName : String!
     
-
     @IBOutlet weak var SearchButton: UIButton!
     
     @IBAction func searchSongs(sender: AnyObject) {
@@ -54,14 +55,7 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
     var pausePressed = true;
     var skipSongs = false;
     
-    
-    //table view
-    //@IBOutlet
-    //var tableView: UITableView!
-    
-    //var timer: NSTimer = NSTimer()
-    
-    
+    var serializedPlaylist: [AnyObject] = []
     
     //array of songs returned by spotify search request
     var songs: [Song] = []
@@ -459,42 +453,15 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
     
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        print("tableView called")
-        
-        
-        
         var cell:UITableViewCell? = tableView.dequeueReusableCellWithIdentifier("cell") as UITableViewCell?
         
         if (cell != nil) {
             cell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "cell")
         }
         
-        
-        
-        
-        
-        
-        //let cell = self.tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
-        //var cell = self.tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
-        
-        //print(indexPath.row)
-        //print(songs.count)
-        
         if(userPlaylistTrackStrings.count > 0){
-            /*
-            let song = playlistTrackname[indexPath.row]
-            
-            cell.textLabel?.text = song.title
-            
-            cell.detailTextLabel?.text = song.artist + " - " + song.album
-*/
-            //code for join stream but not host
-            //cell.textLabel?.text = playlistTrackname[indexPath.row]
-            
-            print(userPlaylistTrackStrings[indexPath.row].title)
             cell!.textLabel?.text = userPlaylistTrackStrings[indexPath.row].title
             cell!.detailTextLabel?.text = userPlaylistTrackStrings[indexPath.row].artist + " - " + userPlaylistTrackStrings[indexPath.row].album
-
         }
 
         return cell!
@@ -509,20 +476,9 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
      
     /* Received a message */
     func client(client: PubNub!, didReceiveMessage message: PNMessageResult!) {
-        
-//        // Message has been received on channel group stored in message.data.subscribedChannel
-//        if message.data.actualChannel != nil {
-//            print("actual channel")
-//        }
-//        // Message has been received on channel stored in message.data.subscribedChannel
-//        else {
-//            print("other channel")
-//        }
-        
         print("Received message: \(message.data.message) on channel " +
             "\((message.data.actualChannel ?? message.data.subscribedChannel)!) at " +
             "\(message.data.timetoken)")
-        
         
         // If we received a song, add it to the playlist and publish it
         if let songObject = message.data.message["songObject"] {
@@ -539,12 +495,20 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
                 userPlaylistTrackStrings.append(song)
                 
                 var playlist: [AnyObject] = []
-                for (var i = 0; i < userPlaylistTrackStrings.count; i++) {
-                    playlist.append(userPlaylistTrackStrings[i].toSerializableData())
+                if (!self.serializedPlaylist.isEmpty) {
+                    serializedPlaylist.append(song.toSerializableData())
+                    playlist = serializedPlaylist
+                }
+                    
+                else {
+                    // construct the playlist
+                    for (var i = 0; i < userPlaylistTrackStrings.count; i++) {
+                        playlist.append(userPlaylistTrackStrings[i].toSerializableData())
+                    }
+                    serializedPlaylist = playlist
                 }
                 
-                
-                // construct the playlist object
+                // construct the message to send
                 let playlistObject: [String: [AnyObject]] = [
                     "playlistObject": playlist
                 ]
@@ -557,92 +521,35 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
             }
         }
         
-        // if we received a playlist
-        if let playlistObject = message.data.message["playlistObject"] {
-            if (playlistObject != nil) {
+        // If the host user receives a request from a joined user, send the playlist
+        if let joinRequest = message.data.message["joinRequest"] {
+            if (joinRequest != nil) {
                 
-                // reconstruct the playlist
-                let playlistJSON: JSON = JSON(playlistObject)
+                print("A USER JOINED THE STREAM. REQUESTED PLAYLIST")
                 
-                // loop through the playlist to get the songs
-                var playlist: [Song] = []
-                for (_, songJSON) in playlistJSON {
-                    let song = Song()
-                    song.trackID = songJSON["trackID"].stringValue
-                    song.title = songJSON["title"].stringValue
-                    song.artist = songJSON["artist"].stringValue
-                    song.album = songJSON["album"].stringValue
-                    
-                    playlist.append(song)
+                var playlist: [AnyObject] = []
+                if (!self.serializedPlaylist.isEmpty) {
+                    playlist = serializedPlaylist
                 }
+                    
+                else {
+                    // construct the playlist
+                    for (var i = 0; i < userPlaylistTrackStrings.count; i++) {
+                        playlist.append(userPlaylistTrackStrings[i].toSerializableData())
+                    }
+                    serializedPlaylist = playlist
+                }
+                
+                // construct the message to send
+                let playlistObject: [String: [AnyObject]] = [
+                    "playlistObject": playlist
+                ]
+                
+                // publish the playlist
+                let targetChannel =  appDelegate.client?.channels().last as! String
+                appDelegate.client!.publish(playlistObject, toChannel: targetChannel, compressed: false, withCompletion: { (status) -> Void in })
             }
         }
-        
-//        if let obj = message.data.message["songObj"] {
-//            /*
-//            if !self.listeners.contains(message.uuid) {
-//            print("adding " + message.uuid + " to my list of listeners")
-//            self.listenersPic.append(obj["url"] as! String)
-//            self.listeners.append(message.uuid)
-//            self.listenersView.reloadData()
-//            }
-//            else {
-//            print("ERROR: " + message.uuid + " is already a listener")
-//            }*/
-//            
-//            // get the song and append it to the internal list
-//            if(obj != nil){
-//                
-//                let song = Song()
-//                
-//                song.title = obj["title"] as! String
-//                song.album = obj["album"] as! String
-//                song.artist = obj["artist"] as! String
-//                song.trackID = obj["trackID"] as! String
-//                //var tmpString = song.trackID
-//                //var formattedTrackName = NSURL(string: "spotify:track:"+tmpString);
-//                
-//                
-//                userPlaylistTrackStrings.append(song)
-//                //var tempString2 = obj["title"] as! String
-//                //playlistTrackname.append(tempString2
-//            }
-//        }
-//        
-//        if let obj = message.data.message["publish"] {
-//            if(obj != nil) {
-//                // CODE TO PUBLISH PLAYLISTS
-//                let targetChannel =  appDelegate.client?.channels().last as! String
-//                playlistTrackname.removeAll()
-//                playlistArtistname.removeAll()
-//                for(var i = 0; i < userPlaylistTrackStrings.count; i++)
-//                {
-//                    playlistTrackname.append(userPlaylistTrackStrings[i].title)
-//                    playlistArtistname.append(userPlaylistTrackStrings[i].artist)
-//                }
-//                var tmpString = ""
-//                var tmpArtists = ""
-//                for(var i = 0; i < playlistTrackname.count; i++)
-//                {
-//                    tmpString = tmpString + playlistTrackname[i] + ","
-//                    tmpArtists = tmpArtists + playlistArtistname[i] + ","
-//                }
-//                
-//                
-//                
-//                //let playlistObject : [String : [Array]] = ["playlistObj": [playlistTrackname]]
-//                let playlistObject: [String : [String:String]] = ["playlistObj" : ["tracks" : tmpString, "artists" : tmpArtists] ]
-//                
-//                appDelegate.client!.publish(playlistObject, toChannel: targetChannel, compressed: false, withCompletion: { (status) -> Void in })
-//                
-//                print("PUBLISHED PLAYLIST")
-//                
-//            }
-//            
-//        }
-//        else {
-//            print("nooo")
-//        }
     }
     
     // New presence event handling.
