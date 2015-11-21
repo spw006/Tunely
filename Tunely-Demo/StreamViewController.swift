@@ -37,7 +37,7 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
     
     @IBAction func searchSongs(sender: AnyObject) {
         let searchSongView:SongSearchViewController = SongSearchViewController(nibName: "SongSearchViewController", bundle: nil)
-        //appDelegate.client?.removeListener(self)
+        appDelegate.client?.removeListener(self)
         
         self.presentViewController(searchSongView, animated: true, completion: nil)
     }
@@ -312,11 +312,15 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
         
         titleLabel?.text = streamName
         
+        
+        /*
         if(firstLoad == true)
         {
             appDelegate.client?.addListener(self)
             firstLoad = false
-        }
+        }*/
+        appDelegate.client?.addListener(self)
+
         
         let nib = UINib(nibName: "CollectionViewCell", bundle: nil)
         
@@ -574,6 +578,7 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
                 
                 
                 userPlaylistTrackStrings.append(song)
+                print(userPlaylistTrackStrings.count)
                 //var tempString2 = obj["title"] as! String
                 //playlistTrackname.append(tempString2)
                 
@@ -601,7 +606,8 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
                 }
                 
                 
-                
+                //self.tableView.reloadData()
+
                 //let playlistObject : [String : [Array]] = ["playlistObj": [playlistTrackname]]
                 let playlistObject: [String : [String:String]] = ["playlistObj" : ["tracks" : tmpString, "artists" : tmpArtists] ]
                 
@@ -615,6 +621,7 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
         else {
             print("nooo")
         }
+        self.tableView.reloadData()
         
         print("Received message: \(message.data.message) on channel " +
             "\((message.data.actualChannel ?? message.data.subscribedChannel)!) at " +
