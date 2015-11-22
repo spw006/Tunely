@@ -17,18 +17,11 @@ class JoinSearchViewController: UIViewController, UITableViewDataSource, UITable
     @IBOutlet weak var BackButton: UIButton!
     
     @IBAction func goBack(sender: AnyObject) {
-        let streamView:JoinStreamViewController = JoinStreamViewController(nibName: "JoinStreamViewController", bundle: nil)
-        self.presentViewController(streamView, animated: true, completion: nil)
+        dismissViewControllerAnimated(true, completion: nil)
     }
     
     //pubnub
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-    
-    
-    
-    
-    
-    
     
     
     @IBOutlet weak var tableView: UITableView!
@@ -40,6 +33,9 @@ class JoinSearchViewController: UIViewController, UITableViewDataSource, UITable
     @IBOutlet weak var SongSearchBar: UISearchBar!
     
     var songs: [Song] = []
+    
+    
+    
     
     func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
         searchActive = true;
@@ -66,7 +62,6 @@ class JoinSearchViewController: UIViewController, UITableViewDataSource, UITable
             self.getSongs(searchText)
             
             //self.tableView.reloadData()
-            
         }
     }
     
@@ -81,13 +76,10 @@ class JoinSearchViewController: UIViewController, UITableViewDataSource, UITable
         appDelegate.client?.addListener(self)
         
         self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
-        
+
     }
     
     func getSongs(timer: String!) {
-        
-        
-        print("getSongs called")
         let searchTerm = timer
         
         self.title = "Results for \(searchTerm)"
@@ -136,102 +128,64 @@ class JoinSearchViewController: UIViewController, UITableViewDataSource, UITable
         }
         
     }
-    /*
-    func searchDisplayController(controller: UISearchDisplayController, shouldReloadTableForSearchString searchString: String?) -> Bool {
-    
-    print("searchDisplayController called")
-    
-    self.getSongs(searchString)
-    
-    return true
-    
-    
-    }*/
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
+    
     // MARK: - Table view data source
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         return songs.count
     }
     
+    /** When a user selects a song */
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         
-        let row = indexPath.row
-        print(songs[row].title)
-        //ViewController().addSongtoPlaylist(songs[row].trackID)
-        //ViewController.addSongtoPlaylist(ViewController)
+        // get the song selected
+        let selectedSong = songs[indexPath.row]
         
-        /* FORMAT STRING ADD SONG OLD NO PUBNUB
+        let songObject: [String: [String: String]] = [
+            "songObject": [
+                "trackID": selectedSong.trackID,
+                "title": selectedSong.title,
+                "artist": selectedSong.artist,
+                "album": selectedSong.album
+            ]
+        ]
         
-        var formattedTrackName = NSURL(string: "spotify:track:"+songs[row].trackID);
-        print(formattedTrackName)
+        // Make the JSON to send
+        let message: AnyObject = JSON(songObject).object
         
-        userPlaylistTrackStrings.append(formattedTrackName!)
-        playlistTrackname.append(songs[row])*/
-        
-        /*    var title = ""
-        var album = ""
-        var artist = ""
-        var trackID = "" */
-        
+        // publish the song message to the target channel
+        // Only the host (StreamViewController should deal with this message)
         let targetChannel =  appDelegate.client?.channels().last as! String
-        let songObject : [String : [String:String]] = ["songObj": ["trackID" : songs[row].trackID, "title" : songs[row].title, "artist" : songs[row].artist, "album" : songs[row].album]]
-        
-        appDelegate.client!.publish(songObject, toChannel: targetChannel, compressed: false, withCompletion: { (status) -> Void in })
-        
-        //player?.queueURI(formattedTrackName, callback: nil)
-        //player?.playURI(formattedTrackName, callback: nil)
-        //.ViewController.addSongtoPlaylist(songs[row].trackID)
-        
-        
-        
+        appDelegate.client!.publish(message, toChannel: targetChannel, compressed: false, withCompletion: { (status) -> Void in })
     }
-    /*
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-    tableView.deselectRowAtIndexPath(indexPath, animated: true)
     
-    let row = indexPath.row
-    println(swiftBlogs[row])
-    }*/
-    
-    
-    
-    
+    /** Populates the table with songs */
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        print("tableView in songsearch called")
-        //let cell = self.tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
-        
-        
         var cell:UITableViewCell? = tableView.dequeueReusableCellWithIdentifier("cell") as UITableViewCell?
         
         if (cell != nil) {
             cell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "cell")
         }
         
-        
-        
-        
-        //print(indexPath.row)
-        //print(songs.count)
-        if(songs.count > 0){
+        // populate the table with the songs (title and artist)
+        if (songs.count > 0){
             let song = songs[indexPath.row]
             
             cell!.textLabel?.text = song.title
-            
             cell!.detailTextLabel?.text = song.artist + " - " + song.album
         }
+        
         return cell!
     }
 
