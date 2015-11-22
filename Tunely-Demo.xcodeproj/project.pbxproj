@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		145EC06E1BFE6F82006C3D27 /* JoinStreamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 145EC06C1BFE6F82006C3D27 /* JoinStreamViewController.swift */; };
 		145EC06F1BFE6F82006C3D27 /* JoinStreamViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 145EC06D1BFE6F82006C3D27 /* JoinStreamViewController.xib */; };
+		145EC0721BFFD93D006C3D27 /* JoinSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 145EC0701BFFD93D006C3D27 /* JoinSearchViewController.swift */; };
+		145EC0731BFFD93D006C3D27 /* JoinSearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 145EC0711BFFD93D006C3D27 /* JoinSearchViewController.xib */; };
 		14BDC8351BF28BC20073F455 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14BDC8341BF28BC20073F455 /* AVFoundation.framework */; };
 		14BDC8371BF28BC90073F455 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14BDC8361BF28BC90073F455 /* SystemConfiguration.framework */; };
 		14BDC8421BF51F140073F455 /* Song.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14BDC8411BF51F140073F455 /* Song.swift */; };
@@ -54,6 +56,8 @@
 		0B6F901B2C7C0B4D2335DA3A /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		145EC06C1BFE6F82006C3D27 /* JoinStreamViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JoinStreamViewController.swift; sourceTree = "<group>"; };
 		145EC06D1BFE6F82006C3D27 /* JoinStreamViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JoinStreamViewController.xib; sourceTree = "<group>"; };
+		145EC0701BFFD93D006C3D27 /* JoinSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JoinSearchViewController.swift; sourceTree = "<group>"; };
+		145EC0711BFFD93D006C3D27 /* JoinSearchViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JoinSearchViewController.xib; sourceTree = "<group>"; };
 		14BDC8341BF28BC20073F455 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		14BDC8361BF28BC90073F455 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		14BDC8411BF51F140073F455 /* Song.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Song.swift; sourceTree = "<group>"; };
@@ -186,6 +190,8 @@
 				6EA1EED31BD0B87700E83778 /* Tunely-Demo-Bridging-Header.h */,
 				145EC06C1BFE6F82006C3D27 /* JoinStreamViewController.swift */,
 				145EC06D1BFE6F82006C3D27 /* JoinStreamViewController.xib */,
+				145EC0701BFFD93D006C3D27 /* JoinSearchViewController.swift */,
+				145EC0711BFFD93D006C3D27 /* JoinSearchViewController.xib */,
 			);
 			path = "Tunely-Demo";
 			sourceTree = "<group>";
@@ -259,7 +265,7 @@
 				TargetAttributes = {
 					6EA1EEA81BD0B77D00E83778 = {
 						CreatedOnToolsVersion = 7.0.1;
-						DevelopmentTeam = P3FMUJLH68;
+						DevelopmentTeam = W8FMTE3P32;
 					};
 					6EA1EEBC1BD0B77D00E83778 = {
 						CreatedOnToolsVersion = 7.0.1;
@@ -301,6 +307,7 @@
 				94D1578F1BE851E10048BAF8 /* HostViewController.xib in Resources */,
 				6EFEC0AB1BFA726B00CA4C0E /* CollectionViewCell.xib in Resources */,
 				145EC06F1BFE6F82006C3D27 /* JoinStreamViewController.xib in Resources */,
+				145EC0731BFFD93D006C3D27 /* JoinSearchViewController.xib in Resources */,
 				6EA1EEB21BD0B77D00E83778 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -377,6 +384,7 @@
 				14F90BF51BF5255F00B0B374 /* SongSearchViewController.swift in Sources */,
 				94D157921BE86AFD0048BAF8 /* JoinViewController.swift in Sources */,
 				6EA1EEAD1BD0B77D00E83778 /* AppDelegate.swift in Sources */,
+				145EC0721BFFD93D006C3D27 /* JoinSearchViewController.swift in Sources */,
 				6EFEC0971BF29F8A00CA4C0E /* OurPubNub.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -436,9 +444,11 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -482,9 +492,11 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_BITCODE = NO;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -510,6 +522,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -528,8 +542,10 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.example.Tunely-Demo";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Tunely-Demo/Tunely-Demo-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -539,6 +555,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -557,7 +575,9 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.example.Tunely-Demo";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Tunely-Demo/Tunely-Demo-Bridging-Header.h";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

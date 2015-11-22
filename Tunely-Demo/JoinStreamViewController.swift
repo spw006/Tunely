@@ -32,9 +32,16 @@ class JoinStreamViewController: UIViewController,SPTAudioStreamingPlaybackDelega
 
     @IBOutlet weak var SearchButton: UIButton!
     
+    @IBAction func goBack(sender: AnyObject) {
+        let streamView:JoinViewController = JoinViewController(nibName: "JoinViewController", bundle: nil)
+        self.presentViewController(streamView, animated: true, completion: nil)
+    }
+    
     @IBAction func searchSongs(sender: AnyObject) {
-        let searchSongView:SongSearchViewController = SongSearchViewController(nibName: "SongSearchViewController", bundle: nil)
-        //appDelegate.client?.removeListener(self)
+        let searchSongView:JoinSearchViewController = JoinSearchViewController(nibName: "JoinSearchViewController", bundle: nil)
+        
+        
+        appDelegate.client?.removeListener(self)
         
         self.presentViewController(searchSongView, animated: true, completion: nil)
     }
@@ -72,8 +79,7 @@ class JoinStreamViewController: UIViewController,SPTAudioStreamingPlaybackDelega
         
         if(firstLoad == true) {
             appDelegate.client?.addListener(self)
-            firstLoad = false
-        }
+
         
         //let nib = UINib(nibName: "CollectionViewCell", bundle: nil)
         

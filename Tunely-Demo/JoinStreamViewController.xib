@@ -8,6 +8,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="JoinStreamViewController" customModule="Tunely_Demo" customModuleProvider="target">
             <connections>
                 <outlet property="SearchButton" destination="y3k-Ba-5Ke" id="lkh-x4-Idl"/>
+                <outlet property="backButton" destination="Kmb-cS-OJA" id="aaE-hL-nh9"/>
                 <outlet property="tableView" destination="3EB-XU-Psm" id="4wF-Mr-jxV"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -21,6 +22,9 @@
                     <rect key="frame" x="38" y="17" width="34" height="30"/>
                     <animations/>
                     <state key="normal" title="Back"/>
+                    <connections>
+                        <action selector="goBack:" destination="-1" eventType="touchUpInside" id="Vmi-DP-FwQ"/>
+                    </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y3k-Ba-5Ke">
                     <rect key="frame" x="445" y="17" width="48" height="30"/>

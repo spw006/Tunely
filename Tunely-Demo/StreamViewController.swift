@@ -48,7 +48,7 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
     var isPlaying = false;
     var TrackListPosition = 0;
     var firstPlay = true;
-    var pausePressed = true;
+    var pausePressed = false;
     var skipSongs = false;
     
     var serializedPlaylist: [AnyObject] = []
@@ -76,6 +76,7 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
         if(firstPlay == true)
         {
             print("first play")
+            updateSession()
             playUsingSession(session)
             //player?.playURI(userPlaylistTrackStrings[0], callback: nil)
             let tmpString = userPlaylistTrackStrings[0].trackID 
@@ -238,6 +239,23 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
             }
         }
     }
+    
+    func updateSession() {
+
+        let userDefaults = NSUserDefaults.standardUserDefaults()
+        
+        if let sessionObj:AnyObject = userDefaults.objectForKey("SpotifySession") {
+            let sessionDataObj = sessionObj as! NSData
+            let firstTimeSession = NSKeyedUnarchiver.unarchiveObjectWithData(sessionDataObj) as! SPTSession
+            
+            //playUsingSession(firstTimeSession)
+            session = firstTimeSession
+            
+        }
+    }
+    
+    
+    
     func playUsingSession(sessionObj:SPTSession) {
         print("playing using session called")
         if player == nil {
@@ -300,6 +318,7 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
         
         /*if (firstLoad == true) {
             appDelegate.client?.addListener(self)
+            clnt = appDelegate.client
             firstLoad = false
         } */
         
@@ -410,6 +429,27 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        
+        
+        if player == nil {
+            player = SPTAudioStreamingController(clientId: kClientID)
+            player?.playbackDelegate = self;
+            print("no player")
+        }
+        if(firstPlay == true)
+        {
+            print("first play")
+            updateSession()
+            playUsingSession(session)
+            //player?.playURI(userPlaylistTrackStrings[0], callback: nil)
+            //let tmpString = userPlaylistTrackStrings[0].trackID
+            //let formattedTrackName = NSURL(string: "spotify:track:"+tmpString);
+            //player?.playURI(formattedTrackName, callback: nil)
+            //isPlaying = true;
+            firstPlay = false
+        }
+        
+        
         skipSongs = true
         let row = indexPath.row
         
