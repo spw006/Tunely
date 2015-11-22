@@ -298,10 +298,13 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
         
         titleLabel?.text = streamName
         
-        if (firstLoad == true) {
+        /*if (firstLoad == true) {
             appDelegate.client?.addListener(self)
             firstLoad = false
-        }
+        } */
+        
+        appDelegate.client?.addListener(self)
+
         
         let nib = UINib(nibName: "CollectionViewCell", bundle: nil)
         
