@@ -54,7 +54,7 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
     var isPlaying = false;
     var TrackListPosition = 0;
     var firstPlay = true;
-    var pausePressed = true;
+    var pausePressed = false;
     var skipSongs = false;
     
     
@@ -256,38 +256,14 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
     func updateSession() {
 
         let userDefaults = NSUserDefaults.standardUserDefaults()
-        print("viewdidload")
+        
         if let sessionObj:AnyObject = userDefaults.objectForKey("SpotifySession") {
-            //session available
-            print("session available");
             let sessionDataObj = sessionObj as! NSData
-            session = NSKeyedUnarchiver.unarchiveObjectWithData(sessionDataObj) as! SPTSession
-            if !session.isValid() {
-                SPTAuth.defaultInstance().renewSession(session, callback: { (error:NSError!, renewedSession: SPTSession!) ->
-                    Void in
-                    print("session not valid")
-                    if error == nil {
-                        let sessionData = NSKeyedArchiver.archivedDataWithRootObject(session)
-                        userDefaults.setObject(sessionData, forKey: "SpotifySession")
-                        userDefaults.synchronize()
-                        
-                        session = renewedSession
-                        
-                        //self.playUsingSession(renewedSession)
-                        
-                    }
-                    else {
-                        print("error refresshing session")
-                    }
-                })
-                
-                
-            }else {
-                print("sessionValid")
-                //playUsingSession(session)
-            }
+            let firstTimeSession = NSKeyedUnarchiver.unarchiveObjectWithData(sessionDataObj) as! SPTSession
             
-
+            //playUsingSession(firstTimeSession)
+            session = firstTimeSession
+            
         }
     }
     
@@ -353,12 +329,15 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
         print("streamviewcontroller view loaded")
         
         titleLabel?.text = streamName
-        
+        /*
         if(firstLoad == true)
         {
             appDelegate.client?.addListener(self)
+            clnt = appDelegate.client
             firstLoad = false
-        }
+        }*/
+        
+         appDelegate.client?.addListener(self)
         
         let nib = UINib(nibName: "CollectionViewCell", bundle: nil)
         
@@ -640,9 +619,7 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
                 print(userPlaylistTrackStrings.count)
                 //var tempString2 = obj["title"] as! String
                 //playlistTrackname.append(tempString2)
-                print("song object received, update table")
-                self.tableView.reloadData()
-                
+                print("song object received, update table")                
             }
             
         }
@@ -673,6 +650,7 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
                 let playlistObject: [String : [String:String]] = ["playlistObj" : ["tracks" : tmpString, "artists" : tmpArtists] ]
                 
                 appDelegate.client!.publish(playlistObject, toChannel: targetChannel, compressed: false, withCompletion: { (status) -> Void in })
+                self.tableView.reloadData()
                 
                 print("PUBLISHED PLAYLIST")
                 

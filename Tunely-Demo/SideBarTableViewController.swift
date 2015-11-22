@@ -117,7 +117,7 @@ class SideBarTableViewController: UIViewController {
         if sideBarArray[indexPath.row] == "Logout" {
             FBSDKLoginManager().logOut()
             let view:ViewController = ViewController(nibName: "ViewController", bundle: nil)
-            self.presentViewController(view, animated: true, completion: nil)
+            //self.presentViewController(view, animated: true, completion: nil)
             dismissViewControllerAnimated(true, completion: nil)
         }
         
