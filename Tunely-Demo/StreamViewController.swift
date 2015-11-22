@@ -335,6 +335,46 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
         self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
         
         self.tableView.reloadData()
+        
+        
+        
+        
+        
+        // CODE TO PUBLISH PLAYLISTS
+        let targetChannel =  appDelegate.client?.channels().last as! String
+        playlistTrackname.removeAll()
+        playlistArtistname.removeAll()
+        for(var i = 0; i < userPlaylistTrackStrings.count; i++)
+        {
+            playlistTrackname.append(userPlaylistTrackStrings[i].title)
+            playlistArtistname.append(userPlaylistTrackStrings[i].artist)
+        }
+        var tmpString = ""
+        var tmpArtists = ""
+        for(var i = 0; i < playlistTrackname.count; i++)
+        {
+            tmpString = tmpString + playlistTrackname[i] + "|"
+            tmpArtists = tmpArtists + playlistArtistname[i] + "|"
+        }
+        
+        
+        
+        //let playlistObject : [String : [Array]] = ["playlistObj": [playlistTrackname]]
+        let playlistObject: [String : [String:String]] = ["playlistObj" : ["tracks" : tmpString, "artists" : tmpArtists] ]
+        
+        appDelegate.client!.publish(playlistObject, toChannel: targetChannel, compressed: false, withCompletion: { (status) -> Void in })
+        
+        print("PUBLISHED PLAYLIST")
+
+        
+        
+        
+        
+
+        print("endofviewload")
+        
+
+        // Do any additional setup after loading the view.
     }
     
     override func didReceiveMemoryWarning() {
@@ -572,6 +612,14 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
                 appDelegate.client!.publish(playlistObject, toChannel: targetChannel, compressed: false, withCompletion: { (status) -> Void in })
             }
         }
+        else {
+            print("nooo")
+        }
+        self.tableView.reloadData()
+        
+        print("Received message: \(message.data.message) on channel " +
+            "\((message.data.actualChannel ?? message.data.subscribedChannel)!) at " +
+            "\(message.data.timetoken)")
     }
     
     // New presence event handling.

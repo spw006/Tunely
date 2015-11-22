@@ -20,6 +20,7 @@ class JoinStreamViewController: UIViewController,SPTAudioStreamingPlaybackDelega
     @IBOutlet weak var titleLabel : UILabel?
     @IBOutlet weak var listenersView: UICollectionView!
     
+    @IBOutlet weak var backButton: UIButton!
     /** this joined user's playlist */
     var playlist: [Song] = []
     
@@ -77,7 +78,7 @@ class JoinStreamViewController: UIViewController,SPTAudioStreamingPlaybackDelega
         
         titleLabel?.text = streamName
         
-        if(firstLoad == true) {
+
             appDelegate.client?.addListener(self)
 
         
