@@ -58,11 +58,13 @@ class JoinViewController: UIViewController {
     }
     
     @IBAction func cancel() {
-        //self.dismissViewControllerAnimated(true, completion: nil)
         firstLoad = true;
-        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc : UIViewController = storyBoard.instantiateViewControllerWithIdentifier("mainIdent")
-        self.presentViewController(vc, animated: false, completion: nil)
+        
+        dismissViewControllerAnimated(true, completion: nil)
+
+//        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+//        let vc : UIViewController = storyBoard.instantiateViewControllerWithIdentifier("mainIdent")
+//        self.presentViewController(vc, animated: false, completion: nil)
         
     }
     

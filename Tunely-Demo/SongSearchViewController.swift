@@ -171,6 +171,9 @@ class SongSearchViewController: UIViewController, UITableViewDataSource, UITable
         // Only the host (StreamViewController should deal with this message)
         let targetChannel =  appDelegate.client?.channels().last as! String
         appDelegate.client!.publish(message, toChannel: targetChannel, compressed: false, withCompletion: { (status) -> Void in })
+        
+        // TODO ABBAS AND COLE
+        // POPUP
     }
     
     /** Populates the table with songs */
