@@ -35,9 +35,6 @@ class JoinStreamViewController: UIViewController,SPTAudioStreamingPlaybackDelega
     @IBAction func searchSongs(sender: AnyObject) {
         let searchSongView:JoinSearchViewController = JoinSearchViewController(nibName: "JoinSearchViewController", bundle: nil)
         
-        
-        appDelegate.client?.removeListener(self)
-        
         self.presentViewController(searchSongView, animated: true, completion: nil)
     }
     
@@ -68,23 +65,10 @@ class JoinStreamViewController: UIViewController,SPTAudioStreamingPlaybackDelega
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("streamviewcontroller view loaded")
         
         titleLabel?.text = streamName
         
-
-            appDelegate.client?.addListener(self)
-
-        
         appDelegate.client?.addListener(self)
-        
-        //let nib = UINib(nibName: "CollectionViewCell", bundle: nil)
-        
-        //self.listenersView.registerNib(nib, forCellWithReuseIdentifier: "reuseIdentifier")
-        
-        //client = appDelegate.client!
-        //client?.addListener(self)
-        //appDelegate.client!.addListener(self)
         
         /* Table Setup delegates */
         self.tableView.delegate = self
