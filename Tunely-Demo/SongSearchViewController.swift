@@ -172,8 +172,12 @@ class SongSearchViewController: UIViewController, UITableViewDataSource, UITable
         let targetChannel =  appDelegate.client?.channels().last as! String
         appDelegate.client!.publish(message, toChannel: targetChannel, compressed: false, withCompletion: { (status) -> Void in })
         
-        // TODO ABBAS AND COLE
-        // POPUP
+        // popup confirm
+        let alert = UIAlertController(title: "Song Added", message: selectedSong.title + " just added", preferredStyle: UIAlertControllerStyle.Alert)
+        let alertAction = UIAlertAction(title: "OK!", style: UIAlertActionStyle.Default) { (UIAlertAction) -> Void in }
+        alert.addAction(alertAction)
+        presentViewController(alert, animated: true) { () -> Void in }
+        
     }
     
     /** Populates the table with songs */

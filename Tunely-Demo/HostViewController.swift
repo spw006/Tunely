@@ -180,7 +180,6 @@ class HostViewController: UIViewController {
     }
     
     @IBAction func hostButtonPressed(sender: AnyObject) {
-        print("LOL")
         let streamView:StreamViewController = StreamViewController(nibName: "StreamViewController", bundle: nil)
         self.presentViewController(streamView, animated: true, completion: nil)
     }
