@@ -16,8 +16,9 @@ class JoinViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
     var streams : JSON = nil
-    var streamList : [String] = []
+    var streamList : [TunelyStream] = []
     var pubnubChannels : [String] = []
+    var passwordTextField : UITextField?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,12 +45,18 @@ class JoinViewController: UIViewController {
                 }
                 
                 for (_, stream) in streams {
-                    if let title = stream["name"].string {
-                        self.streamList.append(title)
-                    }
-                    if let pubnub = stream["pubnub"].string {
-                        self.pubnubChannels.append(pubnub)
-                    }
+                    
+                    let streamID = stream["_id"].stringValue
+                    let streamUpdatedAt = stream["updatedAt"].stringValue
+                    let streamCreatedAt = stream["createdAt"].stringValue
+                    let streamPassword = stream["password"].stringValue;
+                    let streamChannelName = stream["pubnub"].stringValue;
+                    let streamHost = stream["host"].stringValue
+                    let streamName = stream["name"].stringValue
+                    
+                    let tunelyStream = TunelyStream(id: streamID, updatedAt: streamUpdatedAt, createdAt: streamCreatedAt, password: streamPassword, pubnub: streamChannelName, host: streamHost, name: streamName);
+                    
+                    self.streamList.append(tunelyStream)
                 }
                 
                 // re-populate the table view with the data received
@@ -89,7 +96,7 @@ class JoinViewController: UIViewController {
         
         let cell : UITableViewCell = self.tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath)
         
-        cell.textLabel?.text = streamList[indexPath.row]
+        cell.textLabel?.text = streamList[indexPath.row].name
         cell.textLabel?.font = UIFont(name: "Helvetica", size: 20)
         
         return cell
@@ -99,18 +106,71 @@ class JoinViewController: UIViewController {
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         
-        // subscribe to specified channel
-        appDelegate.client?.subscribeToChannels([pubnubChannels[indexPath.row]], withPresence: true)
+        let tunelyStream : TunelyStream = streamList[indexPath.row]
         
-        // go to streamview
-        let streamView:JoinStreamViewController = JoinStreamViewController(nibName: "JoinStreamViewController", bundle: nil)
-        streamView.streamName = streamList[indexPath.row]
-        self.presentViewController(streamView, animated: true, completion: nil)
+        func enterStream() {
+            // stream has no password
+            // subscribe to the channel
+            appDelegate.client?.subscribeToChannels([tunelyStream.pubnub], withPresence: true)
+            
+            // go to streamview
+            let streamView:StreamViewController = StreamViewController(nibName: "StreamViewController", bundle: nil)
+            streamView.streamName = self.streamList[indexPath.row].name
+            self.presentViewController(streamView, animated: true, completion: nil)
+        }
+        
+        // stream has a password
+        if (tunelyStream.password != "") {
+            func checkPassword (entered: String, alert : UIAlertController) {
+                print(entered);
+                
+                // password is good! proceed
+                if (entered == self.streamList[indexPath.row].password) {
+                    enterStream()
+                }
+                    
+                    // incorrect password
+                else {
+                    alert.message = "Wrong password. Please try again."
+                    self.presentViewController(alert, animated: true, completion: nil)
+                }
+                
+            }
+            
+            let alert = UIAlertController(title: self.streamList[indexPath.row].name, message: "Enter Password", preferredStyle: UIAlertControllerStyle.Alert)
+            
+            // Cancel action
+            let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) {(action) in
+                print(action)
+            }
+            
+            // Enter action
+            let enterAction = UIAlertAction(title: "Enter", style: UIAlertActionStyle.Default) {(action) in
+                checkPassword(self.passwordTextField!.text!, alert: alert)
+            }
+            
+            alert.addAction(cancelAction)
+            alert.addAction(enterAction)
+            
+            // Configure alert
+            alert.addTextFieldWithConfigurationHandler({(textField: UITextField!) in
+                self.passwordTextField = textField!
+                textField.placeholder = "password"
+                textField.secureTextEntry = true
+            })
+            
+            // Show alert
+            self.presentViewController(alert, animated: true, completion: nil)
+        }
+        
+        // stream has no password
+        // subscribe to the channel
+        enterStream()
     }
-    
+
     /*
     // MARK: - Navigation
-    
+
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
     // Get the new view controller using segue.destinationViewController.
