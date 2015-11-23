@@ -30,7 +30,11 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     var streamName : String!
     
+    var currentSong: String = ""
+    
+    @IBOutlet weak var thisSong: UILabel!
     @IBOutlet weak var SearchButton: UIButton!
+    
     
     @IBAction func searchSongs(sender: AnyObject) {
         let searchSongView:SongSearchViewController = SongSearchViewController(nibName: "SongSearchViewController", bundle: nil)
@@ -79,9 +83,15 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
             updateSession()
             playUsingSession(session)
             //player?.playURI(userPlaylistTrackStrings[0], callback: nil)
-            let tmpString = userPlaylistTrackStrings[0].trackID 
+            let tmpString = userPlaylistTrackStrings[0].trackID
+            let tmpTitle = "Current Song: " + userPlaylistTrackStrings[0].title + " - " + userPlaylistTrackStrings[0].artist
             let formattedTrackName = NSURL(string: "spotify:track:"+tmpString);
-            player?.playURI(formattedTrackName, callback: nil)
+            player?.playURI(formattedTrackName, callback: { error -> Void in
+                if error == nil {
+                        self.currentSong = tmpTitle
+                        self.thisSong.text = self.currentSong
+                }
+            })
             //isPlaying = true;
             firstPlay = false
         }
@@ -99,41 +109,7 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
             }
         }
         pausePressed = false
-        //playUsingSession(session)
-        
-        //self.player?.setIsPlaying(isPlaying, callback: nil)
-        /*
-        Alamofire.request(.GET, "https://api.spotify.com/v1/search?q=loveland&type=track")
-        .responseJSON { response in
-        debugPrint(response)*/
-        /*
-        Alamofire.request(.GET, "https://api.spotify.com/v1/search?q=loveland&type=track").response { request, response, data, error in
-        
-        let json = JSON(data: data!)
-        
-        print(json["tracks"]["items"].count);
-        //print(json["tracks"]["items"])
-        
-        for var i = 0; i < json["tracks"]["items"].count; i++ {
-        
-        let data = json["tracks"]["items"][i]
-        
-        // return the object list
-        let song = Song()
-        
-        song.title = data["name"].string!
-        song.album = data["album"]["name"].string!
-        song.artist = data["artists"][0]["name"].string!
-        song.trackID = data["id"].string!
-        
-        print(song.title)
-        print(song.artist)
-        print(song.trackID)
-        
-        self.songs += [song]
-        
-        }
-        }*/
+
         
         
     }
@@ -148,6 +124,7 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
         if(TrackListPosition < userPlaylistTrackStrings.count)
         {
             let tmpString = userPlaylistTrackStrings[TrackListPosition].trackID
+            let tmpTitle = "Current Song: " + userPlaylistTrackStrings[TrackListPosition].title + " - " + userPlaylistTrackStrings[TrackListPosition].artist
             let formattedTrackName = NSURL(string: "spotify:track:"+tmpString);
             print(userPlaylistTrackStrings[TrackListPosition].title)
             //player!.setIsPlaying(false, callback: nil)
@@ -155,6 +132,8 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
             player!.playURI(formattedTrackName, callback: { error -> Void in
                 if error == nil {
                     self.skipSongs = false;
+                    self.currentSong = tmpTitle
+                    self.thisSong.text = self.currentSong
                     return
                 }
             })
@@ -177,6 +156,7 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
         if(TrackListPosition >= 0)
         {
             let tmpString = userPlaylistTrackStrings[TrackListPosition].trackID
+            let tmpTitle = "Current Song: " + userPlaylistTrackStrings[TrackListPosition].title + " - " + userPlaylistTrackStrings[TrackListPosition].artist
             let formattedTrackName = NSURL(string: "spotify:track:"+tmpString);
             //player!.setIsPlaying(false, callback: nil)
             //player!.stop(nil)
@@ -184,6 +164,8 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
             player!.playURI(formattedTrackName, callback: { error -> Void in
                 if error == nil {
                     self.skipSongs = false;
+                    self.currentSong = tmpTitle
+                    self.thisSong.text = self.currentSong
                     return
                 }
             })
@@ -233,8 +215,11 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
             {
                 print("audio streaming next song")
                 let tmpString = userPlaylistTrackStrings[TrackListPosition].trackID
+                let tmpTitle = "Current Song: " + userPlaylistTrackStrings[TrackListPosition].title + " - " + userPlaylistTrackStrings[TrackListPosition].artist
                 let formattedTrackName = NSURL(string: "spotify:track:"+tmpString);
                 player.playURI(formattedTrackName, callback: nil)
+                self.currentSong = tmpTitle
+                self.thisSong.text = self.currentSong
             }
             }
         }
@@ -315,6 +300,8 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
         super.viewDidLoad()
         
         titleLabel?.text = streamName
+        thisSong.textAlignment = .Center
+        thisSong.text = "Current Song: "
         
         /*if (firstLoad == true) {
             appDelegate.client?.addListener(self)
@@ -500,12 +487,16 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
         
         
         let tmpString = userPlaylistTrackStrings[row].trackID //as! String
+        let tmpTitle = "Current Song: " + userPlaylistTrackStrings[row].title + " - " + userPlaylistTrackStrings[row].artist
         print(userPlaylistTrackStrings[row].title)
         let formattedTrackName = NSURL(string: "spotify:track:"+tmpString);
+        
         print("x")
         player?.playURI(formattedTrackName, callback: { error -> Void in
             if error == nil {
                 self.skipSongs = false;
+                self.currentSong = tmpTitle
+                self.thisSong.text = self.currentSong
                 return
             }
         })
