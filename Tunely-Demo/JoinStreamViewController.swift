@@ -77,10 +77,9 @@ class JoinStreamViewController: UIViewController,SPTAudioStreamingPlaybackDelega
         
         titleLabel?.text = streamName
         
-        /*if(firstLoad == true) {
+
             appDelegate.client?.addListener(self)
-            firstLoad = false
-        } */
+
         
         appDelegate.client?.addListener(self)
         
@@ -108,6 +107,15 @@ class JoinStreamViewController: UIViewController,SPTAudioStreamingPlaybackDelega
         let targetChannel =  appDelegate.client?.channels().last as! String
         let songObject : [String : String] = ["joinRequest": "joinRequest"]
         appDelegate.client!.publish(songObject, toChannel: targetChannel, compressed: false, withCompletion: { (status) -> Void in })
+        
+        
+        // construct picture object
+        let pictureObject : [String : [String : String]] = [
+            "pictureObject" : ["picURL" : defaults.stringForKey("userPicURL")! as String]]
+        
+        appDelegate.client!.publish(pictureObject, toChannel: targetChannel,
+            compressed: false, withCompletion: { (status) -> Void in
+        })
         
         self.tableView.reloadData()
     }
@@ -208,6 +216,7 @@ class JoinStreamViewController: UIViewController,SPTAudioStreamingPlaybackDelega
         if let listenersPic = message.data.message["listenersObject"] {
             if (listenersPic != nil) {
                 self.listenersPic = listenersPic as! [String]
+                print(listenersPic)
                 listenersView.reloadData()
             }
         }
@@ -309,17 +318,6 @@ class JoinStreamViewController: UIViewController,SPTAudioStreamingPlaybackDelega
             })
             } */
             
-            let targetChannel = client.channels().last as! String
-            
-            // construct picture object
-            let pictureObject : [String : [String : String]] = [
-                "pictureObject" : ["picURL" : defaults.stringForKey("userPicURL")! as String]
-            ]
-            
-            
-            client.publish(pictureObject, toChannel: targetChannel,
-                compressed: false, withCompletion: { (status) -> Void in
-            })
 
         }
             
