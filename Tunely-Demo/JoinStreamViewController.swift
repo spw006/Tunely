@@ -20,6 +20,7 @@ class JoinStreamViewController: UIViewController,SPTAudioStreamingPlaybackDelega
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var listenersView: UICollectionView!
     
+    @IBOutlet weak var backButton: UIButton!
     /** this joined user's playlist */
     var playlist: [Song] = []
     
@@ -31,9 +32,16 @@ class JoinStreamViewController: UIViewController,SPTAudioStreamingPlaybackDelega
 
     @IBOutlet weak var SearchButton: UIButton!
     
+    @IBAction func goBack(sender: AnyObject) {
+        let streamView:JoinViewController = JoinViewController(nibName: "JoinViewController", bundle: nil)
+        self.presentViewController(streamView, animated: true, completion: nil)
+    }
+    
     @IBAction func searchSongs(sender: AnyObject) {
-        let searchSongView:SongSearchViewController = SongSearchViewController(nibName: "SongSearchViewController", bundle: nil)
-        //appDelegate.client?.removeListener(self)
+        let searchSongView:JoinSearchViewController = JoinSearchViewController(nibName: "JoinSearchViewController", bundle: nil)
+        
+        
+        appDelegate.client?.removeListener(self)
         
         self.presentViewController(searchSongView, animated: true, completion: nil)
     }

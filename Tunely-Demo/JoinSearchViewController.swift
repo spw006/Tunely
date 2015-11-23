@@ -1,8 +1,8 @@
 //
-//  SearchSongTableViewController.swift
+//  JoinSearchViewController.swift
 //  Tunely-Demo
 //
-//  Created by Sean Wang on 11/12/15.
+//  Created by Sean Wang on 11/20/15.
 //  Copyright © 2015 Tracy Nham. All rights reserved.
 //
 
@@ -11,11 +11,9 @@ import Alamofire
 import SwiftyJSON
 import PubNub
 
-//var playlistTrackname = [Song]()
-
-class SongSearchViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchDisplayDelegate, PNObjectEventListener {
+class JoinSearchViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchDisplayDelegate, PNObjectEventListener {
     
-
+    
     @IBOutlet weak var BackButton: UIButton!
     
     @IBAction func goBack(sender: AnyObject) {
@@ -27,7 +25,7 @@ class SongSearchViewController: UIViewController, UITableViewDataSource, UITable
     
     
     @IBOutlet weak var tableView: UITableView!
-
+    
     var searchActive : Bool = false
     
     var filtered:[String] = []
@@ -35,6 +33,9 @@ class SongSearchViewController: UIViewController, UITableViewDataSource, UITable
     @IBOutlet weak var SongSearchBar: UISearchBar!
     
     var songs: [Song] = []
+    
+    
+    
     
     func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
         searchActive = true;
@@ -61,7 +62,6 @@ class SongSearchViewController: UIViewController, UITableViewDataSource, UITable
             self.getSongs(searchText)
             
             //self.tableView.reloadData()
-            
         }
     }
     
@@ -76,11 +76,10 @@ class SongSearchViewController: UIViewController, UITableViewDataSource, UITable
         appDelegate.client?.addListener(self)
         
         self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
-        
+
     }
     
     func getSongs(timer: String!) {
-        print("getSongs called")
         let searchTerm = timer
         
         self.title = "Results for \(searchTerm)"
@@ -138,12 +137,10 @@ class SongSearchViewController: UIViewController, UITableViewDataSource, UITable
     
     // MARK: - Table view data source
     
-    /** Number of sections  */
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
     
-    /** Number of rows in a section */
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return songs.count
     }
@@ -177,13 +174,12 @@ class SongSearchViewController: UIViewController, UITableViewDataSource, UITable
         let alertAction = UIAlertAction(title: "OK!", style: UIAlertActionStyle.Default) { (UIAlertAction) -> Void in }
         alert.addAction(alertAction)
         presentViewController(alert, animated: true) { () -> Void in }
-        
     }
     
     /** Populates the table with songs */
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell:UITableViewCell? = tableView.dequeueReusableCellWithIdentifier("cell") as UITableViewCell?
-
+        
         if (cell != nil) {
             cell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "cell")
         }
@@ -198,7 +194,5 @@ class SongSearchViewController: UIViewController, UITableViewDataSource, UITable
         
         return cell!
     }
-    
-    
-}
 
+}

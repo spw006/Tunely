@@ -47,7 +47,7 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
     var isPlaying = false;
     var TrackListPosition = 0;
     var firstPlay = true;
-    var pausePressed = true;
+    var pausePressed = false;
     var skipSongs = false;
     
     var serializedPlaylist: [AnyObject] = []
@@ -73,6 +73,7 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
         if(firstPlay == true)
         {
             print("first play")
+            updateSession()
             playUsingSession(session)
             //player?.playURI(userPlaylistTrackStrings[0], callback: nil)
             let tmpString = userPlaylistTrackStrings[0].trackID 
@@ -235,6 +236,23 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
             }
         }
     }
+    
+    func updateSession() {
+
+        let userDefaults = NSUserDefaults.standardUserDefaults()
+        
+        if let sessionObj:AnyObject = userDefaults.objectForKey("SpotifySession") {
+            let sessionDataObj = sessionObj as! NSData
+            let firstTimeSession = NSKeyedUnarchiver.unarchiveObjectWithData(sessionDataObj) as! SPTSession
+            
+            //playUsingSession(firstTimeSession)
+            session = firstTimeSession
+            
+        }
+    }
+    
+    
+    
     func playUsingSession(sessionObj:SPTSession) {
         print("playing using session called")
         if player == nil {
@@ -297,6 +315,7 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
         
         /*if (firstLoad == true) {
             appDelegate.client?.addListener(self)
+            clnt = appDelegate.client
             firstLoad = false
         } */
         
@@ -313,6 +332,46 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
         self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
         
         self.tableView.reloadData()
+        
+        
+        
+        
+        
+        // CODE TO PUBLISH PLAYLISTS
+        let targetChannel =  appDelegate.client?.channels().last as! String
+        playlistTrackname.removeAll()
+        playlistArtistname.removeAll()
+        for(var i = 0; i < userPlaylistTrackStrings.count; i++)
+        {
+            playlistTrackname.append(userPlaylistTrackStrings[i].title)
+            playlistArtistname.append(userPlaylistTrackStrings[i].artist)
+        }
+        var tmpString = ""
+        var tmpArtists = ""
+        for(var i = 0; i < playlistTrackname.count; i++)
+        {
+            tmpString = tmpString + playlistTrackname[i] + "|"
+            tmpArtists = tmpArtists + playlistArtistname[i] + "|"
+        }
+        
+        
+        
+        //let playlistObject : [String : [Array]] = ["playlistObj": [playlistTrackname]]
+        let playlistObject: [String : [String:String]] = ["playlistObj" : ["tracks" : tmpString, "artists" : tmpArtists] ]
+        
+        appDelegate.client!.publish(playlistObject, toChannel: targetChannel, compressed: false, withCompletion: { (status) -> Void in })
+        
+        print("PUBLISHED PLAYLIST")
+
+        
+        
+        
+        
+
+        print("endofviewload")
+        
+
+        // Do any additional setup after loading the view.
     }
     
     override func didReceiveMemoryWarning() {
@@ -407,6 +466,27 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        
+        
+        if player == nil {
+            player = SPTAudioStreamingController(clientId: kClientID)
+            player?.playbackDelegate = self;
+            print("no player")
+        }
+        if(firstPlay == true)
+        {
+            print("first play")
+            updateSession()
+            playUsingSession(session)
+            //player?.playURI(userPlaylistTrackStrings[0], callback: nil)
+            //let tmpString = userPlaylistTrackStrings[0].trackID
+            //let formattedTrackName = NSURL(string: "spotify:track:"+tmpString);
+            //player?.playURI(formattedTrackName, callback: nil)
+            //isPlaying = true;
+            firstPlay = false
+        }
+        
+        
         skipSongs = true
         let row = indexPath.row
         
@@ -564,6 +644,14 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
                 appDelegate.client!.publish(playlistObject, toChannel: targetChannel, compressed: false, withCompletion: { (status) -> Void in })
             }
         }
+        else {
+            print("nooo")
+        }
+        self.tableView.reloadData()
+        
+        print("Received message: \(message.data.message) on channel " +
+            "\((message.data.actualChannel ?? message.data.subscribedChannel)!) at " +
+            "\(message.data.timetoken)")
     }
     
     // New presence event handling.

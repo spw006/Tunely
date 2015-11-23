@@ -135,6 +135,12 @@ class HostViewController: UIViewController {
                  //Do not proceed if a user already has a stream created
                 if (duplicate) {
                     print("User already has a stream.")
+                    
+                    // popup confirm
+                    let alert = UIAlertController(title: "You already have a hosted stream", message: nil, preferredStyle: UIAlertControllerStyle.Alert)
+                    let alertAction = UIAlertAction(title: "OK!", style: UIAlertActionStyle.Default) { (UIAlertAction) -> Void in }
+                    alert.addAction(alertAction)
+                    self.presentViewController(alert, animated: true) { () -> Void in }
                     return;
                 }
                 
@@ -180,7 +186,6 @@ class HostViewController: UIViewController {
     }
     
     @IBAction func hostButtonPressed(sender: AnyObject) {
-        print("LOL")
         let streamView:StreamViewController = StreamViewController(nibName: "StreamViewController", bundle: nil)
         self.presentViewController(streamView, animated: true, completion: nil)
     }
