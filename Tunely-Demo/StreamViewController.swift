@@ -32,7 +32,7 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
     @IBOutlet weak var SearchButton: UIButton!
     
     @IBAction func searchSongs(sender: AnyObject) {
-        let searchSongView:SongSearchViewController = SongSearchViewController(nibName: "SongSearchViewController", bundle: nil)        
+        let searchSongView:SongSearchViewController = SongSearchViewController(nibName: "SongSearchViewController", bundle: nil)
         self.presentViewController(searchSongView, animated: true, completion: nil)
     }    
     
