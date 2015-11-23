@@ -27,7 +27,7 @@ class JoinStreamViewController: UIViewController,SPTAudioStreamingPlaybackDelega
     var streamName : String!
     
     
-    var listenersPic : [String] = []
+    var listenersPic : [String] = ["http://i.telegraph.co.uk/multimedia/archive/02690/Anne-Guichard_2690182k.jpg"]
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
 
     @IBOutlet weak var SearchButton: UIButton!
@@ -129,6 +129,8 @@ class JoinStreamViewController: UIViewController,SPTAudioStreamingPlaybackDelega
         
         let url : NSURL = NSURL(string : listenersPic[indexPath.row])!
         let data : NSData = NSData(contentsOfURL: url)!
+        
+        print("heafidfuiadf");
         
         cell.imageView.image = UIImage(data: data);
         
