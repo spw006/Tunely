@@ -75,6 +75,10 @@ class JoinStreamViewController: UIViewController,SPTAudioStreamingPlaybackDelega
         self.tableView.dataSource = self
         self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
         
+        let nib = UINib(nibName: "CollectionViewCell", bundle: nil)
+        self.listenersView.registerNib(nib, forCellWithReuseIdentifier: "reuseIdentifier")
+        
+        
         // When the user joins a stream, initially populate the table with the current playlist
         // basically requests for the playlist from the host
         let targetChannel =  appDelegate.client?.channels().last as! String
