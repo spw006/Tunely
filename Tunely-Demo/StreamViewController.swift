@@ -570,6 +570,24 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
             }
         }
         
+        // If we received a leave request with the user's picture, remove the picture from the listenerspic array
+        if let leaveRequest = message.data.message["leaveRequest"] {
+            if (leaveRequest != nil) {
+                let urlToRemove = leaveRequest as! String;
+                listenersPic = listenersPic.filter() { $0 != urlToRemove}
+                
+                let listenersObject: [String: [String]] = [
+                    "listenersObject": listenersPic
+                ]
+                
+                listenersView.reloadData()
+                
+                // publish updated pictures
+                let targetChannel =  appDelegate.client?.channels().last as! String
+                appDelegate.client!.publish(listenersObject, toChannel: targetChannel, compressed: false, withCompletion: { (status) -> Void in })
+            }
+        }
+        
         
         // If we received a song, add it to the playlist and publish it
         if let songObject = message.data.message["songObject"] {
