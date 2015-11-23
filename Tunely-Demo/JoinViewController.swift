@@ -24,6 +24,10 @@ class JoinViewController: UIViewController {
         super.viewDidLoad()
         
         self.tableView.registerClass(UITableViewCell.classForCoder(), forCellReuseIdentifier: "reuseIdentifier")
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
         
         // Populate the table view with streams
         let uri : String = "http://ec2-54-183-142-37.us-west-1.compute.amazonaws.com/api/streams"
@@ -44,6 +48,8 @@ class JoinViewController: UIViewController {
                     return
                 }
                 
+                var activeStreams: [TunelyStream] = []
+                
                 for (_, stream) in streams {
                     
                     let streamID = stream["_id"].stringValue
@@ -56,8 +62,10 @@ class JoinViewController: UIViewController {
                     
                     let tunelyStream = TunelyStream(id: streamID, updatedAt: streamUpdatedAt, createdAt: streamCreatedAt, password: streamPassword, pubnub: streamChannelName, host: streamHost, name: streamName);
                     
-                    self.streamList.append(tunelyStream)
+                    activeStreams.append(tunelyStream)
                 }
+                
+                self.streamList = activeStreams
                 
                 // re-populate the table view with the data received
                 self.tableView.reloadData()
@@ -67,12 +75,7 @@ class JoinViewController: UIViewController {
     @IBAction func cancel() {
         firstLoad = true;
         
-        dismissViewControllerAnimated(true, completion: nil)
-
-//        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-//        let vc : UIViewController = storyBoard.instantiateViewControllerWithIdentifier("mainIdent")
-//        self.presentViewController(vc, animated: false, completion: nil)
-        
+        dismissViewControllerAnimated(true, completion: nil)        
     }
     
     override func didReceiveMemoryWarning() {
