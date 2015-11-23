@@ -27,7 +27,7 @@ class JoinStreamViewController: UIViewController,SPTAudioStreamingPlaybackDelega
     var streamName : String!
     
     
-    var listenersPic : [String] = []
+    var listenersPic : [String] = ["http://i.telegraph.co.uk/multimedia/archive/02690/Anne-Guichard_2690182k.jpg"]
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
 
     @IBOutlet weak var SearchButton: UIButton!
@@ -78,14 +78,10 @@ class JoinStreamViewController: UIViewController,SPTAudioStreamingPlaybackDelega
         
         appDelegate.client?.addListener(self)
         
-        //let nib = UINib(nibName: "CollectionViewCell", bundle: nil)
+        let nib = UINib(nibName: "CollectionViewCell", bundle: nil)
         
-        //self.listenersView.registerNib(nib, forCellWithReuseIdentifier: "reuseIdentifier")
-        
-        //client = appDelegate.client!
-        //client?.addListener(self)
-        //appDelegate.client!.addListener(self)
-        
+        self.listenersView.registerNib(nib, forCellWithReuseIdentifier: "reuseIdentifier")
+                
         /* Table Setup delegates */
         self.tableView.delegate = self
         self.tableView.dataSource = self
@@ -145,6 +141,8 @@ class JoinStreamViewController: UIViewController,SPTAudioStreamingPlaybackDelega
         
         let url : NSURL = NSURL(string : listenersPic[indexPath.row])!
         let data : NSData = NSData(contentsOfURL: url)!
+        
+        print("heafidfuiadf");
         
         cell.imageView.image = UIImage(data: data);
         

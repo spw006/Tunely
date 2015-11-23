@@ -45,6 +45,10 @@
                         <size key="footerReferenceSize" width="0.0" height="0.0"/>
                         <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                     </collectionViewFlowLayout>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="7z3-Eg-egS"/>
+                        <outlet property="delegate" destination="-1" id="ebj-cE-Ivl"/>
+                    </connections>
                 </collectionView>
                 <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WCL-R9-Feu">
                     <rect key="frame" x="8" y="21" width="69" height="31"/>
