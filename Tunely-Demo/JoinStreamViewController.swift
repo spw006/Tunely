@@ -27,7 +27,7 @@ class JoinStreamViewController: UIViewController,SPTAudioStreamingPlaybackDelega
     var streamName : String!
     
     
-    var listenersPic : [String] = ["http://i.telegraph.co.uk/multimedia/archive/02690/Anne-Guichard_2690182k.jpg"]
+    var listenersPic : [String] = []
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
 
     @IBOutlet weak var SearchButton: UIButton!
@@ -318,9 +318,21 @@ class JoinStreamViewController: UIViewController,SPTAudioStreamingPlaybackDelega
     /************************ END PUBNUB FUNCTIONS ****************************/
     
     @IBAction func endStream(sender: AnyObject) {
-        // unsubscribe from pubnub
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+
+        // leave request to alert host user to remove this user's picture from their listeners pic array
+
+        
+        // unsubscribe from pubnub
         if let targetChannel = appDelegate.client?.channels().last {
+            let leaveObject : [String : String] = ["leaveRequest": defaults.stringForKey("userPicURL")!]
+            
+            // alert host user to remove this user's picture from their listeners pic array
+            appDelegate.client?.publish(leaveObject, toChannel: targetChannel as! String,
+                compressed: false, withCompletion: { (status) -> Void in
+            })
+            
+            
             print("unsubscribed from " + (targetChannel as! String))
             appDelegate.client?.unsubscribeFromChannels([targetChannel as! String], withPresence: true)
         }

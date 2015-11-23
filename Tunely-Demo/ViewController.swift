@@ -110,6 +110,7 @@ class ViewController: UIViewController, FBSDKLoginButtonDelegate {
                     print("view controller good")
                 }
                 
+                
                 // Attempt to create a new Facebook user
                 var uri : String = "http://ec2-54-183-142-37.us-west-1.compute.amazonaws.com/api/users"
                 let parameters : [String: AnyObject] = [
@@ -163,15 +164,6 @@ class ViewController: UIViewController, FBSDKLoginButtonDelegate {
                             print("New User: " + (userName as String) + ", created.")
                         }
                     }
-            
-            
-                // store user picture
-                /*let url : NSURL = NSURL(fileURLWithPath: picURL)
-                let data : NSData = NSData(contentsOfURL: url)!
-
-                let picture: UIImageView = UIImageView(image: UIImage(data: data)!)
-                
-                defaults.setObject(picture, forKey: "picture") */
                 
             }
         })
