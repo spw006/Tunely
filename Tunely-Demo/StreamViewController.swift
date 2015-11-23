@@ -26,7 +26,6 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
     var userPlaylistTrackStrings = [Song]()
     
     var listenersPic : [String] = []
-    var serializedListeners = [String : [String]]()
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     var streamName : String!
     
