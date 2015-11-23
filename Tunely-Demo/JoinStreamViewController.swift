@@ -15,9 +15,9 @@ import SwiftyJSON
 class JoinStreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, UITableViewDataSource, UITableViewDelegate, PNObjectEventListener {
     
     
-    @IBOutlet weak var tableView: UITableView!
     
-    @IBOutlet weak var titleLabel : UILabel?
+    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var listenersView: UICollectionView!
     
     /** this joined user's playlist */
@@ -27,7 +27,6 @@ class JoinStreamViewController: UIViewController,SPTAudioStreamingPlaybackDelega
     
     
     var listenersPic : [String] = []
-    var listeners : [String] = []
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
 
     @IBOutlet weak var SearchButton: UIButton!
@@ -70,10 +69,12 @@ class JoinStreamViewController: UIViewController,SPTAudioStreamingPlaybackDelega
         
         titleLabel?.text = streamName
         
-        if(firstLoad == true) {
+        /*if(firstLoad == true) {
             appDelegate.client?.addListener(self)
             firstLoad = false
-        }
+        } */
+        
+        appDelegate.client?.addListener(self)
         
         //let nib = UINib(nibName: "CollectionViewCell", bundle: nil)
         
@@ -116,6 +117,7 @@ class JoinStreamViewController: UIViewController,SPTAudioStreamingPlaybackDelega
         
     }
     
+    
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         // Return the number of sections
         return 1
@@ -130,7 +132,6 @@ class JoinStreamViewController: UIViewController,SPTAudioStreamingPlaybackDelega
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("reuseIdentifier", forIndexPath: indexPath) as! CollectionViewCell
         
-        
         let url : NSURL = NSURL(string : listenersPic[indexPath.row])!
         let data : NSData = NSData(contentsOfURL: url)!
         
@@ -138,8 +139,6 @@ class JoinStreamViewController: UIViewController,SPTAudioStreamingPlaybackDelega
         
         return cell
     }
-    
-    
     
     
     
@@ -197,6 +196,14 @@ class JoinStreamViewController: UIViewController,SPTAudioStreamingPlaybackDelega
             "\(message.data.timetoken)")
         
         
+        // If a joined user received a listeners object, they update their listeners
+        if let listenersPic = message.data.message["listenersObject"] {
+            if (listenersPic != nil) {
+                self.listenersPic = listenersPic as! [String]
+                listenersView.reloadData()
+            }
+        }
+        
         // When a joined user receives the playist message from the host, they update their local playlist
         if let playlistObject = message.data.message["playlistObject"] {
             if (playlistObject != nil) {
@@ -242,34 +249,6 @@ class JoinStreamViewController: UIViewController,SPTAudioStreamingPlaybackDelega
         }
         
         if event.data.presenceEvent != "state-change" {
-            
-            let targetChannel = client.channels().last as! String
-            
-            //let uuid : String = (self.client?.uuid())!
-            let uuid: String = client.uuid()
-            
-            
-            let picObject : [String : [String : String]] = ["pic" : ["url" : defaults.stringForKey("userPicURL")! , "uuid" : uuid]]
-            
-            
-            client.publish(picObject, toChannel: targetChannel,
-                compressed: false, withCompletion: { (status) -> Void in
-                    
-                    if !status.error {
-                        
-                        // Message successfully published to specified channel.
-                    }
-                    else{
-                        
-                        // Handle message publish error. Check 'category' property
-                        // to find out possible reason because of which request did fail.
-                        // Review 'errorData' property (which has PNErrorData data type) of status
-                        // object to get additional information about issue.
-                        //
-                        // Request can be resent using: status.retry()
-                    }
-            })
-            
             
             print("\(event.data.presence.uuid) \"\(event.data.presenceEvent)'ed\"\n" +
                 "at: \(event.data.presence.timetoken) " +
@@ -324,30 +303,16 @@ class JoinStreamViewController: UIViewController,SPTAudioStreamingPlaybackDelega
             
             let targetChannel = client.channels().last as! String
             
-            //let uuid : String = (self.client?.uuid())!
-            let uuid : String = (client?.uuid())!
+            // construct picture object
+            let pictureObject : [String : [String : String]] = [
+                "pictureObject" : ["picURL" : defaults.stringForKey("userPicURL")! as String]
+            ]
             
             
-            let picObject : [String : [String : String]] = ["pic" : ["url" : defaults.stringForKey("userPicURL")! , "uuid" : uuid]]
-            
-            
-            client.publish(picObject, toChannel: targetChannel,
+            client.publish(pictureObject, toChannel: targetChannel,
                 compressed: false, withCompletion: { (status) -> Void in
-                    
-                    if !status.error {
-                        
-                        // Message successfully published to specified channel.
-                    }
-                    else{
-                        
-                        // Handle message publish error. Check 'category' property
-                        // to find out possible reason because of which request did fail.
-                        // Review 'errorData' property (which has PNErrorData data type) of status
-                        // object to get additional information about issue.
-                        //
-                        // Request can be resent using: status.retry()
-                    }
             })
+
         }
             
         else if status.category == .PNReconnectedCategory {
@@ -362,7 +327,56 @@ class JoinStreamViewController: UIViewController,SPTAudioStreamingPlaybackDelega
         }
     }
     
+
     /************************ END PUBNUB FUNCTIONS ****************************/
+    
+    @IBAction func endStream(sender: AnyObject) {
+        let hostedStream = defaults.stringForKey("hostedStream")
+        
+        if (hostedStream != nil) {
+            
+            // delete the stream object in the database
+            let uri : String = "http://ec2-54-183-142-37.us-west-1.compute.amazonaws.com/api/streams/" + hostedStream!
+            let headers : [String: String] = ["x-access-token": FBSDKAccessToken.currentAccessToken().tokenString]
+            
+            Alamofire.request(.DELETE, uri, headers:headers)
+                .responseJSON { json in
+                    
+                    let deletedStream = JSON(data: json.data!)
+                    
+                    print (deletedStream)
+                    
+                    // Do not proceed if server did not respond
+                    if (deletedStream == nil) {
+                        print("No response from server or stream does not exist.")
+                        return
+                    }
+                    
+                    // delete the value for the hostedStream key
+                    defaults.setObject(nil, forKey: "hostedStream")
+                    
+                    print("Deleted hosted stream.")
+            }
+            
+            // unsubscribe from pubnub
+            let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+            if let targetChannel = appDelegate.client?.channels().last {
+                print("unsubscribed from " + (targetChannel as! String))
+                appDelegate.client?.unsubscribeFromChannels([targetChannel as! String], withPresence: true)
+            }
+            
+            print(appDelegate.client?.channels())
+            
+            // go back to home after delete
+            dismissViewControllerAnimated(true, completion: nil)
+        }
+            
+            // the user is not in a stream
+        else {
+            dismissViewControllerAnimated(true, completion: nil)
+        }
+    
+    }
     
 
 }
