@@ -114,7 +114,7 @@ class JoinViewController: UIViewController {
             appDelegate.client?.subscribeToChannels([tunelyStream.pubnub], withPresence: true)
             
             // go to streamview
-            let streamView:StreamViewController = StreamViewController(nibName: "StreamViewController", bundle: nil)
+            let streamView:JoinStreamViewController = JoinStreamViewController(nibName: "JoinStreamViewController", bundle: nil)
             streamView.streamName = self.streamList[indexPath.row].name
             self.presentViewController(streamView, animated: true, completion: nil)
         }
