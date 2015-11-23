@@ -75,12 +75,6 @@ class JoinStreamViewController: UIViewController,SPTAudioStreamingPlaybackDelega
         self.tableView.dataSource = self
         self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
         
-        
-        
-        
-        
-        
-        
         // When the user joins a stream, initially populate the table with the current playlist
         // basically requests for the playlist from the host
         let targetChannel =  appDelegate.client?.channels().last as! String
@@ -88,10 +82,12 @@ class JoinStreamViewController: UIViewController,SPTAudioStreamingPlaybackDelega
         appDelegate.client!.publish(songObject, toChannel: targetChannel, compressed: false, withCompletion: { (status) -> Void in })
         
         
-        // construct picture object
+        // When the users joins a stream, also send their fb profile picture URL
         let pictureObject : [String : [String : String]] = [
-            "pictureObject" : ["picURL" : defaults.stringForKey("userPicURL")! as String]]
-        
+            "pictureObject" : [
+                "picURL" : defaults.stringForKey("userPicURL")! as String
+            ]
+        ]
         appDelegate.client!.publish(pictureObject, toChannel: targetChannel,
             compressed: false, withCompletion: { (status) -> Void in
         })
@@ -228,6 +224,28 @@ class JoinStreamViewController: UIViewController,SPTAudioStreamingPlaybackDelega
                 self.tableView.reloadData()
             }
         }
+        
+        // If a joined user receives a message that the host user is ending the stream, kick them
+        if let endStreamMessage = message.data.message["endStreamMessage"] {
+            if (endStreamMessage != nil) {
+                
+                // notify the user
+                let alert = UIAlertController(title: streamName + " has ended.", message: nil, preferredStyle: UIAlertControllerStyle.Alert)
+                let alertAction = UIAlertAction(title: "OK!", style: UIAlertActionStyle.Default) { (UIAlertAction) -> Void in }
+                alert.addAction(alertAction)
+                presentViewController(alert, animated: true) { () -> Void in }
+                
+                // unsubscribe from pubnub
+                let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+                let targetChannel = appDelegate.client?.channels().last
+                
+                appDelegate.client?.unsubscribeFromChannels([targetChannel as! String], withPresence: true)
+                print("unsubscribed from " + (targetChannel as! String))
+                
+                // go back to home after delete
+                dismissViewControllerAnimated(true, completion: nil)
+            }
+        }
     }
     
     // New presence event handling.
@@ -317,13 +335,31 @@ class JoinStreamViewController: UIViewController,SPTAudioStreamingPlaybackDelega
 
     /************************ END PUBNUB FUNCTIONS ****************************/
     
-    @IBAction func endStream(sender: AnyObject) {
-        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-
-        // leave request to alert host user to remove this user's picture from their listeners pic array
-
+    @IBAction func leaveStream(sender: AnyObject) {
+        let alert = UIAlertController(title: "Are you sure you want to leave " + streamName + "?", message: nil, preferredStyle: UIAlertControllerStyle.Alert)
         
-        // unsubscribe from pubnub
+        // Cancel action
+        let cancelAction = UIAlertAction(title: "No", style: .Cancel) {(action) in
+            print(action)
+        }
+        
+        // Enter action
+        let enterAction = UIAlertAction(title: "Yes", style: UIAlertActionStyle.Default) {(action) in
+            self.leaveStreamAndUnsubscribe()
+        }
+        
+        alert.addAction(cancelAction)
+        alert.addAction(enterAction)
+        
+        // Show alert
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    /** Handles leaving the stream and removing this joined user from the channel */
+    func leaveStreamAndUnsubscribe() {
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        
+        // leave request to alert host user to remove this user's picture from their listeners pic array
         if let targetChannel = appDelegate.client?.channels().last {
             let leaveObject : [String : String] = ["leaveRequest": defaults.stringForKey("userPicURL")!]
             
@@ -332,13 +368,11 @@ class JoinStreamViewController: UIViewController,SPTAudioStreamingPlaybackDelega
                 compressed: false, withCompletion: { (status) -> Void in
             })
             
-            
-            print("unsubscribed from " + (targetChannel as! String))
+            // unsubscribe from pubnub
             appDelegate.client?.unsubscribeFromChannels([targetChannel as! String], withPresence: true)
+            print("unsubscribed from " + (targetChannel as! String))
         }
-        
-        print(appDelegate.client?.channels())
-        
+
         // go back to home after delete
         dismissViewControllerAnimated(true, completion: nil)
     }

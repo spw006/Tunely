@@ -57,11 +57,11 @@
                         <constraint firstAttribute="height" constant="31" id="5wI-kd-huv"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                    <state key="normal" title="End">
+                    <state key="normal" title="Leave">
                         <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     </state>
                     <connections>
-                        <action selector="endStream:" destination="-1" eventType="touchUpInside" id="DpC-hF-KMk"/>
+                        <action selector="leaveStream:" destination="-1" eventType="touchUpInside" id="yj3-eQ-TTq"/>
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Dn-R0-J2r">
