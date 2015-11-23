@@ -230,7 +230,7 @@ class JoinStreamViewController: UIViewController,SPTAudioStreamingPlaybackDelega
         }
         
         // If a joined user receives a message that the host user is ending the stream, kick them
-        if let endStreamMessage = message.data.message["endStreamMessage"] {
+        if let endStreamMessage = message.data.message["endStream"] {
             if (endStreamMessage != nil) {
                 
                 // notify the user
