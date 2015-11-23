@@ -332,46 +332,6 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
         self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
         
         self.tableView.reloadData()
-        
-        
-        
-        
-        
-        // CODE TO PUBLISH PLAYLISTS
-        let targetChannel =  appDelegate.client?.channels().last as! String
-        playlistTrackname.removeAll()
-        playlistArtistname.removeAll()
-        for(var i = 0; i < userPlaylistTrackStrings.count; i++)
-        {
-            playlistTrackname.append(userPlaylistTrackStrings[i].title)
-            playlistArtistname.append(userPlaylistTrackStrings[i].artist)
-        }
-        var tmpString = ""
-        var tmpArtists = ""
-        for(var i = 0; i < playlistTrackname.count; i++)
-        {
-            tmpString = tmpString + playlistTrackname[i] + "|"
-            tmpArtists = tmpArtists + playlistArtistname[i] + "|"
-        }
-        
-        
-        
-        //let playlistObject : [String : [Array]] = ["playlistObj": [playlistTrackname]]
-        let playlistObject: [String : [String:String]] = ["playlistObj" : ["tracks" : tmpString, "artists" : tmpArtists] ]
-        
-        appDelegate.client!.publish(playlistObject, toChannel: targetChannel, compressed: false, withCompletion: { (status) -> Void in })
-        
-        print("PUBLISHED PLAYLIST")
-
-        
-        
-        
-        
-
-        print("endofviewload")
-        
-
-        // Do any additional setup after loading the view.
     }
     
     override func didReceiveMemoryWarning() {
@@ -404,50 +364,71 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
     
     /** End the stream */
     @IBAction func endStream(sender: AnyObject) {
+
+        let alert = UIAlertController(title: "Are you sure you want to end your stream?", message: nil, preferredStyle: UIAlertControllerStyle.Alert)
+            
+        // Cancel action
+        let cancelAction = UIAlertAction(title: "No", style: .Cancel) {(action) in
+            print(action)
+        }
+            
+        // Enter action
+        let enterAction = UIAlertAction(title: "Yes", style: UIAlertActionStyle.Default) {(action) in
+            self.deleteStreamAndUnsubscribe()
+        }
+            
+        alert.addAction(cancelAction)
+        alert.addAction(enterAction)
+            
+        // Show alert
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    /** Handles deleting the stream from the database and removing the host/joined users from the channel */
+    func deleteStreamAndUnsubscribe() {
         let hostedStream = defaults.stringForKey("hostedStream")
         
-        if (hostedStream != nil) {
-            
-            // delete the stream object in the database
-            let uri : String = "http://ec2-54-183-142-37.us-west-1.compute.amazonaws.com/api/streams/" + hostedStream!
-            let headers : [String: String] = ["x-access-token": FBSDKAccessToken.currentAccessToken().tokenString]
-            
-            Alamofire.request(.DELETE, uri, headers:headers)
-                .responseJSON { json in
-                    
-                    let deletedStream = JSON(data: json.data!)
-                    
-                    print (deletedStream)
-                    
-                    // Do not proceed if server did not respond
-                    if (deletedStream == nil) {
-                        print("No response from server or stream does not exist.")
-                        return
-                    }
-                    
-                    // delete the value for the hostedStream key
-                    defaults.setObject(nil, forKey: "hostedStream")
-                    
-                    print("Deleted hosted stream.")
-            }
-            
-            // unsubscribe from pubnub
-            let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-            if let targetChannel = appDelegate.client?.channels().last {
-                print("unsubscribed from " + (targetChannel as! String))
-                appDelegate.client?.unsubscribeFromChannels([targetChannel as! String], withPresence: true)
-            }
-            
-            print(appDelegate.client?.channels())
-            
-            // go back to home after delete
-            dismissViewControllerAnimated(true, completion: nil)
+        // delete the stream object in the database
+        let uri : String = "http://ec2-54-183-142-37.us-west-1.compute.amazonaws.com/api/streams/" + hostedStream!
+        let headers : [String: String] = ["x-access-token": FBSDKAccessToken.currentAccessToken().tokenString]
+        
+        Alamofire.request(.DELETE, uri, headers:headers)
+            .responseJSON { json in
+                
+                let deletedStream = JSON(data: json.data!)
+                
+                print (deletedStream)
+                
+                // Do not proceed if server did not respond
+                if (deletedStream == nil) {
+                    print("No response from server or stream does not exist.")
+                    return
+                }
+                
+                // delete the value for the hostedStream key
+                defaults.setObject(nil, forKey: "hostedStream")
+                
+                print("Deleted hosted stream.")
         }
+        
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        
+        // kick all joined users in the channel and then unsubscribe from pubnub
+        if let targetChannel = appDelegate.client?.channels().last {
             
-        // the user is not in a stream
-        else {
-            dismissViewControllerAnimated(true, completion: nil)
+            // kick all joined users in the channel
+            let endStreamMessage : [String : String] = ["endStream" :"endStream"]
+            appDelegate.client!.publish(endStreamMessage, toChannel: targetChannel as! String,
+                compressed: false, withCompletion: { (status) -> Void in
+            })
+            
+            // unsubscribe from the channel
+            appDelegate.client?.unsubscribeFromChannels([targetChannel as! String], withPresence: true)
+            print("unsubscribed from " + (targetChannel as! String))
         }
+        
+        // go back to home after delete
+        dismissViewControllerAnimated(true, completion: nil)
     }
     
     
@@ -539,7 +520,7 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
             "\((message.data.actualChannel ?? message.data.subscribedChannel)!) at " +
             "\(message.data.timetoken)")
         
-        // If we receive a picture object
+        // If we receive a picture object, add it to the list of listeners and publish the updated listeners array
         if let pictureObject = message.data.message["pictureObject"] {
             if (pictureObject != nil) {
                 
@@ -562,32 +543,11 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
                 
                 listenersView.reloadData()
       
-                
                 // publish the pictures
                 let targetChannel =  appDelegate.client?.channels().last as! String
                 appDelegate.client!.publish(listenersObject, toChannel: targetChannel, compressed: false, withCompletion: { (status) -> Void in })
-
             }
         }
-        
-        // If we received a leave request with the user's picture, remove the picture from the listenerspic array
-        if let leaveRequest = message.data.message["leaveRequest"] {
-            if (leaveRequest != nil) {
-                let urlToRemove = leaveRequest as! String;
-                listenersPic = listenersPic.filter() { $0 != urlToRemove}
-                
-                let listenersObject: [String: [String]] = [
-                    "listenersObject": listenersPic
-                ]
-                
-                listenersView.reloadData()
-                
-                // publish updated pictures
-                let targetChannel =  appDelegate.client?.channels().last as! String
-                appDelegate.client!.publish(listenersObject, toChannel: targetChannel, compressed: false, withCompletion: { (status) -> Void in })
-            }
-        }
-        
         
         // If we received a song, add it to the playlist and publish it
         if let songObject = message.data.message["songObject"] {
@@ -631,13 +591,9 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
         }
         
         
-        
-        
         // If the host user receives a request from a joined user, send the playlist
         if let joinRequest = message.data.message["joinRequest"] {
             if (joinRequest != nil) {
-                
-                print("A USER JOINED THE STREAM. REQUESTED PLAYLIST")
                 
                 var playlist: [AnyObject] = []
                 if (!self.serializedPlaylist.isEmpty) {
@@ -662,9 +618,25 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
                 appDelegate.client!.publish(playlistObject, toChannel: targetChannel, compressed: false, withCompletion: { (status) -> Void in })
             }
         }
-        else {
-            print("nooo")
+            
+        // If we received a leave request with the user's picture, remove the picture from the listenerspic array
+        if let leaveRequest = message.data.message["leaveRequest"] {
+            if (leaveRequest != nil) {
+                let urlToRemove = leaveRequest as! String;
+                listenersPic = listenersPic.filter() { $0 != urlToRemove}
+                
+                let listenersObject: [String: [String]] = [
+                    "listenersObject": listenersPic
+                ]
+                
+                listenersView.reloadData()
+                
+                // publish updated pictures
+                let targetChannel =  appDelegate.client?.channels().last as! String
+                appDelegate.client!.publish(listenersObject, toChannel: targetChannel, compressed: false, withCompletion: { (status) -> Void in })
+            }
         }
+        
         self.tableView.reloadData()
         
         print("Received message: \(message.data.message) on channel " +
