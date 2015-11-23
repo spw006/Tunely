@@ -27,7 +27,7 @@ class JoinStreamViewController: UIViewController,SPTAudioStreamingPlaybackDelega
     var streamName : String!
     
     
-    var listenersPic : [String] = ["http://i.telegraph.co.uk/multimedia/archive/02690/Anne-Guichard_2690182k.jpg"]
+    var listenersPic : [String] = []
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
 
     @IBOutlet weak var SearchButton: UIButton!
@@ -81,7 +81,7 @@ class JoinStreamViewController: UIViewController,SPTAudioStreamingPlaybackDelega
         let nib = UINib(nibName: "CollectionViewCell", bundle: nil)
         
         self.listenersView.registerNib(nib, forCellWithReuseIdentifier: "reuseIdentifier")
-                
+        
         /* Table Setup delegates */
         self.tableView.delegate = self
         self.tableView.dataSource = self
