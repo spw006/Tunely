@@ -64,6 +64,9 @@
                     <rect key="frame" x="163" y="130" width="48" height="30"/>
                     <animations/>
                     <state key="normal" title="Search"/>
+                    <connections>
+                        <action selector="searchSongs:" destination="-1" eventType="touchUpInside" id="7Co-N4-LWO"/>
+                    </connections>
                 </button>
             </subviews>
             <animations/>
