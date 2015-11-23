@@ -32,11 +32,6 @@ class JoinStreamViewController: UIViewController,SPTAudioStreamingPlaybackDelega
 
     @IBOutlet weak var SearchButton: UIButton!
     
-    @IBAction func goBack(sender: AnyObject) {
-        let streamView:JoinViewController = JoinViewController(nibName: "JoinViewController", bundle: nil)
-        self.presentViewController(streamView, animated: true, completion: nil)
-    }
-    
     @IBAction func searchSongs(sender: AnyObject) {
         let searchSongView:JoinSearchViewController = JoinSearchViewController(nibName: "JoinSearchViewController", bundle: nil)
         
@@ -337,52 +332,16 @@ class JoinStreamViewController: UIViewController,SPTAudioStreamingPlaybackDelega
     /************************ END PUBNUB FUNCTIONS ****************************/
     
     @IBAction func endStream(sender: AnyObject) {
-        let hostedStream = defaults.stringForKey("hostedStream")
+        // unsubscribe from pubnub
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        if let targetChannel = appDelegate.client?.channels().last {
+            print("unsubscribed from " + (targetChannel as! String))
+            appDelegate.client?.unsubscribeFromChannels([targetChannel as! String], withPresence: true)
+        }
         
-        if (hostedStream != nil) {
-            
-            // delete the stream object in the database
-            let uri : String = "http://ec2-54-183-142-37.us-west-1.compute.amazonaws.com/api/streams/" + hostedStream!
-            let headers : [String: String] = ["x-access-token": FBSDKAccessToken.currentAccessToken().tokenString]
-            
-            Alamofire.request(.DELETE, uri, headers:headers)
-                .responseJSON { json in
-                    
-                    let deletedStream = JSON(data: json.data!)
-                    
-                    print (deletedStream)
-                    
-                    // Do not proceed if server did not respond
-                    if (deletedStream == nil) {
-                        print("No response from server or stream does not exist.")
-                        return
-                    }
-                    
-                    // delete the value for the hostedStream key
-                    defaults.setObject(nil, forKey: "hostedStream")
-                    
-                    print("Deleted hosted stream.")
-            }
-            
-            // unsubscribe from pubnub
-            let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-            if let targetChannel = appDelegate.client?.channels().last {
-                print("unsubscribed from " + (targetChannel as! String))
-                appDelegate.client?.unsubscribeFromChannels([targetChannel as! String], withPresence: true)
-            }
-            
-            print(appDelegate.client?.channels())
-            
-            // go back to home after delete
-            dismissViewControllerAnimated(true, completion: nil)
-        }
-            
-            // the user is not in a stream
-        else {
-            dismissViewControllerAnimated(true, completion: nil)
-        }
-    
+        print(appDelegate.client?.channels())
+        
+        // go back to home after delete
+        dismissViewControllerAnimated(true, completion: nil)
     }
-    
-
 }
