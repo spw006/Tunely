@@ -233,12 +233,6 @@ class JoinStreamViewController: UIViewController,SPTAudioStreamingPlaybackDelega
         if let endStreamMessage = message.data.message["endStream"] {
             if (endStreamMessage != nil) {
                 
-                // notify the user
-                let alert = UIAlertController(title: streamName + " has ended.", message: nil, preferredStyle: UIAlertControllerStyle.Alert)
-                let alertAction = UIAlertAction(title: "OK!", style: UIAlertActionStyle.Default) { (UIAlertAction) -> Void in }
-                alert.addAction(alertAction)
-                presentViewController(alert, animated: true) { () -> Void in }
-                
                 // unsubscribe from pubnub
                 let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
                 let targetChannel = appDelegate.client?.channels().last
@@ -246,8 +240,15 @@ class JoinStreamViewController: UIViewController,SPTAudioStreamingPlaybackDelega
                 appDelegate.client?.unsubscribeFromChannels([targetChannel as! String], withPresence: true)
                 print("unsubscribed from " + (targetChannel as! String))
                 
-                // go back to home after delete
-                dismissViewControllerAnimated(true, completion: nil)
+                // notify the user
+                let alert = UIAlertController(title: streamName + " has ended.", message: nil, preferredStyle: UIAlertControllerStyle.Alert)
+                let okAction = UIAlertAction(title: "OK!", style: UIAlertActionStyle.Default) { (action) in
+                    // go back to home
+                    self.dismissViewControllerAnimated(true, completion: nil)
+                }
+                
+                alert.addAction(okAction)
+                presentViewController(alert, animated: true) { () -> Void in }
             }
         }
     }
