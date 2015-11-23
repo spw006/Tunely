@@ -21,6 +21,10 @@ class ViewController: UIViewController, FBSDKLoginButtonDelegate {
     
     @IBOutlet weak var loginView : UIView!
     
+    let publishKey : String = "pub-c-92476f6d-6968-4061-b297-5b4de6065ecf";
+    let subscribeKey : String = "sub-c-26dd82d4-8259-11e5-a4dc-0619f8945a4f";
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         

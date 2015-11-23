@@ -26,7 +26,6 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
     var userPlaylistTrackStrings = [Song]()
     
     var listenersPic : [String] = []
-    var listeners : [String] = []
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     var streamName : String!
     
@@ -66,8 +65,6 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
     
     @IBOutlet weak var Back: UIBarButtonItem!
     @IBOutlet weak var Next: UIBarButtonItem!
-    
-    
     
     
     @IBAction func PlayPause(sender: AnyObject) {
@@ -533,6 +530,38 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
             "\((message.data.actualChannel ?? message.data.subscribedChannel)!) at " +
             "\(message.data.timetoken)")
         
+        // If we receive a picture object
+        if let pictureObject = message.data.message["pictureObject"] {
+            if (pictureObject != nil) {
+                
+                // create the pic object
+                let url = pictureObject["picURL"] as! String
+                
+                // we don't want to add a picture we already have
+                if (listenersPic.contains(url)) {
+                    return;
+                }
+                
+                // add the picture to host's listenersPic array
+                listenersPic.append(url);
+                
+                
+                // construct the message to send (pictures of all current listeners)
+                let listenersObject: [String: [String]] = [
+                    "listenersObject": listenersPic
+                ]
+                
+                listenersView.reloadData()
+      
+                
+                // publish the pictures
+                let targetChannel =  appDelegate.client?.channels().last as! String
+                appDelegate.client!.publish(listenersObject, toChannel: targetChannel, compressed: false, withCompletion: { (status) -> Void in })
+
+            }
+        }
+        
+        
         // If we received a song, add it to the playlist and publish it
         if let songObject = message.data.message["songObject"] {
             if (songObject != nil) {
@@ -573,6 +602,9 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
                 self.tableView.reloadData()
             }
         }
+        
+        
+        
         
         // If the host user receives a request from a joined user, send the playlist
         if let joinRequest = message.data.message["joinRequest"] {
@@ -632,32 +664,27 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
         
         if event.data.presenceEvent != "state-change" {
             
-            let targetChannel = client.channels().last as! String
+            /*let targetChannel = client.channels().last as! String
             
             //let uuid : String = (self.client?.uuid())!
             let uuid: String = client.uuid()
             
             
-            let picObject : [String : [String : String]] = ["pic" : ["url" : defaults.stringForKey("userPicURL")! , "uuid" : uuid]]
+            /*let pictureObject : [String : [String : String]] = ["picObject" : ["url" : defaults.stringForKey("userPicURL")! , "uuid" : uuid]] */
+            
+            var userPicture = UserPicture();
+            userPicture.picURL = defaults.stringForKey("userPicURL")!
+            userPicture.name = defaults.stringForKey("userName")!
+            
+            // construct picture object
+            let pictureObject : [String : AnyObject] = [
+                "pictureObject" : userPicture.toSerializableData()
+            ]
             
             
-            client.publish(picObject, toChannel: targetChannel,
+            client.publish(pictureObject, toChannel: targetChannel,
                 compressed: false, withCompletion: { (status) -> Void in
-                    
-                    if !status.error {
-                        
-                        // Message successfully published to specified channel.
-                    }
-                    else{
-                        
-                        // Handle message publish error. Check 'category' property
-                        // to find out possible reason because of which request did fail.
-                        // Review 'errorData' property (which has PNErrorData data type) of status
-                        // object to get additional information about issue.
-                        //
-                        // Request can be resent using: status.retry()
-                    }
-            })
+            }) */
             
             
             print("\(event.data.presence.uuid) \"\(event.data.presenceEvent)'ed\"\n" +
@@ -714,31 +741,17 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
             
             let targetChannel = client.channels().last as! String
             
-            //let uuid : String = (self.client?.uuid())!
-            let uuid : String = (client?.uuid())!
+            // construct picture object
+            let pictureObject : [String : [String : String]] = [
+                "pictureObject" : ["picURL" : defaults.stringForKey("userPicURL")! as String]
+            ]
             
-            let picObject : [String : [String : String]] = ["pic" : ["url" : defaults.stringForKey("userPicURL")! , "uuid" : uuid]]
             
-            
-            client.publish(picObject, toChannel: targetChannel,
-                compressed: false, withCompletion: { (status) -> Void in
-                    
-                    if !status.error {
-                        
-                        // Message successfully published to specified channel.
-                    }
-                    else{
-                        
-                        // Handle message publish error. Check 'category' property
-                        // to find out possible reason because of which request did fail.
-                        // Review 'errorData' property (which has PNErrorData data type) of status
-                        // object to get additional information about issue.
-                        //
-                        // Request can be resent using: status.retry()
-                    }
+            client.publish(pictureObject, toChannel: targetChannel,
+            compressed: false, withCompletion: { (status) -> Void in
             })
-        }
             
+        }
         else if status.category == .PNReconnectedCategory {
             
             // Happens as part of our regular operation. This event happens when
