@@ -12,13 +12,13 @@ import SwiftyJSON
 import UIKit
 
 var SpotifyLoginFlag = false;
-var session:SPTSession!
+//var session:SPTSession!
 var firstLoad = true;
 
 
-class HostViewController: UIViewController {
+class HostViewController: UIViewController, SPTAudioStreamingPlaybackDelegate {
     
-    
+    var session:SPTSession!
 
     // Stream object
     var newStream : NSMutableDictionary = [ "name" : "", "password" : "" ]
@@ -26,6 +26,8 @@ class HostViewController: UIViewController {
     //Spotify
     let kClientID = "bc9df159847e473bac13ac944653af50";
     let kCallBackURL = "Tunely-Demo://callback"
+    let kTokenSwapURL = "https://tunelyspotifyauth.herokuapp.com/swap"
+    let kTokenRefreshURL = "https://tunelyspotifyauth.herokuapp.com/refresh"
 
     // UI elements
     @IBOutlet weak var isPrivateStream : UISwitch!
@@ -51,22 +53,27 @@ class HostViewController: UIViewController {
             //session available
             print("session available");
             let sessionDataObj = sessionObj as! NSData
-            session = NSKeyedUnarchiver.unarchiveObjectWithData(sessionDataObj) as! SPTSession
+            let session = NSKeyedUnarchiver.unarchiveObjectWithData(sessionDataObj) as! SPTSession
             if !session.isValid() {
+                SPTAuth.defaultInstance().tokenRefreshURL = NSURL(string: kTokenRefreshURL)
+                SPTAuth.defaultInstance().tokenSwapURL = NSURL(string: kTokenSwapURL)
                 SPTAuth.defaultInstance().renewSession(session, callback: { (error:NSError!, renewedSession: SPTSession!) ->
                     Void in
                     print("session not valid")
                     if error == nil {
+                        print(error)
                         let sessionData = NSKeyedArchiver.archivedDataWithRootObject(session)
                         userDefaults.setObject(sessionData, forKey: "SpotifySession")
                         userDefaults.synchronize()
                         
-                        session = renewedSession
+                        self.session = renewedSession
                         
-                        //self.playUsingSession(renewedSession)
+                        
+                        self.playUsingSession(renewedSession)
                         
                     }
                     else {
+                        print(error)
                         print("error refresshing session")
                     }
                 })
@@ -74,7 +81,8 @@ class HostViewController: UIViewController {
                 
             }else {
                 print("sessionValid")
-                //playUsingSession(session)
+                
+                playUsingSession(session)
             }
             
         }
@@ -86,9 +94,29 @@ class HostViewController: UIViewController {
         }
     }
     
+    
+    
+    func playUsingSession(sessionObj:SPTSession) {
+        print("playing using session called")
+        if player == nil {
+            player = SPTAudioStreamingController(clientId: kClientID)
+            //player?.playbackDelegate = self;
+            
+        }
+        
+        player?.loginWithSession(sessionObj, callback: { (error:NSError!) -> Void in
+            if error != nil {
+                print("enabling playback got error")
+                return
+            }
+        })
+    }
+    
     @IBAction func cancel() {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
+    
+    
     
     /** Populate the list with all streams */
     @IBAction func viewStream(sender: AnyObject) {
@@ -203,8 +231,11 @@ class HostViewController: UIViewController {
         auth.clientID = kClientID;
         auth.redirectURL = NSURL(string: kCallBackURL);
         auth.requestedScopes = [SPTAuthStreamingScope];
-        let loginURL : NSURL = auth.loginURL;
-        // let loginURL = SPTAuth.loginURLForClientId(kClientID, withRedirectURL: NSURL(string: kCallBackURL), scopes: [SPTAuthStreamingScope], responseType: "code")
+        auth.tokenRefreshURL = NSURL(string: kTokenRefreshURL)
+        auth.tokenSwapURL = NSURL(string: kTokenSwapURL)
+        //let loginURL : NSURL = auth.loginURL;
+        
+        let loginURL = SPTAuth.loginURLForClientId(kClientID, withRedirectURL: NSURL(string: kCallBackURL), scopes: [SPTAuthStreamingScope], responseType: "code")
         
         let seconds = 0.5
         let delay = seconds * Double(NSEC_PER_MSEC)
@@ -225,8 +256,8 @@ class HostViewController: UIViewController {
             let sessionDataObj = sessionObj as! NSData
             let firstTimeSession = NSKeyedUnarchiver.unarchiveObjectWithData(sessionDataObj) as! SPTSession
             
-            //playUsingSession(firstTimeSession)
-            session = firstTimeSession
+            playUsingSession(firstTimeSession)
+            //session = firstTimeSession
             
         }
     }

@@ -30,7 +30,7 @@ class ViewController: UIViewController, FBSDKLoginButtonDelegate {
         
         if (FBSDKAccessToken.currentAccessToken() != nil) {
             let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-            let configuration = PNConfiguration(publishKey: "demo", subscribeKey: "demo")
+            let configuration = PNConfiguration(publishKey: publishKey, subscribeKey: subscribeKey)
             configuration.uuid = defaults.stringForKey("userFbid")
             
             appDelegate.client = PubNub.clientWithConfiguration(configuration)

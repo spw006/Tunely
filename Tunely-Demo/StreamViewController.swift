@@ -74,11 +74,12 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
             player?.playbackDelegate = self;
             print("no player")
         }
+        if(userPlaylistTrackStrings.count > 0) {
         if(firstPlay == true)
         {
             print("first play")
-            updateSession()
-            playUsingSession(session)
+            //updateSession()
+            //playUsingSession(session)
             //player?.playURI(userPlaylistTrackStrings[0], callback: nil)
             let tmpString = userPlaylistTrackStrings[0].trackID
             let tmpTitle = "Current Song: " + userPlaylistTrackStrings[0].title + " - " + userPlaylistTrackStrings[0].artist
@@ -104,6 +105,7 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
                 print("music played")
                 isPlaying = false;
             }
+        }
         }
         pausePressed = false
 
@@ -134,6 +136,10 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
                     return
                 }
             })
+        }
+        else
+        {
+            TrackListPosition=TrackListPosition-1;
         }
 
         //debug
@@ -166,6 +172,10 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
                     return
                 }
             })
+        }
+        else
+        {
+            TrackListPosition=TrackListPosition+1;
         }
 
         //debug
@@ -221,6 +231,7 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
             }
         }
     }
+    /*
     
     func updateSession() {
 
@@ -231,7 +242,7 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
             let firstTimeSession = NSKeyedUnarchiver.unarchiveObjectWithData(sessionDataObj) as! SPTSession
             
             //playUsingSession(firstTimeSession)
-            session = firstTimeSession
+            //session = firstTimeSession
             
         }
     }
@@ -289,7 +300,7 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
             
         })
     }
-    
+    */
     
     
 
@@ -299,6 +310,9 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
         titleLabel?.text = streamName
         thisSong.textAlignment = .Center
         thisSong.text = "Current Song: "
+        
+        //player?.playbackDelegate = self;
+
         
         /*if (firstLoad == true) {
             appDelegate.client?.addListener(self)
@@ -322,35 +336,7 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
         
         
         
-        
-        
-        // CODE TO PUBLISH PLAYLISTS
-        let targetChannel =  appDelegate.client?.channels().last as! String
-        playlistTrackname.removeAll()
-        playlistArtistname.removeAll()
-        for(var i = 0; i < userPlaylistTrackStrings.count; i++)
-        {
-            playlistTrackname.append(userPlaylistTrackStrings[i].title)
-            playlistArtistname.append(userPlaylistTrackStrings[i].artist)
-        }
-        var tmpString = ""
-        var tmpArtists = ""
-        for(var i = 0; i < playlistTrackname.count; i++)
-        {
-            tmpString = tmpString + playlistTrackname[i] + "|"
-            tmpArtists = tmpArtists + playlistArtistname[i] + "|"
-        }
-        
-        
-        
-        //let playlistObject : [String : [Array]] = ["playlistObj": [playlistTrackname]]
-        let playlistObject: [String : [String:String]] = ["playlistObj" : ["tracks" : tmpString, "artists" : tmpArtists] ]
-        
-        appDelegate.client!.publish(playlistObject, toChannel: targetChannel, compressed: false, withCompletion: { (status) -> Void in })
-        
-        print("PUBLISHED PLAYLIST")
 
-        
         
         
         
@@ -463,8 +449,8 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
         if(firstPlay == true)
         {
             print("first play")
-            updateSession()
-            playUsingSession(session)
+            //updateSession()
+            //playUsingSession(session)
             //player?.playURI(userPlaylistTrackStrings[0], callback: nil)
             //let tmpString = userPlaylistTrackStrings[0].trackID
             //let formattedTrackName = NSURL(string: "spotify:track:"+tmpString);

@@ -266,6 +266,11 @@
 					6EA1EEA81BD0B77D00E83778 = {
 						CreatedOnToolsVersion = 7.0.1;
 						DevelopmentTeam = W8FMTE3P32;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 					6EA1EEBC1BD0B77D00E83778 = {
 						CreatedOnToolsVersion = 7.0.1;
