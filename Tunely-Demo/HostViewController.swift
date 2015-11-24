@@ -92,6 +92,19 @@ class HostViewController: UIViewController, SPTAudioStreamingPlaybackDelegate {
             
             loginButton.hidden = false;
         }
+        
+        // Blur the background
+        let visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .Dark)) as UIVisualEffectView
+        visualEffectView.alpha = 0.8
+        visualEffectView.frame = UIScreen.mainScreen().applicationFrame
+        blurredBackground.addSubview(visualEffectView)
+        
+        // update the status bar
+        setNeedsStatusBarAppearanceUpdate()
+    }
+    
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return UIStatusBarStyle.LightContent
     }
     
     

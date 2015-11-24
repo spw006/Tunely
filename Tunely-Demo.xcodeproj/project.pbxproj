@@ -17,6 +17,7 @@
 		14F90BF41BF5255F00B0B374 /* SongSearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 14F90BF21BF5255F00B0B374 /* SongSearchViewController.xib */; };
 		14F90BF51BF5255F00B0B374 /* SongSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F90BF31BF5255F00B0B374 /* SongSearchViewController.swift */; };
 		21FCE77A92E181AB102F1D51 /* Pods_Tunely_Demo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBAC6CE0561895928CA53A5B /* Pods_Tunely_Demo.framework */; };
+		6E67BA6B1C03B3C900AF62B9 /* TunelyStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E67BA6A1C03B3C900AF62B9 /* TunelyStream.swift */; };
 		6E72E4C51C0262B2003DDD6C /* Spotify.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E72E4C41C0262B2003DDD6C /* Spotify.framework */; };
 		6E908C2E1BD1B5C400CA2744 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E908C2B1BD1B5C400CA2744 /* FBSDKCoreKit.framework */; };
 		6E908C2F1BD1B5C400CA2744 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E908C2C1BD1B5C400CA2744 /* FBSDKLoginKit.framework */; };
@@ -27,9 +28,9 @@
 		6EA1EEB41BD0B77D00E83778 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6EA1EEB31BD0B77D00E83778 /* Assets.xcassets */; };
 		6EA1EEB71BD0B77D00E83778 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6EA1EEB51BD0B77D00E83778 /* LaunchScreen.storyboard */; };
 		6EA1EEC21BD0B77D00E83778 /* Tunely_DemoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EA1EEC11BD0B77D00E83778 /* Tunely_DemoTests.swift */; };
-		6EFEC0971BF29F8A00CA4C0E /* OurPubNub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EFEC0961BF29F8A00CA4C0E /* OurPubNub.swift */; };
 		6EFEC0AA1BFA726B00CA4C0E /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EFEC0A81BFA726B00CA4C0E /* CollectionViewCell.swift */; };
 		6EFEC0AB1BFA726B00CA4C0E /* CollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6EFEC0A91BFA726B00CA4C0E /* CollectionViewCell.xib */; };
+		946BB3E61C044D4700824DFB /* rock_concert.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 946BB3E51C044D4700824DFB /* rock_concert.jpg */; };
 		94738CA21BD2FD4A00161C9D /* SideBarTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94738CA01BD2FD4A00161C9D /* SideBarTableViewController.swift */; };
 		94738CA31BD2FD4A00161C9D /* SideBarTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 94738CA11BD2FD4A00161C9D /* SideBarTableViewController.xib */; };
 		94D1578E1BE851E10048BAF8 /* HostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D1578C1BE851E10048BAF8 /* HostViewController.swift */; };
@@ -63,6 +64,7 @@
 		14BDC8411BF51F140073F455 /* Song.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Song.swift; sourceTree = "<group>"; };
 		14F90BF21BF5255F00B0B374 /* SongSearchViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SongSearchViewController.xib; sourceTree = "<group>"; };
 		14F90BF31BF5255F00B0B374 /* SongSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SongSearchViewController.swift; sourceTree = "<group>"; };
+		6E67BA6A1C03B3C900AF62B9 /* TunelyStream.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TunelyStream.swift; sourceTree = "<group>"; };
 		6E72E4C41C0262B2003DDD6C /* Spotify.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Spotify.framework; sourceTree = "<group>"; };
 		6E908C2B1BD1B5C400CA2744 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		6E908C2C1BD1B5C400CA2744 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
@@ -78,9 +80,9 @@
 		6EA1EEC11BD0B77D00E83778 /* Tunely_DemoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tunely_DemoTests.swift; sourceTree = "<group>"; };
 		6EA1EEC31BD0B77D00E83778 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6EA1EED31BD0B87700E83778 /* Tunely-Demo-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tunely-Demo-Bridging-Header.h"; sourceTree = "<group>"; };
-		6EFEC0961BF29F8A00CA4C0E /* OurPubNub.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OurPubNub.swift; sourceTree = "<group>"; };
 		6EFEC0A81BFA726B00CA4C0E /* CollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
 		6EFEC0A91BFA726B00CA4C0E /* CollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CollectionViewCell.xib; sourceTree = "<group>"; };
+		946BB3E51C044D4700824DFB /* rock_concert.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = rock_concert.jpg; sourceTree = "<group>"; };
 		94738CA01BD2FD4A00161C9D /* SideBarTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideBarTableViewController.swift; sourceTree = "<group>"; };
 		94738CA11BD2FD4A00161C9D /* SideBarTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SideBarTableViewController.xib; sourceTree = "<group>"; };
 		94D1578C1BE851E10048BAF8 /* HostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HostViewController.swift; sourceTree = "<group>"; };
@@ -166,14 +168,14 @@
 		6EA1EEAB1BD0B77D00E83778 /* Tunely-Demo */ = {
 			isa = PBXGroup;
 			children = (
-				14F90BF21BF5255F00B0B374 /* SongSearchViewController.xib */,
 				14F90BF31BF5255F00B0B374 /* SongSearchViewController.swift */,
+				14F90BF21BF5255F00B0B374 /* SongSearchViewController.xib */,
 				6EA1EEB01BD0B77D00E83778 /* Main.storyboard */,
+				6EA1EEB51BD0B77D00E83778 /* LaunchScreen.storyboard */,
 				6EA1EEAC1BD0B77D00E83778 /* AppDelegate.swift */,
 				6EA1EEAE1BD0B77D00E83778 /* ViewController.swift */,
 				94738CA01BD2FD4A00161C9D /* SideBarTableViewController.swift */,
 				94738CA11BD2FD4A00161C9D /* SideBarTableViewController.xib */,
-				6EFEC0961BF29F8A00CA4C0E /* OurPubNub.swift */,
 				94D1578C1BE851E10048BAF8 /* HostViewController.swift */,
 				94D1578D1BE851E10048BAF8 /* HostViewController.xib */,
 				94D157941BE935C90048BAF8 /* StreamViewController.swift */,
@@ -182,16 +184,16 @@
 				6EFEC0A91BFA726B00CA4C0E /* CollectionViewCell.xib */,
 				14BDC8411BF51F140073F455 /* Song.swift */,
 				94D157901BE86AFD0048BAF8 /* JoinViewController.swift */,
+				6E67BA6A1C03B3C900AF62B9 /* TunelyStream.swift */,
 				94D157911BE86AFD0048BAF8 /* JoinViewController.xib */,
-				94672BB11BD601BB00764E88 /* Resources */,
-				6EA1EEB31BD0B77D00E83778 /* Assets.xcassets */,
-				6EA1EEB51BD0B77D00E83778 /* LaunchScreen.storyboard */,
-				6EA1EEB81BD0B77D00E83778 /* Info.plist */,
 				6EA1EED31BD0B87700E83778 /* Tunely-Demo-Bridging-Header.h */,
 				145EC06C1BFE6F82006C3D27 /* JoinStreamViewController.swift */,
 				145EC06D1BFE6F82006C3D27 /* JoinStreamViewController.xib */,
 				145EC0701BFFD93D006C3D27 /* JoinSearchViewController.swift */,
 				145EC0711BFFD93D006C3D27 /* JoinSearchViewController.xib */,
+				6EA1EEB81BD0B77D00E83778 /* Info.plist */,
+				6EA1EEB31BD0B77D00E83778 /* Assets.xcassets */,
+				94672BB11BD601BB00764E88 /* Resources */,
 			);
 			path = "Tunely-Demo";
 			sourceTree = "<group>";
@@ -208,6 +210,7 @@
 		94672BB11BD601BB00764E88 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				946BB3E51C044D4700824DFB /* rock_concert.jpg */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -309,6 +312,7 @@
 				6EA1EEB71BD0B77D00E83778 /* LaunchScreen.storyboard in Resources */,
 				94D157971BE935C90048BAF8 /* StreamViewController.xib in Resources */,
 				6EA1EEB41BD0B77D00E83778 /* Assets.xcassets in Resources */,
+				946BB3E61C044D4700824DFB /* rock_concert.jpg in Resources */,
 				94D1578F1BE851E10048BAF8 /* HostViewController.xib in Resources */,
 				6EFEC0AB1BFA726B00CA4C0E /* CollectionViewCell.xib in Resources */,
 				145EC06F1BFE6F82006C3D27 /* JoinStreamViewController.xib in Resources */,
@@ -386,11 +390,11 @@
 				94D157961BE935C90048BAF8 /* StreamViewController.swift in Sources */,
 				14BDC8421BF51F140073F455 /* Song.swift in Sources */,
 				94738CA21BD2FD4A00161C9D /* SideBarTableViewController.swift in Sources */,
+				6E67BA6B1C03B3C900AF62B9 /* TunelyStream.swift in Sources */,
 				14F90BF51BF5255F00B0B374 /* SongSearchViewController.swift in Sources */,
 				94D157921BE86AFD0048BAF8 /* JoinViewController.swift in Sources */,
 				6EA1EEAD1BD0B77D00E83778 /* AppDelegate.swift in Sources */,
 				145EC0721BFFD93D006C3D27 /* JoinSearchViewController.swift in Sources */,
-				6EFEC0971BF29F8A00CA4C0E /* OurPubNub.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

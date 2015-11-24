@@ -23,7 +23,8 @@ class ViewController: UIViewController, FBSDKLoginButtonDelegate {
     
     let publishKey : String = "pub-c-92476f6d-6968-4061-b297-5b4de6065ecf";
     let subscribeKey : String = "sub-c-26dd82d4-8259-11e5-a4dc-0619f8945a4f";
-
+    @IBOutlet weak var blurredBackground : UIImageView!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,6 +37,16 @@ class ViewController: UIViewController, FBSDKLoginButtonDelegate {
             appDelegate.client = PubNub.clientWithConfiguration(configuration)
             
             // User is already logged in, do work such as go to next view controller.
+            
+            /*let myButton = UIButton()
+            myButton.setTitle("Host", forState: .Normal)
+            myButton.titleLabel!.font =  UIFont.systemFontOfSize(25)
+            myButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+            myButton.frame = CGRectMake(15, 50, 300, 500)
+            myButton.addTarget(self, action: "pressedAction:", forControlEvents: .TouchUpInside)
+            myButton.layer.borderWidth = 0.8
+            myButton.layer.borderColor = UIColor.grayColor().CGColor
+            self.view.addSubview( myButton)*/
         }
             
         // Do any additional setup after loading the view, typically from a nib.
@@ -46,6 +57,20 @@ class ViewController: UIViewController, FBSDKLoginButtonDelegate {
             loginButton.readPermissions = ["public_profile", "email", "user_friends"]
             loginButton.delegate = self
         }
+        
+        
+        // Blur the background
+        let visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .Dark)) as UIVisualEffectView
+        visualEffectView.alpha = 0.8
+        visualEffectView.frame = self.view.bounds
+        blurredBackground.addSubview(visualEffectView)
+        
+        // update the status bar
+        setNeedsStatusBarAppearanceUpdate()
+    }
+    
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return UIStatusBarStyle.LightContent
     }
     
     override func didReceiveMemoryWarning() {
@@ -110,6 +135,7 @@ class ViewController: UIViewController, FBSDKLoginButtonDelegate {
                     print("view controller good")
                 }
                 
+                
                 // Attempt to create a new Facebook user
                 var uri : String = "http://ec2-54-183-142-37.us-west-1.compute.amazonaws.com/api/users"
                 let parameters : [String: AnyObject] = [
@@ -163,15 +189,6 @@ class ViewController: UIViewController, FBSDKLoginButtonDelegate {
                             print("New User: " + (userName as String) + ", created.")
                         }
                     }
-            
-            
-                // store user picture
-                /*let url : NSURL = NSURL(fileURLWithPath: picURL)
-                let data : NSData = NSData(contentsOfURL: url)!
-
-                let picture: UIImageView = UIImageView(image: UIImage(data: data)!)
-                
-                defaults.setObject(picture, forKey: "picture") */
                 
             }
         })

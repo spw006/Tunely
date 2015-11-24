@@ -43,7 +43,7 @@
                     </connections>
                 </button>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="03K-Fd-1Kj">
-                    <rect key="frame" x="8" y="135" width="359" height="524"/>
+                    <rect key="frame" x="0.0" y="135" width="375" height="524"/>
                     <animations/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <connections>
@@ -66,15 +66,17 @@
             <animations/>
             <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
-                <constraint firstItem="03K-Fd-1Kj" firstAttribute="leading" secondItem="fcc-fH-3YS" secondAttribute="leading" id="2mr-o5-2mq"/>
+                <constraint firstItem="03K-Fd-1Kj" firstAttribute="leading" secondItem="fcc-fH-3YS" secondAttribute="leading" constant="-8" id="2mr-o5-2mq"/>
                 <constraint firstItem="03K-Fd-1Kj" firstAttribute="bottom" secondItem="i5M-Pr-FkT" secondAttribute="bottomMargin" id="7GS-8V-0KY"/>
-                <constraint firstItem="fcc-fH-3YS" firstAttribute="trailing" secondItem="03K-Fd-1Kj" secondAttribute="trailing" id="Gzf-4N-OaA"/>
+                <constraint firstItem="fcc-fH-3YS" firstAttribute="trailing" secondItem="03K-Fd-1Kj" secondAttribute="trailing" constant="-8" id="Gzf-4N-OaA"/>
+                <constraint firstItem="03K-Fd-1Kj" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="K55-Xh-UJn"/>
                 <constraint firstItem="SjM-fH-eop" firstAttribute="centerY" secondItem="Rt8-Ki-Ocv" secondAttribute="centerY" id="QHv-0a-7xH"/>
+                <constraint firstAttribute="trailing" secondItem="03K-Fd-1Kj" secondAttribute="trailing" id="T00-UC-wpe"/>
                 <constraint firstItem="SjM-fH-eop" firstAttribute="leading" secondItem="fcc-fH-3YS" secondAttribute="leading" id="X8Q-3H-phf"/>
                 <constraint firstItem="Rt8-Ki-Ocv" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="Y9V-oo-kVN"/>
                 <constraint firstItem="fcc-fH-3YS" firstAttribute="top" secondItem="Rt8-Ki-Ocv" secondAttribute="bottom" constant="8" symbolic="YES" id="c5b-hd-xFI"/>
                 <constraint firstItem="fcc-fH-3YS" firstAttribute="top" secondItem="SjM-fH-eop" secondAttribute="bottom" constant="27" id="gQh-Uf-kIh"/>
-                <constraint firstItem="03K-Fd-1Kj" firstAttribute="trailing" secondItem="i5M-Pr-FkT" secondAttribute="trailingMargin" id="ohh-LS-hJn"/>
+                <constraint firstItem="03K-Fd-1Kj" firstAttribute="trailing" secondItem="i5M-Pr-FkT" secondAttribute="trailingMargin" constant="8" id="ohh-LS-hJn"/>
                 <constraint firstItem="fcc-fH-3YS" firstAttribute="centerX" secondItem="Rt8-Ki-Ocv" secondAttribute="centerX" id="q8s-3b-62p"/>
                 <constraint firstItem="fcc-fH-3YS" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leadingMargin" id="qsK-is-XtA"/>
                 <constraint firstItem="03K-Fd-1Kj" firstAttribute="top" secondItem="fcc-fH-3YS" secondAttribute="bottom" constant="8" symbolic="YES" id="yp9-NQ-06w"/>

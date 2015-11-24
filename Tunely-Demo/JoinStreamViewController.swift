@@ -32,16 +32,8 @@ class JoinStreamViewController: UIViewController,SPTAudioStreamingPlaybackDelega
 
     @IBOutlet weak var SearchButton: UIButton!
     
-    @IBAction func goBack(sender: AnyObject) {
-        let streamView:JoinViewController = JoinViewController(nibName: "JoinViewController", bundle: nil)
-        self.presentViewController(streamView, animated: true, completion: nil)
-    }
-    
     @IBAction func searchSongs(sender: AnyObject) {
         let searchSongView:JoinSearchViewController = JoinSearchViewController(nibName: "JoinSearchViewController", bundle: nil)
-        
-        
-        appDelegate.client?.removeListener(self)
         
         self.presentViewController(searchSongView, animated: true, completion: nil)
     }
@@ -71,36 +63,25 @@ class JoinStreamViewController: UIViewController,SPTAudioStreamingPlaybackDelega
     @IBOutlet weak var Back: UIBarButtonItem!
     @IBOutlet weak var Next: UIBarButtonItem!
     
+    override func viewDidAppear(animated: Bool) {
+        NSLog("ViewDidAppear Called")
+        self.tableView.reloadData()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("streamviewcontroller view loaded")
         
         titleLabel?.text = streamName
         
-        /*if(firstLoad == true) {
-            appDelegate.client?.addListener(self)
-            firstLoad = false
-        } */
-        
         appDelegate.client?.addListener(self)
-        
-        //let nib = UINib(nibName: "CollectionViewCell", bundle: nil)
-        
-        //self.listenersView.registerNib(nib, forCellWithReuseIdentifier: "reuseIdentifier")
-        
-        //client = appDelegate.client!
-        //client?.addListener(self)
-        //appDelegate.client!.addListener(self)
         
         /* Table Setup delegates */
         self.tableView.delegate = self
         self.tableView.dataSource = self
         self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
         
-        
-        
-        
-        
+        let nib = UINib(nibName: "CollectionViewCell", bundle: nil)
+        self.listenersView.registerNib(nib, forCellWithReuseIdentifier: "reuseIdentifier")
         
         
         // When the user joins a stream, initially populate the table with the current playlist
@@ -108,6 +89,17 @@ class JoinStreamViewController: UIViewController,SPTAudioStreamingPlaybackDelega
         let targetChannel =  appDelegate.client?.channels().last as! String
         let songObject : [String : String] = ["joinRequest": "joinRequest"]
         appDelegate.client!.publish(songObject, toChannel: targetChannel, compressed: false, withCompletion: { (status) -> Void in })
+        
+        
+        // When the users joins a stream, also send their fb profile picture URL
+        let pictureObject : [String : [String : String]] = [
+            "pictureObject" : [
+                "picURL" : defaults.stringForKey("userPicURL")! as String
+            ]
+        ]
+        appDelegate.client!.publish(pictureObject, toChannel: targetChannel,
+            compressed: false, withCompletion: { (status) -> Void in
+        })
         
         self.tableView.reloadData()
     }
@@ -142,6 +134,8 @@ class JoinStreamViewController: UIViewController,SPTAudioStreamingPlaybackDelega
         
         let url : NSURL = NSURL(string : listenersPic[indexPath.row])!
         let data : NSData = NSData(contentsOfURL: url)!
+        
+        print("heafidfuiadf");
         
         cell.imageView.image = UIImage(data: data);
         
@@ -208,6 +202,7 @@ class JoinStreamViewController: UIViewController,SPTAudioStreamingPlaybackDelega
         if let listenersPic = message.data.message["listenersObject"] {
             if (listenersPic != nil) {
                 self.listenersPic = listenersPic as! [String]
+                print(listenersPic)
                 listenersView.reloadData()
             }
         }
@@ -236,6 +231,29 @@ class JoinStreamViewController: UIViewController,SPTAudioStreamingPlaybackDelega
                 
                 // update the table
                 self.tableView.reloadData()
+            }
+        }
+        
+        // If a joined user receives a message that the host user is ending the stream, kick them
+        if let endStreamMessage = message.data.message["endStream"] {
+            if (endStreamMessage != nil) {
+                
+                // unsubscribe from pubnub
+                let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+                let targetChannel = appDelegate.client?.channels().last
+                
+                appDelegate.client?.unsubscribeFromChannels([targetChannel as! String], withPresence: true)
+                print("unsubscribed from " + (targetChannel as! String))
+                
+                // notify the user
+                let alert = UIAlertController(title: streamName + " has ended.", message: nil, preferredStyle: UIAlertControllerStyle.Alert)
+                let okAction = UIAlertAction(title: "OK!", style: UIAlertActionStyle.Default) { (action) in
+                    // go back to home
+                    self.dismissViewControllerAnimated(true, completion: nil)
+                }
+                
+                alert.addAction(okAction)
+                presentViewController(alert, animated: true) { () -> Void in }
             }
         }
     }
@@ -309,17 +327,6 @@ class JoinStreamViewController: UIViewController,SPTAudioStreamingPlaybackDelega
             })
             } */
             
-            let targetChannel = client.channels().last as! String
-            
-            // construct picture object
-            let pictureObject : [String : [String : String]] = [
-                "pictureObject" : ["picURL" : defaults.stringForKey("userPicURL")! as String]
-            ]
-            
-            
-            client.publish(pictureObject, toChannel: targetChannel,
-                compressed: false, withCompletion: { (status) -> Void in
-            })
 
         }
             
@@ -338,53 +345,45 @@ class JoinStreamViewController: UIViewController,SPTAudioStreamingPlaybackDelega
 
     /************************ END PUBNUB FUNCTIONS ****************************/
     
-    @IBAction func endStream(sender: AnyObject) {
-        let hostedStream = defaults.stringForKey("hostedStream")
+    @IBAction func leaveStream(sender: AnyObject) {
+        let alert = UIAlertController(title: "Are you sure you want to leave " + streamName + "?", message: nil, preferredStyle: UIAlertControllerStyle.Alert)
         
-        if (hostedStream != nil) {
-            
-            // delete the stream object in the database
-            let uri : String = "http://ec2-54-183-142-37.us-west-1.compute.amazonaws.com/api/streams/" + hostedStream!
-            let headers : [String: String] = ["x-access-token": FBSDKAccessToken.currentAccessToken().tokenString]
-            
-            Alamofire.request(.DELETE, uri, headers:headers)
-                .responseJSON { json in
-                    
-                    let deletedStream = JSON(data: json.data!)
-                    
-                    print (deletedStream)
-                    
-                    // Do not proceed if server did not respond
-                    if (deletedStream == nil) {
-                        print("No response from server or stream does not exist.")
-                        return
-                    }
-                    
-                    // delete the value for the hostedStream key
-                    defaults.setObject(nil, forKey: "hostedStream")
-                    
-                    print("Deleted hosted stream.")
-            }
-            
-            // unsubscribe from pubnub
-            let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-            if let targetChannel = appDelegate.client?.channels().last {
-                print("unsubscribed from " + (targetChannel as! String))
-                appDelegate.client?.unsubscribeFromChannels([targetChannel as! String], withPresence: true)
-            }
-            
-            print(appDelegate.client?.channels())
-            
-            // go back to home after delete
-            dismissViewControllerAnimated(true, completion: nil)
+        // Cancel action
+        let cancelAction = UIAlertAction(title: "No", style: .Cancel) {(action) in
+            print(action)
         }
-            
-            // the user is not in a stream
-        else {
-            dismissViewControllerAnimated(true, completion: nil)
+        
+        // Enter action
+        let enterAction = UIAlertAction(title: "Yes", style: UIAlertActionStyle.Default) {(action) in
+            self.leaveStreamAndUnsubscribe()
         }
-    
+        
+        alert.addAction(cancelAction)
+        alert.addAction(enterAction)
+        
+        // Show alert
+        self.presentViewController(alert, animated: true, completion: nil)
     }
     
+    /** Handles leaving the stream and removing this joined user from the channel */
+    func leaveStreamAndUnsubscribe() {
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        
+        // leave request to alert host user to remove this user's picture from their listeners pic array
+        if let targetChannel = appDelegate.client?.channels().last {
+            let leaveObject : [String : String] = ["leaveRequest": defaults.stringForKey("userPicURL")!]
+            
+            // alert host user to remove this user's picture from their listeners pic array
+            appDelegate.client?.publish(leaveObject, toChannel: targetChannel as! String,
+                compressed: false, withCompletion: { (status) -> Void in
+            })
+            
+            // unsubscribe from pubnub
+            appDelegate.client?.unsubscribeFromChannels([targetChannel as! String], withPresence: true)
+            print("unsubscribed from " + (targetChannel as! String))
+        }
 
+        // go back to home after delete
+        dismissViewControllerAnimated(true, completion: nil)
+    }
 }

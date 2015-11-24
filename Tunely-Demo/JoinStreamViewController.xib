@@ -45,6 +45,10 @@
                         <size key="footerReferenceSize" width="0.0" height="0.0"/>
                         <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                     </collectionViewFlowLayout>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="7z3-Eg-egS"/>
+                        <outlet property="delegate" destination="-1" id="ebj-cE-Ivl"/>
+                    </connections>
                 </collectionView>
                 <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WCL-R9-Feu">
                     <rect key="frame" x="8" y="21" width="69" height="31"/>
@@ -53,11 +57,11 @@
                         <constraint firstAttribute="height" constant="31" id="5wI-kd-huv"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                    <state key="normal" title="End">
+                    <state key="normal" title="Leave">
                         <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     </state>
                     <connections>
-                        <action selector="endStream:" destination="-1" eventType="touchUpInside" id="DpC-hF-KMk"/>
+                        <action selector="leaveStream:" destination="-1" eventType="touchUpInside" id="yj3-eQ-TTq"/>
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Dn-R0-J2r">

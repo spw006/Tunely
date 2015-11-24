@@ -17,9 +17,28 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kLW-WF-3XF">
-                                <rect key="frame" x="0.0" y="0.0" width="70" height="73"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="rock_concert.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="KbL-U6-xVp">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <animations/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="tunely" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vMl-Q4-aBT">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="64"/>
+                                <animations/>
+                                <color key="backgroundColor" red="0.24859775641025639" green="0.0181514414963658" blue="0.0018467312055771062" alpha="0.5" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="72" id="iGd-cq-1dC"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="25"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kLW-WF-3XF">
+                                <rect key="frame" x="13" y="0.0" width="70" height="73"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="73" id="A2w-aJ-NoJ"/>
+                                    <constraint firstAttribute="width" constant="70" id="faN-OW-YCv"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <state key="normal" title="Menu">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -31,50 +50,66 @@
                             <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EE4-LV-b8x">
                                 <rect key="frame" x="8" y="338" width="359" height="160"/>
                                 <animations/>
-                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="30"/>
                                 <state key="normal" title="Join Stream">
-                                    <color key="titleColor" red="0.24313725489999999" green="0.72549019609999998" blue="0.5568627451" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
                                     <action selector="joinStream:" destination="BYZ-38-t0r" eventType="touchUpInside" id="4mo-fO-p2X"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s7q-fG-bT5">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s7q-fG-bT5">
                                 <rect key="frame" x="8" y="170" width="359" height="160"/>
                                 <animations/>
-                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
-                                <state key="normal" title="Host Stream"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="30"/>
+                                <state key="normal" title="Host Stream">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
                                 <connections>
                                     <action selector="hostStream:" destination="BYZ-38-t0r" eventType="touchUpInside" id="A5c-Zp-S5K"/>
                                 </connections>
                             </button>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9kV-qg-F2U">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9kV-qg-F2U">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="tunely" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bdt-EE-nN9">
-                                        <rect key="frame" x="66" y="134" width="242" height="102"/>
+                                        <rect key="frame" x="66" y="283" width="242" height="102"/>
                                         <animations/>
                                         <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="40"/>
-                                        <color key="textColor" red="0.24313725489999999" green="0.72549019609999998" blue="0.5568627451" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
                                 <animations/>
-                                <color key="backgroundColor" red="0.94753370690000005" green="0.94753370690000005" blue="0.94753370690000005" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" red="0.9475337068666666" green="0.9475337068666666" blue="0.9475337068666666" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstAttribute="trailingMargin" secondItem="EE4-LV-b8x" secondAttribute="trailing" constant="-12" id="ZJc-uV-iBB"/>
-                            <constraint firstItem="s7q-fG-bT5" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-12" id="ZWd-Ky-dbY"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="s7q-fG-bT5" secondAttribute="trailing" constant="-12" id="gue-q1-8KB"/>
-                            <constraint firstItem="EE4-LV-b8x" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-12" id="i3L-no-WBH"/>
+                            <constraint firstItem="KbL-U6-xVp" firstAttribute="centerX" secondItem="EE4-LV-b8x" secondAttribute="centerX" id="114-re-nrb"/>
+                            <constraint firstItem="vMl-Q4-aBT" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="54M-Lt-TIe"/>
+                            <constraint firstItem="vMl-Q4-aBT" firstAttribute="leading" secondItem="9kV-qg-F2U" secondAttribute="leading" id="8C8-ZV-Xin"/>
+                            <constraint firstItem="KbL-U6-xVp" firstAttribute="bottom" secondItem="9kV-qg-F2U" secondAttribute="bottom" id="9On-lh-xWg"/>
+                            <constraint firstItem="KbL-U6-xVp" firstAttribute="trailing" secondItem="9kV-qg-F2U" secondAttribute="trailing" id="C9M-1Z-NCN"/>
+                            <constraint firstItem="vMl-Q4-aBT" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="Gb5-OJ-baX"/>
+                            <constraint firstAttribute="trailing" secondItem="KbL-U6-xVp" secondAttribute="trailing" id="KNJ-lJ-Dgc"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="vMl-Q4-aBT" secondAttribute="trailing" constant="-28" id="LX1-5q-n23"/>
+                            <constraint firstItem="KbL-U6-xVp" firstAttribute="bottom" secondItem="wfy-db-euE" secondAttribute="top" id="aQy-QC-tbK"/>
+                            <constraint firstItem="KbL-U6-xVp" firstAttribute="top" secondItem="kLW-WF-3XF" secondAttribute="top" id="dSf-uG-2f5"/>
+                            <constraint firstItem="kLW-WF-3XF" firstAttribute="top" secondItem="9kV-qg-F2U" secondAttribute="top" id="gz4-h5-O5y"/>
+                            <constraint firstItem="vMl-Q4-aBT" firstAttribute="top" secondItem="9kV-qg-F2U" secondAttribute="top" id="pgA-H6-vEV"/>
+                            <constraint firstItem="s7q-fG-bT5" firstAttribute="top" secondItem="kLW-WF-3XF" secondAttribute="bottom" constant="97" id="qk5-TV-EMo"/>
+                            <constraint firstItem="kLW-WF-3XF" firstAttribute="leading" secondItem="vMl-Q4-aBT" secondAttribute="leading" constant="13" id="sFN-qN-eLM"/>
+                            <constraint firstItem="KbL-U6-xVp" firstAttribute="centerX" secondItem="s7q-fG-bT5" secondAttribute="centerX" id="sf8-qF-9q3"/>
+                            <constraint firstItem="KbL-U6-xVp" firstAttribute="leading" secondItem="vMl-Q4-aBT" secondAttribute="leading" id="w12-wP-rOV"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="TRF-QO-ZQP"/>
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
+                        <outlet property="blurredBackground" destination="KbL-U6-xVp" id="tAN-v3-uOr"/>
                         <outlet property="loginView" destination="9kV-qg-F2U" id="dVl-Sn-Dcq"/>
                     </connections>
                 </viewController>
@@ -82,44 +117,8 @@
             </objects>
             <point key="canvasLocation" x="973.5" y="79.5"/>
         </scene>
-        <!--View Controller-->
-        <scene sceneID="Flc-E6-rih">
-            <objects>
-                <viewController id="ETA-qd-uUY" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="SSt-yn-MhB"/>
-                        <viewControllerLayoutGuide type="bottom" id="R3T-Ly-wwD"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="cdw-MJ-PTc">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <animations/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="aDM-44-FvM" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="269" y="772"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="h2f-9e-7Kh">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="wd4-vI-x01" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="l2f-D9-q0d">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <animations/>
-                        <color key="barTintColor" red="0.24313725490196078" green="0.72549019607843135" blue="0.55686274509803924" alpha="1" colorSpace="calibratedRGB"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="N3b-yp-rgE"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="D26-7Y-4qU" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="161" y="79"/>
-        </scene>
     </scenes>
+    <resources>
+        <image name="rock_concert.jpg" width="1680" height="1050"/>
+    </resources>
 </document>
