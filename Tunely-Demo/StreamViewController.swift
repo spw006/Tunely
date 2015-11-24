@@ -324,7 +324,10 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
         } */
         
         appDelegate.client?.addListener(self)
-
+        if(player != nil) {
+            player?.playbackDelegate = self;
+            print("nil player at streamingcontroller")
+        }
         
         let nib = UINib(nibName: "CollectionViewCell", bundle: nil)
         
@@ -470,6 +473,7 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
             player?.playbackDelegate = self;
             print("no player")
         }
+        
         if(firstPlay == true)
         {
             print("first play")
