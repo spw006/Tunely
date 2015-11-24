@@ -37,6 +37,16 @@ class ViewController: UIViewController, FBSDKLoginButtonDelegate {
             appDelegate.client = PubNub.clientWithConfiguration(configuration)
             
             // User is already logged in, do work such as go to next view controller.
+            
+            /*let myButton = UIButton()
+            myButton.setTitle("Host", forState: .Normal)
+            myButton.titleLabel!.font =  UIFont.systemFontOfSize(25)
+            myButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+            myButton.frame = CGRectMake(15, 50, 300, 500)
+            myButton.addTarget(self, action: "pressedAction:", forControlEvents: .TouchUpInside)
+            myButton.layer.borderWidth = 0.8
+            myButton.layer.borderColor = UIColor.grayColor().CGColor
+            self.view.addSubview( myButton)*/
         }
             
         // Do any additional setup after loading the view, typically from a nib.
