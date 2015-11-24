@@ -62,6 +62,11 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
     
     
     @IBAction func PlayPause(sender: AnyObject) {
+        // do not allow user to play/pause if the playlist is empty
+        if (self.userPlaylistTrackStrings.isEmpty) {
+            return;
+        }
+        
         pausePressed = true
         if player == nil {
             player = SPTAudioStreamingController(clientId: kClientID)
@@ -505,9 +510,42 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
         return cell!
     }
     
+    func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool
+    {
+    return true
+    }
     
-    
-    
+    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath)
+    {
+        if editingStyle == .Delete
+        {
+            userPlaylistTrackStrings.removeAtIndex(indexPath.row)
+            self.tableView.reloadData()
+        }
+        
+        // publish playlist changes to listeners
+        let targetChannel =  appDelegate.client?.channels().last as! String
+        
+        var playlist: [AnyObject] = []
+
+        // construct the playlist
+        for (var i = 0; i < userPlaylistTrackStrings.count; i++) {
+            playlist.append(userPlaylistTrackStrings[i].toSerializableData())
+        }
+        
+        serializedPlaylist = playlist
+        
+        // construct the object to send
+        let playlistObject: [String: [AnyObject]] = [
+            "playlistObject": playlist
+        ]
+        
+        appDelegate.client!.publish(playlistObject, toChannel: targetChannel, compressed: false, withCompletion: { (status) -> Void in })
+    }
+
+
+
+
     
     
     /************************** PUBNUB FUNCTIONS ************************/
