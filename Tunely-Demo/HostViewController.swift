@@ -16,7 +16,10 @@ var SpotifyLoginFlag = false;
 var firstLoad = true;
 
 
-class HostViewController: UIViewController, SPTAudioStreamingPlaybackDelegate {
+class HostViewController: UIViewController {
+    
+    
+    @IBOutlet weak var blurredBackground : UIImageView!
     
     var session:SPTSession!
 
@@ -103,10 +106,6 @@ class HostViewController: UIViewController, SPTAudioStreamingPlaybackDelegate {
         setNeedsStatusBarAppearanceUpdate()
     }
     
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return UIStatusBarStyle.LightContent
-    }
-    
     
     
     func playUsingSession(sessionObj:SPTSession) {
@@ -123,6 +122,9 @@ class HostViewController: UIViewController, SPTAudioStreamingPlaybackDelegate {
                 return
             }
         })
+    }
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return UIStatusBarStyle.LightContent
     }
     
     @IBAction func cancel() {
