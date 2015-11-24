@@ -6,6 +6,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HostViewController" customModule="Tunely_Demo" customModuleProvider="target">
             <connections>
+                <outlet property="blurredBackground" destination="VQl-oR-iYz" id="X9F-wK-eae"/>
                 <outlet property="isPrivateStream" destination="yyY-NP-H4L" id="wQ2-2C-8lW"/>
                 <outlet property="loginButton" destination="FBE-Dy-Xf1" id="qfh-l6-qWc"/>
                 <outlet property="passwordField" destination="jGG-OG-Phj" id="tye-Vi-VtG"/>
@@ -18,6 +19,10 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="rock_concert.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="VQl-oR-iYz">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                    <animations/>
+                </imageView>
                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kq3-Ne-hE3">
                     <rect key="frame" x="0.0" y="336" width="375" height="45"/>
                     <animations/>
@@ -86,8 +91,17 @@
             </subviews>
             <animations/>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="VQl-oR-iYz" secondAttribute="bottom" id="S2W-TO-zem"/>
+                <constraint firstItem="VQl-oR-iYz" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="uaS-K9-s1W"/>
+                <constraint firstItem="VQl-oR-iYz" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="uas-iy-ovj"/>
+                <constraint firstAttribute="trailing" secondItem="VQl-oR-iYz" secondAttribute="trailing" id="wTf-Nh-PLl"/>
+            </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
             <point key="canvasLocation" x="235.5" y="251.5"/>
         </view>
     </objects>
+    <resources>
+        <image name="rock_concert.jpg" width="1680" height="1050"/>
+    </resources>
 </document>

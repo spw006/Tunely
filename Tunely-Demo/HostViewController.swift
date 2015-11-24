@@ -19,7 +19,8 @@ var firstLoad = true;
 class HostViewController: UIViewController {
     
     
-
+    @IBOutlet weak var blurredBackground : UIImageView!
+    
     // Stream object
     var newStream : NSMutableDictionary = [ "name" : "", "password" : "" ]
     
@@ -84,6 +85,19 @@ class HostViewController: UIViewController {
             
             loginButton.hidden = false;
         }
+        
+        // Blur the background
+        let visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .Dark)) as UIVisualEffectView
+        visualEffectView.alpha = 0.8
+        visualEffectView.frame = UIScreen.mainScreen().applicationFrame
+        blurredBackground.addSubview(visualEffectView)
+        
+        // update the status bar
+        setNeedsStatusBarAppearanceUpdate()
+    }
+    
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return UIStatusBarStyle.LightContent
     }
     
     @IBAction func cancel() {

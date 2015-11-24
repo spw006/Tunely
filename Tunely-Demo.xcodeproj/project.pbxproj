@@ -31,6 +31,8 @@
 		6EFEC0971BF29F8A00CA4C0E /* OurPubNub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EFEC0961BF29F8A00CA4C0E /* OurPubNub.swift */; };
 		6EFEC0AA1BFA726B00CA4C0E /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EFEC0A81BFA726B00CA4C0E /* CollectionViewCell.swift */; };
 		6EFEC0AB1BFA726B00CA4C0E /* CollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6EFEC0A91BFA726B00CA4C0E /* CollectionViewCell.xib */; };
+		946BB3E41C04468B00824DFB /* abstract flames music dark rainbows treble clef gclef black background 1280x1024 wallpaper_www.wall321.com_79.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 946BB3E31C04468B00824DFB /* abstract flames music dark rainbows treble clef gclef black background 1280x1024 wallpaper_www.wall321.com_79.jpg */; };
+		946BB3E61C044D4700824DFB /* rock_concert.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 946BB3E51C044D4700824DFB /* rock_concert.jpg */; };
 		94738CA21BD2FD4A00161C9D /* SideBarTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94738CA01BD2FD4A00161C9D /* SideBarTableViewController.swift */; };
 		94738CA31BD2FD4A00161C9D /* SideBarTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 94738CA11BD2FD4A00161C9D /* SideBarTableViewController.xib */; };
 		94D1578E1BE851E10048BAF8 /* HostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D1578C1BE851E10048BAF8 /* HostViewController.swift */; };
@@ -83,6 +85,8 @@
 		6EFEC0961BF29F8A00CA4C0E /* OurPubNub.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OurPubNub.swift; sourceTree = "<group>"; };
 		6EFEC0A81BFA726B00CA4C0E /* CollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
 		6EFEC0A91BFA726B00CA4C0E /* CollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CollectionViewCell.xib; sourceTree = "<group>"; };
+		946BB3E31C04468B00824DFB /* abstract flames music dark rainbows treble clef gclef black background 1280x1024 wallpaper_www.wall321.com_79.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "abstract flames music dark rainbows treble clef gclef black background 1280x1024 wallpaper_www.wall321.com_79.jpg"; sourceTree = "<group>"; };
+		946BB3E51C044D4700824DFB /* rock_concert.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = rock_concert.jpg; sourceTree = "<group>"; };
 		94738CA01BD2FD4A00161C9D /* SideBarTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideBarTableViewController.swift; sourceTree = "<group>"; };
 		94738CA11BD2FD4A00161C9D /* SideBarTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SideBarTableViewController.xib; sourceTree = "<group>"; };
 		94D1578C1BE851E10048BAF8 /* HostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HostViewController.swift; sourceTree = "<group>"; };
@@ -211,6 +215,8 @@
 		94672BB11BD601BB00764E88 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				946BB3E51C044D4700824DFB /* rock_concert.jpg */,
+				946BB3E31C04468B00824DFB /* abstract flames music dark rainbows treble clef gclef black background 1280x1024 wallpaper_www.wall321.com_79.jpg */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -307,9 +313,11 @@
 				6EA1EEB71BD0B77D00E83778 /* LaunchScreen.storyboard in Resources */,
 				94D157971BE935C90048BAF8 /* StreamViewController.xib in Resources */,
 				6EA1EEB41BD0B77D00E83778 /* Assets.xcassets in Resources */,
+				946BB3E61C044D4700824DFB /* rock_concert.jpg in Resources */,
 				94D1578F1BE851E10048BAF8 /* HostViewController.xib in Resources */,
 				6EFEC0AB1BFA726B00CA4C0E /* CollectionViewCell.xib in Resources */,
 				145EC06F1BFE6F82006C3D27 /* JoinStreamViewController.xib in Resources */,
+				946BB3E41C04468B00824DFB /* abstract flames music dark rainbows treble clef gclef black background 1280x1024 wallpaper_www.wall321.com_79.jpg in Resources */,
 				145EC0731BFFD93D006C3D27 /* JoinSearchViewController.xib in Resources */,
 				6EA1EEB21BD0B77D00E83778 /* Main.storyboard in Resources */,
 			);

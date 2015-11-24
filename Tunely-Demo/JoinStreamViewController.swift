@@ -63,6 +63,11 @@ class JoinStreamViewController: UIViewController,SPTAudioStreamingPlaybackDelega
     @IBOutlet weak var Back: UIBarButtonItem!
     @IBOutlet weak var Next: UIBarButtonItem!
     
+    override func viewDidAppear(animated: Bool) {
+        NSLog("ViewDidAppear Called")
+        self.tableView.reloadData()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         

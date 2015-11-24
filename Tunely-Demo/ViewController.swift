@@ -23,7 +23,8 @@ class ViewController: UIViewController, FBSDKLoginButtonDelegate {
     
     let publishKey : String = "pub-c-92476f6d-6968-4061-b297-5b4de6065ecf";
     let subscribeKey : String = "sub-c-26dd82d4-8259-11e5-a4dc-0619f8945a4f";
-
+    @IBOutlet weak var blurredBackground : UIImageView!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,6 +47,20 @@ class ViewController: UIViewController, FBSDKLoginButtonDelegate {
             loginButton.readPermissions = ["public_profile", "email", "user_friends"]
             loginButton.delegate = self
         }
+        
+        
+        // Blur the background
+        let visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .Dark)) as UIVisualEffectView
+        visualEffectView.alpha = 0.8
+        visualEffectView.frame = self.view.bounds
+        blurredBackground.addSubview(visualEffectView)
+        
+        // update the status bar
+        setNeedsStatusBarAppearanceUpdate()
+    }
+    
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return UIStatusBarStyle.LightContent
     }
     
     override func didReceiveMemoryWarning() {
