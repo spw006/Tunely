@@ -64,7 +64,6 @@ class HostViewController: UIViewController {
                     Void in
                     print("session not valid")
                     if error == nil {
-                        print(error)
                         let sessionData = NSKeyedArchiver.archivedDataWithRootObject(session)
                         userDefaults.setObject(sessionData, forKey: "SpotifySession")
                         userDefaults.synchronize()

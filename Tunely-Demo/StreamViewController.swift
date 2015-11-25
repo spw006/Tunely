@@ -87,11 +87,13 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
             let tmpString = userPlaylistTrackStrings[0].trackID
             let tmpTitle = "Current Song: " + userPlaylistTrackStrings[0].title + " - " + userPlaylistTrackStrings[0].artist
             let formattedTrackName = NSURL(string: "spotify:track:"+tmpString);
+            
             player?.playURI(formattedTrackName, callback: { error -> Void in
                 if error == nil {
                         self.currentSong = tmpTitle
                         self.thisSong.text = self.currentSong
                 }
+                else {print(error)}
             })
             //isPlaying = true;
             firstPlay = false
@@ -324,10 +326,12 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
         } */
         
         appDelegate.client?.addListener(self)
+        /*
         if(player != nil) {
             player?.playbackDelegate = self;
             print("nil player at streamingcontroller")
-        }
+        }*/
+        player?.playbackDelegate = self
         
         let nib = UINib(nibName: "CollectionViewCell", bundle: nil)
         
