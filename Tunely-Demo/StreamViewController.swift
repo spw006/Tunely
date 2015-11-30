@@ -45,12 +45,12 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
     
     //var player:SPTAudioStreamingController?
     
-    
     var isPlaying = false;
     var TrackListPosition = 0;
     var firstPlay = true;
     var pausePressed = false;
     var skipSongs = false;
+    
     
     var serializedPlaylist: [AnyObject] = []
     
@@ -560,8 +560,22 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
         appDelegate.client!.publish(playlistObject, toChannel: targetChannel, compressed: false, withCompletion: { (status) -> Void in })
     }
 
+   /* @IBAction func startEditing(sender: AnyObject) {
+        print("edit pressed")
+        self.editing = !self.editing
 
-
+    }
+    
+    func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return true
+    }
+    
+    
+    func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
+        var itemToMove = userPlaylistTrackStrings[fromIndexPath.row]
+        userPlaylistTrackStrings.removeAtIndex(fromIndexPath.row)
+        userPlaylistTrackStrings.insert(itemToMove, atIndex: toIndexPath.row)
+    } */
 
     
     

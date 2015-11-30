@@ -18,16 +18,8 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nlN-0c-Z2V">
-                    <rect key="frame" x="8" y="8" width="111" height="30"/>
-                    <animations/>
-                    <state key="normal" title="Back"/>
-                    <connections>
-                        <action selector="goBack:" destination="-1" eventType="touchUpInside" id="Zrv-15-AVZ"/>
-                    </connections>
-                </button>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Cbk-ao-nmB">
-                    <rect key="frame" x="0.0" y="46" width="600" height="554"/>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Cbk-ao-nmB">
+                    <rect key="frame" x="0.0" y="68" width="600" height="554"/>
                     <animations/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <searchBar key="tableHeaderView" contentMode="redraw" id="XQX-nJ-fhz">
@@ -37,6 +29,14 @@
                         <textInputTraits key="textInputTraits"/>
                     </searchBar>
                 </tableView>
+                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nlN-0c-Z2V">
+                    <rect key="frame" x="8" y="30" width="111" height="30"/>
+                    <animations/>
+                    <state key="normal" title="Back"/>
+                    <connections>
+                        <action selector="goBack:" destination="-1" eventType="touchUpInside" id="Zrv-15-AVZ"/>
+                    </connections>
+                </button>
             </subviews>
             <animations/>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -48,6 +48,7 @@
                 <constraint firstAttribute="trailing" secondItem="Cbk-ao-nmB" secondAttribute="trailing" id="dF2-y5-GR9"/>
                 <constraint firstAttribute="bottom" secondItem="Cbk-ao-nmB" secondAttribute="bottom" id="q3K-yf-RqG"/>
             </constraints>
+            <point key="canvasLocation" x="336" y="279"/>
         </view>
     </objects>
 </document>
