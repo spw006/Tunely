@@ -72,8 +72,8 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9kV-qg-F2U">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="tunely" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bdt-EE-nN9">
-                                        <rect key="frame" x="66" y="283" width="242" height="102"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="tunely" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bdt-EE-nN9">
+                                        <rect key="frame" x="8" y="103" width="359" height="102"/>
                                         <animations/>
                                         <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="40"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -82,6 +82,11 @@
                                 </subviews>
                                 <animations/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstItem="Bdt-EE-nN9" firstAttribute="top" secondItem="9kV-qg-F2U" secondAttribute="top" constant="103" id="1Wg-o1-5hp"/>
+                                    <constraint firstItem="Bdt-EE-nN9" firstAttribute="leading" secondItem="9kV-qg-F2U" secondAttribute="leading" constant="8" id="EMx-wx-rZE"/>
+                                    <constraint firstAttribute="trailing" secondItem="Bdt-EE-nN9" secondAttribute="trailing" constant="8" id="oVB-rq-6a7"/>
+                                </constraints>
                             </view>
                         </subviews>
                         <animations/>
