@@ -199,7 +199,7 @@ class HostViewController: UIViewController {
                 
                  //go to stream view
                 let streamView:StreamViewController = StreamViewController(nibName: "StreamViewController", bundle: nil)
-                streamView.streamName = streamName
+                streamView.streamName = "My Stream"
                 self.presentViewController(streamView, animated: true, completion: nil)
         }
     }
@@ -226,15 +226,6 @@ class HostViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    @IBAction func hostButtonPressed(sender: AnyObject) {
-        let streamView:StreamViewController = StreamViewController(nibName: "StreamViewController", bundle: nil)
-        self.presentViewController(streamView, animated: true, completion: nil)
-    }
-    
-    
-    
-    
     
     
     
