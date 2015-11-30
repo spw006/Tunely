@@ -388,6 +388,10 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
     /** End the stream */
     @IBAction func endStream(sender: AnyObject) {
 
+        if(player != nil){
+            player?.setIsPlaying(false, callback: nil)
+        }
+        
         let alert = UIAlertController(title: "Are you sure you want to end your stream?", message: nil, preferredStyle: UIAlertControllerStyle.Alert)
             
         // Cancel action
