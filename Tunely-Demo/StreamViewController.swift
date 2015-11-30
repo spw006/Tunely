@@ -87,11 +87,13 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
             let tmpString = userPlaylistTrackStrings[0].trackID
             let tmpTitle = "Current Song: " + userPlaylistTrackStrings[0].title + " - " + userPlaylistTrackStrings[0].artist
             let formattedTrackName = NSURL(string: "spotify:track:"+tmpString);
+            
             player?.playURI(formattedTrackName, callback: { error -> Void in
                 if error == nil {
                         self.currentSong = tmpTitle
                         self.thisSong.text = self.currentSong
                 }
+                else {print(error)}
             })
             //isPlaying = true;
             firstPlay = false
@@ -324,7 +326,12 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
         } */
         
         appDelegate.client?.addListener(self)
-
+        /*
+        if(player != nil) {
+            player?.playbackDelegate = self;
+            print("nil player at streamingcontroller")
+        }*/
+        player?.playbackDelegate = self
         
         let nib = UINib(nibName: "CollectionViewCell", bundle: nil)
         
@@ -381,6 +388,10 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
     /** End the stream */
     @IBAction func endStream(sender: AnyObject) {
 
+        if(player != nil){
+            player?.setIsPlaying(false, callback: nil)
+        }
+        
         let alert = UIAlertController(title: "Are you sure you want to end your stream?", message: nil, preferredStyle: UIAlertControllerStyle.Alert)
             
         // Cancel action
@@ -470,6 +481,7 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
             player?.playbackDelegate = self;
             print("no player")
         }
+        
         if(firstPlay == true)
         {
             print("first play")
