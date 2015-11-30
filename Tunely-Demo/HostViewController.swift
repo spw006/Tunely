@@ -200,7 +200,7 @@ class HostViewController: UIViewController {
                 
                  //go to stream view
                 let streamView:StreamViewController = StreamViewController(nibName: "StreamViewController", bundle: nil)
-                streamView.streamName = streamName
+                streamView.streamName = "My Stream"
                 self.presentViewController(streamView, animated: true, completion: nil)
         }
     }

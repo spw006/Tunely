@@ -24,7 +24,7 @@
                     <constraints>
                         <constraint firstAttribute="width" constant="600" id="o5I-O1-ZOd"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
@@ -79,6 +79,8 @@
                 <constraint firstItem="M2z-qp-KQd" firstAttribute="trailing" secondItem="eYT-qK-Svw" secondAttribute="trailing" id="7Rv-O5-XWf"/>
                 <constraint firstItem="M2z-qp-KQd" firstAttribute="top" secondItem="aCV-Wb-rmy" secondAttribute="top" constant="168" id="FlS-Y8-DeL"/>
                 <constraint firstItem="M2z-qp-KQd" firstAttribute="leading" secondItem="aCV-Wb-rmy" secondAttribute="leading" id="IDl-HI-qTe"/>
+                <constraint firstAttribute="trailing" secondItem="x8U-os-fiF" secondAttribute="trailing" constant="-112" id="Ymx-Sk-GyY"/>
+                <constraint firstItem="x8U-os-fiF" firstAttribute="leading" secondItem="aCV-Wb-rmy" secondAttribute="leading" constant="-113" id="bT2-Rc-Gwu"/>
                 <constraint firstItem="M2z-qp-KQd" firstAttribute="centerX" secondItem="3Dn-R0-J2r" secondAttribute="centerX" id="fGz-jQ-sws"/>
                 <constraint firstItem="M2z-qp-KQd" firstAttribute="leading" secondItem="eYT-qK-Svw" secondAttribute="leading" id="fIo-Eg-NhD"/>
                 <constraint firstAttribute="trailing" secondItem="M2z-qp-KQd" secondAttribute="trailing" id="gyp-Rg-d8B"/>
