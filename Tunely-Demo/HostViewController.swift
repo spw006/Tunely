@@ -228,15 +228,6 @@ class HostViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func hostButtonPressed(sender: AnyObject) {
-        let streamView:StreamViewController = StreamViewController(nibName: "StreamViewController", bundle: nil)
-        self.presentViewController(streamView, animated: true, completion: nil)
-    }
-    
-    
-    
-    
-    
     
     
     @IBAction func loginWithSpotify(sender: AnyObject) {
