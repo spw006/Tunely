@@ -16,7 +16,7 @@ var SpotifyLoginFlag = false;
 var firstLoad = true;
 
 
-class HostViewController: UIViewController {
+class HostViewController: UIViewController, UITextFieldDelegate {
     
     
     @IBOutlet weak var blurredBackground : UIImageView!
@@ -40,7 +40,6 @@ class HostViewController: UIViewController {
 
     @IBOutlet weak var loginButton: UIButton!
     
-
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -49,6 +48,7 @@ class HostViewController: UIViewController {
         passwordField.hidden = true
         loginButton.hidden = true;
         
+        passwordField.delegate = self
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "UpdateAfterFirstLogin", name: "loginSuccessful", object: nil)
         let userDefaults = NSUserDefaults.standardUserDefaults()
         print("viewdidload")
@@ -75,9 +75,12 @@ class HostViewController: UIViewController {
                         self.playUsingSession(renewedSession)
                         
                     }
+                        
+                    // show spotify login button if error
                     else {
                         print(error)
                         print("error refresshing session")
+                        self.loginButton.hidden = false
                     }
                 })
                 
@@ -131,6 +134,14 @@ class HostViewController: UIViewController {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
+    /* Called when the user taps Return on the keyboard */
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        
+        // Hide the keyboard
+        textField.resignFirstResponder()
+        
+        return true
+    }
     
     
     /** Populate the list with all streams */

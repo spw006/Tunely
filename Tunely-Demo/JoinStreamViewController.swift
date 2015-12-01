@@ -135,8 +135,6 @@ class JoinStreamViewController: UIViewController,SPTAudioStreamingPlaybackDelega
         let url : NSURL = NSURL(string : listenersPic[indexPath.row])!
         let data : NSData = NSData(contentsOfURL: url)!
         
-        print("heafidfuiadf");
-        
         cell.imageView.image = UIImage(data: data);
         
         return cell
@@ -202,7 +200,6 @@ class JoinStreamViewController: UIViewController,SPTAudioStreamingPlaybackDelega
         if let listenersPic = message.data.message["listenersObject"] {
             if (listenersPic != nil) {
                 self.listenersPic = listenersPic as! [String]
-                print(listenersPic)
                 listenersView.reloadData()
             }
         }
