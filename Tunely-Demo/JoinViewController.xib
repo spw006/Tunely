@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -19,11 +20,11 @@
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Join Stream" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rt8-Ki-Ocv">
                     <rect key="frame" x="-113" y="0.0" width="600" height="73"/>
                     <animations/>
-                    <color key="backgroundColor" red="0.24313725489999999" green="0.72549019609999998" blue="0.5568627451" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="backgroundColor" red="0.24859775640000001" green="0.018151441500000001" blue="0.0018467312059999999" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="600" id="Oq3-rf-LVH"/>
+                        <constraint firstAttribute="width" constant="600" id="lVy-3x-oj9"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
@@ -31,10 +32,10 @@
                     <rect key="frame" x="8" y="20" width="64" height="34"/>
                     <animations/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="34" id="0x3-Me-niq"/>
-                        <constraint firstAttribute="width" constant="64" id="mnC-6c-4fa"/>
+                        <constraint firstAttribute="height" constant="34" id="7dZ-Rc-nEY"/>
+                        <constraint firstAttribute="width" constant="64" id="Ayt-by-RdW"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                     <state key="normal" title="Cancel">
                         <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     </state>
@@ -55,9 +56,9 @@
                     <rect key="frame" x="8" y="81" width="359" height="46"/>
                     <animations/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="46" id="DSQ-di-7UT"/>
+                        <constraint firstAttribute="height" constant="46" id="Te3-Pl-Vb9"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                     <state key="normal" title="Active Streams">
                         <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     </state>
@@ -66,20 +67,18 @@
             <animations/>
             <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
-                <constraint firstItem="03K-Fd-1Kj" firstAttribute="leading" secondItem="fcc-fH-3YS" secondAttribute="leading" constant="-8" id="2mr-o5-2mq"/>
-                <constraint firstItem="03K-Fd-1Kj" firstAttribute="bottom" secondItem="i5M-Pr-FkT" secondAttribute="bottomMargin" id="7GS-8V-0KY"/>
-                <constraint firstItem="fcc-fH-3YS" firstAttribute="trailing" secondItem="03K-Fd-1Kj" secondAttribute="trailing" constant="-8" id="Gzf-4N-OaA"/>
-                <constraint firstItem="03K-Fd-1Kj" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="K55-Xh-UJn"/>
-                <constraint firstItem="SjM-fH-eop" firstAttribute="centerY" secondItem="Rt8-Ki-Ocv" secondAttribute="centerY" id="QHv-0a-7xH"/>
-                <constraint firstAttribute="trailing" secondItem="03K-Fd-1Kj" secondAttribute="trailing" id="T00-UC-wpe"/>
-                <constraint firstItem="SjM-fH-eop" firstAttribute="leading" secondItem="fcc-fH-3YS" secondAttribute="leading" id="X8Q-3H-phf"/>
-                <constraint firstItem="Rt8-Ki-Ocv" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="Y9V-oo-kVN"/>
-                <constraint firstItem="fcc-fH-3YS" firstAttribute="top" secondItem="Rt8-Ki-Ocv" secondAttribute="bottom" constant="8" symbolic="YES" id="c5b-hd-xFI"/>
-                <constraint firstItem="fcc-fH-3YS" firstAttribute="top" secondItem="SjM-fH-eop" secondAttribute="bottom" constant="27" id="gQh-Uf-kIh"/>
-                <constraint firstItem="03K-Fd-1Kj" firstAttribute="trailing" secondItem="i5M-Pr-FkT" secondAttribute="trailingMargin" constant="8" id="ohh-LS-hJn"/>
-                <constraint firstItem="fcc-fH-3YS" firstAttribute="centerX" secondItem="Rt8-Ki-Ocv" secondAttribute="centerX" id="q8s-3b-62p"/>
-                <constraint firstItem="fcc-fH-3YS" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leadingMargin" id="qsK-is-XtA"/>
-                <constraint firstItem="03K-Fd-1Kj" firstAttribute="top" secondItem="fcc-fH-3YS" secondAttribute="bottom" constant="8" symbolic="YES" id="yp9-NQ-06w"/>
+                <constraint firstItem="Rt8-Ki-Ocv" firstAttribute="centerY" secondItem="SjM-fH-eop" secondAttribute="centerY" id="3Im-6T-ldS"/>
+                <constraint firstItem="03K-Fd-1Kj" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Ecf-TE-IcZ"/>
+                <constraint firstItem="fcc-fH-3YS" firstAttribute="centerX" secondItem="Rt8-Ki-Ocv" secondAttribute="centerX" id="JcF-au-ASy"/>
+                <constraint firstItem="03K-Fd-1Kj" firstAttribute="bottom" secondItem="i5M-Pr-FkT" secondAttribute="bottomMargin" id="LZw-bb-2XH"/>
+                <constraint firstItem="fcc-fH-3YS" firstAttribute="centerX" secondItem="03K-Fd-1Kj" secondAttribute="centerX" id="YsV-M7-ZX4"/>
+                <constraint firstAttribute="trailing" secondItem="03K-Fd-1Kj" secondAttribute="trailing" id="c70-dB-ped"/>
+                <constraint firstItem="Rt8-Ki-Ocv" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="lZc-jT-QBr"/>
+                <constraint firstItem="fcc-fH-3YS" firstAttribute="leading" secondItem="SjM-fH-eop" secondAttribute="leading" id="qh5-lZ-LUB"/>
+                <constraint firstItem="SjM-fH-eop" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leadingMargin" id="t0V-8j-7kI"/>
+                <constraint firstItem="fcc-fH-3YS" firstAttribute="top" secondItem="Rt8-Ki-Ocv" secondAttribute="bottom" constant="8" symbolic="YES" id="v83-Bd-Hx5"/>
+                <constraint firstItem="03K-Fd-1Kj" firstAttribute="top" secondItem="fcc-fH-3YS" secondAttribute="bottom" constant="8" symbolic="YES" id="xFb-i0-nuF"/>
+                <constraint firstItem="fcc-fH-3YS" firstAttribute="top" secondItem="SjM-fH-eop" secondAttribute="bottom" constant="27" id="y2l-vp-081"/>
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
             <point key="canvasLocation" x="274.5" y="292.5"/>

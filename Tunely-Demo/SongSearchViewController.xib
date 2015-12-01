@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9060" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
     </dependencies>
     <objects>
@@ -20,7 +21,7 @@
                     <rect key="frame" x="0.0" y="72" width="600" height="528"/>
                     <animations/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <searchBar key="tableHeaderView" contentMode="redraw" placeholder="Search Song" id="QBa-Yr-FxY">
+                    <searchBar key="tableHeaderView" contentMode="redraw" placeholder="Search" id="QBa-Yr-FxY">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                         <animations/>
@@ -31,10 +32,25 @@
                         <outlet property="delegate" destination="-1" id="tUd-vB-heu"/>
                     </connections>
                 </tableView>
-                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z5D-1g-hT6">
-                    <rect key="frame" x="26" y="18" width="37" height="31"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Search" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4eT-QZ-mVQ">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="74"/>
                     <animations/>
-                    <state key="normal" title="Back"/>
+                    <color key="backgroundColor" red="0.24859775641025639" green="0.0181514414963658" blue="0.0018467312055771062" alpha="1" colorSpace="calibratedRGB"/>
+                    <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="20"/>
+                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z5D-1g-hT6">
+                    <rect key="frame" x="26" y="21" width="40" height="31"/>
+                    <animations/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="40" id="TDf-Hw-Zd9"/>
+                        <constraint firstAttribute="height" constant="31" id="uB6-vX-Zgf"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                    <state key="normal" title="Back">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
                     <connections>
                         <action selector="goBack:" destination="-1" eventType="touchUpInside" id="Gg5-EJ-BLE"/>
                     </connections>
@@ -43,12 +59,16 @@
             <animations/>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="tgk-vT-KqQ" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="2Rz-00-S5b"/>
-                <constraint firstItem="tgk-vT-KqQ" firstAttribute="top" secondItem="Z5D-1g-hT6" secondAttribute="bottom" constant="24" id="7Os-ha-TlG"/>
-                <constraint firstAttribute="trailing" secondItem="tgk-vT-KqQ" secondAttribute="trailing" id="KSM-gz-wGk"/>
-                <constraint firstItem="Z5D-1g-hT6" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="18" id="LDo-v8-af6"/>
-                <constraint firstAttribute="bottom" secondItem="tgk-vT-KqQ" secondAttribute="bottom" id="jlZ-Gp-dqh"/>
-                <constraint firstItem="Z5D-1g-hT6" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="29" id="uSu-5m-cyf"/>
+                <constraint firstItem="Z5D-1g-hT6" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="21" id="1eh-dp-8PO"/>
+                <constraint firstItem="Z5D-1g-hT6" firstAttribute="centerY" secondItem="4eT-QZ-mVQ" secondAttribute="centerY" id="6yQ-mV-HLB"/>
+                <constraint firstAttribute="trailing" secondItem="tgk-vT-KqQ" secondAttribute="trailing" id="8Wz-si-q8T"/>
+                <constraint firstItem="tgk-vT-KqQ" firstAttribute="leading" secondItem="4eT-QZ-mVQ" secondAttribute="leading" id="FDK-Kf-HbB"/>
+                <constraint firstItem="tgk-vT-KqQ" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="K73-cC-zBV"/>
+                <constraint firstItem="tgk-vT-KqQ" firstAttribute="top" secondItem="Z5D-1g-hT6" secondAttribute="bottom" constant="20" id="Ppn-2q-QJj"/>
+                <constraint firstItem="4eT-QZ-mVQ" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="iix-du-B8G"/>
+                <constraint firstItem="Z5D-1g-hT6" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="26" id="ocY-fl-Akn"/>
+                <constraint firstItem="4eT-QZ-mVQ" firstAttribute="trailing" secondItem="tgk-vT-KqQ" secondAttribute="trailing" id="uLf-yz-Wu2"/>
+                <constraint firstAttribute="bottom" secondItem="tgk-vT-KqQ" secondAttribute="bottom" id="ueH-7h-poF"/>
             </constraints>
         </view>
     </objects>

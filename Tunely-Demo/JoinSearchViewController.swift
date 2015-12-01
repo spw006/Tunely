@@ -171,7 +171,7 @@ class JoinSearchViewController: UIViewController, UITableViewDataSource, UITable
         
         // popup confirm
         let alert = UIAlertController(title: "Song Added", message: selectedSong.title + " just added", preferredStyle: UIAlertControllerStyle.Alert)
-        let alertAction = UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default) { (UIAlertAction) -> Void in }
+        let alertAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default) { (UIAlertAction) -> Void in }
         alert.addAction(alertAction)
         presentViewController(alert, animated: true) { () -> Void in }
     }
