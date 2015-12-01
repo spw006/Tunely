@@ -51,9 +51,6 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
     var pausePressed = false;
     var skipSongs = false;
     
-    
-    var serializedPlaylist: [AnyObject] = []
-    
     //array of songs returned by spotify search request
     var songs: [Song] = []
     
@@ -562,8 +559,6 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
             playlist.append(userPlaylistTrackStrings[i].toSerializableData())
         }
         
-        serializedPlaylist = playlist
-        
         // construct the object to send
         let playlistObject: [String: [AnyObject]] = [
             "playlistObject": playlist
@@ -643,17 +638,10 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
                 userPlaylistTrackStrings.append(song)
                 
                 var playlist: [AnyObject] = []
-                if (!self.serializedPlaylist.isEmpty) {
-                    serializedPlaylist.append(song.toSerializableData())
-                    playlist = serializedPlaylist
-                }
-                    
-                else {
-                    // construct the playlist
-                    for (var i = 0; i < userPlaylistTrackStrings.count; i++) {
-                        playlist.append(userPlaylistTrackStrings[i].toSerializableData())
-                    }
-                    serializedPlaylist = playlist
+                
+                // construct the playlist
+                for (var i = 0; i < userPlaylistTrackStrings.count; i++) {
+                    playlist.append(userPlaylistTrackStrings[i].toSerializableData())
                 }
                 
                 // construct the message to send
@@ -675,16 +663,10 @@ class StreamViewController: UIViewController,SPTAudioStreamingPlaybackDelegate, 
             if (joinRequest != nil) {
                 
                 var playlist: [AnyObject] = []
-                if (!self.serializedPlaylist.isEmpty) {
-                    playlist = serializedPlaylist
-                }
-                    
-                else {
-                    // construct the playlist
-                    for (var i = 0; i < userPlaylistTrackStrings.count; i++) {
-                        playlist.append(userPlaylistTrackStrings[i].toSerializableData())
-                    }
-                    serializedPlaylist = playlist
+                
+                // construct the playlist
+                for (var i = 0; i < userPlaylistTrackStrings.count; i++) {
+                    playlist.append(userPlaylistTrackStrings[i].toSerializableData())
                 }
                 
                 // construct the message to send

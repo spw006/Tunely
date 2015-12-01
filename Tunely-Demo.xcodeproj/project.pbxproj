@@ -171,8 +171,6 @@
 		6EA1EEAB1BD0B77D00E83778 /* Tunely-Demo */ = {
 			isa = PBXGroup;
 			children = (
-				14F90BF31BF5255F00B0B374 /* SongSearchViewController.swift */,
-				14F90BF21BF5255F00B0B374 /* SongSearchViewController.xib */,
 				6EA1EEB01BD0B77D00E83778 /* Main.storyboard */,
 				6EA1EEB51BD0B77D00E83778 /* LaunchScreen.storyboard */,
 				6EA1EEAC1BD0B77D00E83778 /* AppDelegate.swift */,
@@ -183,12 +181,14 @@
 				94D1578D1BE851E10048BAF8 /* HostViewController.xib */,
 				94D157941BE935C90048BAF8 /* StreamViewController.swift */,
 				94D157951BE935C90048BAF8 /* StreamViewController.xib */,
+				14F90BF31BF5255F00B0B374 /* SongSearchViewController.swift */,
+				14F90BF21BF5255F00B0B374 /* SongSearchViewController.xib */,
 				6EFEC0A81BFA726B00CA4C0E /* CollectionViewCell.swift */,
 				6EFEC0A91BFA726B00CA4C0E /* CollectionViewCell.xib */,
 				14BDC8411BF51F140073F455 /* Song.swift */,
 				94D157901BE86AFD0048BAF8 /* JoinViewController.swift */,
-				6E67BA6A1C03B3C900AF62B9 /* TunelyStream.swift */,
 				94D157911BE86AFD0048BAF8 /* JoinViewController.xib */,
+				6E67BA6A1C03B3C900AF62B9 /* TunelyStream.swift */,
 				6EA1EED31BD0B87700E83778 /* Tunely-Demo-Bridging-Header.h */,
 				145EC06C1BFE6F82006C3D27 /* JoinStreamViewController.swift */,
 				145EC06D1BFE6F82006C3D27 /* JoinStreamViewController.xib */,
