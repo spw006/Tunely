@@ -181,7 +181,7 @@ class HostViewController: UIViewController {
                     
                     // popup confirm
                     let alert = UIAlertController(title: "You already have a hosted stream", message: nil, preferredStyle: UIAlertControllerStyle.Alert)
-                    let alertAction = UIAlertAction(title: "OK!", style: UIAlertActionStyle.Default) { (UIAlertAction) -> Void in }
+                    let alertAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default) { (UIAlertAction) -> Void in }
                     alert.addAction(alertAction)
                     self.presentViewController(alert, animated: true) { () -> Void in }
                     return;
