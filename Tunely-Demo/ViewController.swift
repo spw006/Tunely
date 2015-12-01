@@ -234,6 +234,13 @@ class ViewController: UIViewController, FBSDKLoginButtonDelegate {
             UIView.commitAnimations()
         }
         
+        var tracker = GAI.sharedInstance().defaultTracker
+        tracker.set(kGAIScreenName, value: "MainView")
+        
+        var builder = GAIDictionaryBuilder.createScreenView()
+        tracker.send(builder.build() as [NSObject : AnyObject])
+        
+        
     }
     
 }

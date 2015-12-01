@@ -7,3 +7,4 @@
 #import <FBSDKShareKit/FBSDKShareKit.h>
 #import <PubNub/PubNub.h>
 #import <Spotify/Spotify.h>
+#import <Google/Analytics.h>
